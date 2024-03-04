@@ -76,4 +76,6 @@ document.getElementById('submitButton').addEventListener('click', () => {
 });
 
 // Play a random reference clip when the page loads
-playRandomReferenceClip();
+window.onload = function() {
+  playRandomReferenceClip();
+};

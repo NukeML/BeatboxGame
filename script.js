@@ -6,7 +6,15 @@ function playRandomReferenceClip() {
     .then(data => {
       // Set the source of the reference clip audio element
       const referenceClip = document.getElementById('referenceClip');
-      referenceClip.src = data.randomClipUrl;
+      
+      // Regular expression to match Google Drive file IDs in URLs
+      var regex = /(?:\/)([\w-]{25,})/;
+      // Match the regex against the URL
+      var match = regex.exec(data.randomClipUrl);
+      var playUrlFormat = "https://docs.google.com/uc?export=download&id=";
+      var playUrl = playUrlFormat + match[1];
+      
+      referenceClip.src = playUrl;
       alert('Data fetched successfully');
     })
     .catch(error => {

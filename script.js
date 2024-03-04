@@ -8,7 +8,7 @@ function playRandomReferenceClip() {
       const referenceClip = document.getElementById('referenceClip');
       referenceClip.src = data.randomClipUrl;
     });
-  alert(String(response.json());
+  alert(JSON.stringify(data));
 }
 
 // Function to record user's mimicry attempt

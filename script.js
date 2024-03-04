@@ -2,11 +2,15 @@
 function playRandomReferenceClip() {
   // Make an HTTP request to Google Apps Script to get the URL of a random reference clip
   fetch('https://script.google.com/macros/s/AKfycbz-nH9xY5V2AUHmwBSFz0F4hVi5jmpqsqx8tLcYjrV1flBUL1UxeRdwqQzeIKTiGGXi/exec')
-    .then(response => response.json())
+    .then(response => {
+      response.json();
+      alert('fetch')
+    })
     .then(data => {
       // Set the source of the reference clip audio element
       const referenceClip = document.getElementById('referenceClip');
       referenceClip.src = data.randomClipUrl;
+      alert('data');
     })
     .catch(function(error) {
       alert('Fetch error:', error);

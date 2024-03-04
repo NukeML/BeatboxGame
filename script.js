@@ -81,3 +81,4 @@ document.addEventListener('DOMContentLoaded', function() {
 // Play a random reference clip when the page loads
 
 playRandomReferenceClip();
+alert("start");

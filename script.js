@@ -1,5 +1,6 @@
 // Function to fetch and play a random reference clip
 function playRandomReferenceClip() {
+  alert('start')
   // Make an HTTP request to Google Apps Script to get the URL of a random reference clip
   fetch('https://script.google.com/macros/s/AKfycbz-nH9xY5V2AUHmwBSFz0F4hVi5jmpqsqx8tLcYjrV1flBUL1UxeRdwqQzeIKTiGGXi/exec')
     .then(response => {

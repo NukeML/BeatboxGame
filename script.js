@@ -8,6 +8,7 @@ function playRandomReferenceClip() {
       const referenceClip = document.getElementById('referenceClip');
       referenceClip.src = data.randomClipUrl;
     });
+  alert("can");
 }
 
 // Function to record user's mimicry attempt
@@ -75,10 +76,9 @@ document.getElementById('submitButton').addEventListener('click', () => {
   submitFormData();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    alert("Ready!");
-}, false);
-// Play a random reference clip when the page loads
+// document.addEventListener('DOMContentLoaded', function() {
+//     alert("Ready!");
+// }, false);
 
+// Play a random reference clip when the page loads
 playRandomReferenceClip();
-alert("start");

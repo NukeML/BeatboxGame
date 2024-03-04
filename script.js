@@ -9,7 +9,7 @@ function playRandomReferenceClip() {
       referenceClip.src = data.randomClipUrl;
     });
   alert(JSON.stringify(data));
-  document.getElementById('rcText').textContent = JSON.stringify(data);
+  document.getElementById('rcText').textContent = "fanchoeng";
 }
 
 // Function to record user's mimicry attempt

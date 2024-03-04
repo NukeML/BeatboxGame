@@ -7,8 +7,10 @@ function playRandomReferenceClip() {
       // Set the source of the reference clip audio element
       const referenceClip = document.getElementById('referenceClip');
       referenceClip.src = data.randomClipUrl;
+    })
+    .catch(function(error) {
+      alert('Fetch error:', error);
     });
-  alert("7head");
 }
 
 // Function to record user's mimicry attempt

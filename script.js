@@ -8,7 +8,7 @@ function playRandomReferenceClip() {
       const referenceClip = document.getElementById('referenceClip');
       referenceClip.src = data.randomClipUrl;
     });
-  alert(JSON.stringify(data));
+  // alert(JSON.stringify(data));
   document.getElementById('rcText').innerHTML = "fanchoeng";
 }
 

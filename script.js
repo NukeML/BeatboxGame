@@ -6,7 +6,7 @@ function playRandomReferenceClip() {
     .then(data => {
       // Set the source of the reference clip audio element
       const referenceClip = document.getElementById('referenceClip');
-      referenceClip.src = data.randomClipUrl;
+      referenceClip.src = data."randomClipUrl";
     });
   alert(String(referenceClip.src));
 }

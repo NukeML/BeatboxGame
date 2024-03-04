@@ -6,7 +6,6 @@ function playRandomReferenceClip() {
     .then(data => {
       // Set the source of the reference clip audio element
       const referenceClip = document.getElementById('referenceClip');
-      alert('audio fetched');
       referenceClip.src = data.randomClipUrl;
     });
 }
@@ -76,7 +75,9 @@ document.getElementById('submitButton').addEventListener('click', () => {
   submitFormData();
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    alert("Ready!");
+}, false);
 // Play a random reference clip when the page loads
-window.onload = function() {
-  playRandomReferenceClip();
-};
+
+playRandomReferenceClip();

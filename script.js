@@ -11,8 +11,9 @@ function playRandomReferenceClip() {
       var regex = /(?:\/)([\w-]{25,})/;
       // Match the regex against the URL
       var match = regex.exec(data.randomClipUrl);
-      var playUrlFormat = "https://docs.google.com/uc?export=download&id=";
-      var playUrl = playUrlFormat + match[1];
+      // var playUrlFormat = "https://docs.google.com/uc?export=download&id=";
+      var playUrlFormat = "https://drive.google.com/file/d/";
+      var playUrl = playUrlFormat + match[1] + "/preview";
       
       referenceClip.src = playUrl;
       alert('Data fetched successfully');

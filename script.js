@@ -16,7 +16,7 @@ function playRandomReferenceClip() {
       var playUrl = playUrlFormat + match[1] + "/preview";
       
       referenceClip.src = playUrl;
-      alert('Data fetched successfully');
+      // alert('Data fetched successfully');
     })
     .catch(error => {
       alert('Fetch error: ' + error.message); // Add message property to access error message

@@ -26,7 +26,8 @@ function playRandomReferenceClip() {
 function showErrorMsg(err) {
 
   var newDiv = document.createElement('div');
-  newDiv.className = ''
+  newDiv.className = 'error-msg';
+  
 
 }
 

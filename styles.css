@@ -10,3 +10,10 @@ body {
     text-align: center;
     font-size: 24px;
 }
+
+.error-msg {
+  padding: 20px;
+  background-color: #ffa500; /* orange */
+  color: white;
+  margin-bottom: 15px;
+}

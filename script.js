@@ -23,10 +23,10 @@ function playRandomReferenceClip() {
     });
 }
 
-function showErrorMsg(err) {
+function showErrorMsg(error, parent) {
 
   var newDiv = document.createElement('div');
-  newDiv.className = 'error-msg';
+  newDiv.className = 'centered-text error-msg';
   
 
 }

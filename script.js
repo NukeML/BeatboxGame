@@ -23,6 +23,13 @@ function playRandomReferenceClip() {
     });
 }
 
+function showErrorMsg(err) {
+
+  var newDiv = document.createElement('div');
+  newDiv.className = ''
+
+}
+
 
 // // Function to record user's mimicry attempt
 // function recordUserAttempt() {

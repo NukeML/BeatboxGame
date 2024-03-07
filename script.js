@@ -24,32 +24,36 @@ function playRandomReferenceClip() {
 }
 
 
-// Function to record user's mimicry attempt
+// // Function to record user's mimicry attempt
+// function recordUserAttempt() {
+//   // Use MediaRecorder API to record audio from microphone
+//   navigator.mediaDevices.getUserMedia({ audio: true })
+//     .then(stream => {
+//       const mediaRecorder = new MediaRecorder(stream);
+//       const chunks = [];
+
+//       mediaRecorder.addEventListener('dataavailable', event => {
+//         chunks.push(event.data);
+//       });
+
+//       mediaRecorder.addEventListener('stop', () => {
+//         const blob = new Blob(chunks, { type: 'audio/wav' });
+//         const userRecording = document.getElementById('userRecording');
+//         userRecording.src = URL.createObjectURL(blob);
+//       });
+
+//       // Start recording
+//       mediaRecorder.start();
+
+//       // Set time limit for recording
+//       setTimeout(() => {
+//         mediaRecorder.stop();
+//       }, 10000); // Adjust time limit as needed (10 seconds in this example)
+//     });
+// }
+
 function recordUserAttempt() {
-  // Use MediaRecorder API to record audio from microphone
-  navigator.mediaDevices.getUserMedia({ audio: true })
-    .then(stream => {
-      const mediaRecorder = new MediaRecorder(stream);
-      const chunks = [];
-
-      mediaRecorder.addEventListener('dataavailable', event => {
-        chunks.push(event.data);
-      });
-
-      mediaRecorder.addEventListener('stop', () => {
-        const blob = new Blob(chunks, { type: 'audio/wav' });
-        const userRecording = document.getElementById('userRecording');
-        userRecording.src = URL.createObjectURL(blob);
-      });
-
-      // Start recording
-      mediaRecorder.start();
-
-      // Set time limit for recording
-      setTimeout(() => {
-        mediaRecorder.stop();
-      }, 10000); // Adjust time limit as needed (10 seconds in this example)
-    });
+  
 }
 
 // Function to submit form data

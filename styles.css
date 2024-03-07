@@ -12,8 +12,10 @@ body {
 }
 
 .error-msg {
-  padding: 20px;
-  background-color: #ffa500; /* orange */
-  color: white;
-  margin-bottom: 15px;
+    margin: auto;
+    width: 70vw;
+    height: 10vh;
+    padding: 10px;
+    background-color: #ffa500; /* orange */
+    color: white;
 }

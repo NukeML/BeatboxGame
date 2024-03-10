@@ -14,7 +14,7 @@ body {
 }
 
 .error-msg {
-    margin: auto;
+    margin: 0;
     position: relative;
     width: 70vw;
     height: 10vh;

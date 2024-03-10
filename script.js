@@ -34,14 +34,15 @@ if (!(navigator.mediaDevices.getUserMedia)) {
 
 function visualize(stream) {
   if (!audioCtx) {
-    audioCtx = new AudioContext();
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   }
 
   const source = audioCtx.createMediaStreamSource(stream);
-  var analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 2048;
+  const analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 4096;
   const bufferLength = analyser.frequencyBinCount;
   const dataArray = new Uint8Array(bufferLength);
+  analyser.getByteTimeDomainData(dataArray);
 
   source.connect(analyser);
 

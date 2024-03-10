@@ -27,6 +27,6 @@ body {
 }
 
 .error-msg-innertext {
-  margin: 0;
+  margin: auto;
   position: absolute;
 }

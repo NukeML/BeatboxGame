@@ -9,6 +9,7 @@ body {
 
 .centered-text {
     text-align: center;
+    align-items: center;
 /*     margin: auto; */
 }
 

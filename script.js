@@ -5,7 +5,7 @@ const record = document.querySelector("#recordButton");
 var audioCtx;
 const canvasCtx = visualizer.getContext("2d");
 
-if !(navigator.mediaDevices.getUserMedia) {
+if (!(navigator.mediaDevices.getUserMedia)) {
   console.log("MediaDevices.getUserMedia() not supported on your browser!");
   showErrorMsg("MediaDevices.getUserMedia() not supported on your browser!", "#errorsAboveHere");
 } else {

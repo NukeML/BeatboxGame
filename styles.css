@@ -134,3 +134,10 @@ audio {
     transform: rotate(-90deg);
 }
 
+.visualizer {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+
+

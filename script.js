@@ -19,7 +19,7 @@ function playRandomReferenceClip() {
       // alert('Data fetched successfully');
     })
     .catch(error => {
-      showErrorMsg('Fetch error: ' + error.message, ); // Add message property to access error message
+      showErrorMsg('Fetch error: ' + error.message, "#errorsAboveHere"); // Add message property to access error message
     });
 }
 

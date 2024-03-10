@@ -38,7 +38,7 @@ function visualize(stream) {
   }
 
   const source = audioCtx.createMediaStreamSource(stream);
-  const analyser = audioCtx.createAnalyser();
+  var analyser = audioCtx.createAnalyser();
   analyser.fftSize = 2048;
   const bufferLength = analyser.frequencyBinCount;
   const dataArray = new Uint8Array(bufferLength);
@@ -53,6 +53,7 @@ function draw(analyser, bufferLength, dataArray) {
   const vHeight = visualizer.height;
 
   requestAnimationFrame(draw);
+  
   analyser.getByteTimeDomainData(dataArray);
 
   canvasCtx.fillStyle = "rgb(200, 200, 200)";

@@ -1,5 +1,6 @@
 const visualizer = document.querySelector(".visualizer");
 const record = document.querySelector("#recordButton");
+var recordingState = false;
 
 
 var audioCtx;
@@ -10,7 +11,7 @@ if (!(navigator.mediaDevices.getUserMedia)) {
   showErrorMsg("MediaDevices.getUserMedia() not supported on your browser!", "#errorsAboveHere");
 } else {
   console.log("The mediaDevices.getUserMedia() method is supported.");
-  showErrorMsg("NO ERROR: The mediaDevices.getUserMedia() method is supported.", "#errorsAboveHere");
+  // showErrorMsg("NO ERROR: The mediaDevices.getUserMedia() method is supported.", "#errorsAboveHere");
 
   const constraints = { audio: true };
   let chunks = [];
@@ -160,7 +161,19 @@ function showErrorMsg(error, anchorSelector, above=true) {
 // }
 
 function recordUserAttempt() {
-
+  if (recordingState == false) {
+    mediaRecorder.start();
+    console.log(mediaRecorder.state);
+    console.log("Recorder started.");
+    recordingState = true;
+    record.textContent = "Stop";
+  } else {
+    mediaRecorder.stop();
+    console.log(mediaRecorder.state);
+    console.log("Recorder stopped.");
+    recordingState = false;
+    record.textContent = "Record";
+  }
 }
 
 // Function to submit form data
@@ -189,7 +202,7 @@ function submitFormData() {
 }
 
 // Event listener for record button
-document.getElementById('recordButton').addEventListener('click', () => {
+record.addEventListener('click', () => {
   // Record user's mimicry attempt
   recordUserAttempt();
 });
@@ -206,4 +219,4 @@ document.getElementById('submitButton').addEventListener('click', () => {
 
 // Play a random reference clip when the page loads
 playRandomReferenceClip();
-showErrorMsg("BIG ERROR", "#errorsAboveHere");
+// showErrorMsg("BIG ERROR", "#errorsAboveHere");

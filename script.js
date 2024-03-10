@@ -28,7 +28,8 @@ function showErrorMsg(error, parentSelector) {
     alert('ERROR MESSAGE CANNOT BE DISPLAYED');
   } else {
     const parent = document.querySelector(parentSelector);
-    const errorDiv = document.querySelector("#errorMsg");
+    const template = document.querySelector("#errorMsg");
+    
     
   }
 

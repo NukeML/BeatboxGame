@@ -15,7 +15,7 @@ body {
     margin: auto;
     width: 70vw;
     height: 10vh;
-    padding: 10px;
+/*     padding: 0.5em; */
     background-color: #ffa500; /* orange */
     color: white;
     top: 1em;

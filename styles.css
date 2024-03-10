@@ -135,11 +135,11 @@ audio {
 }
 
 .visualizer {
-    display: block;
-    margin-bottom: 0.5rem;
-    position: relative;
+    margin: auto;
+/*     margin-bottom: 0.5rem; */
     width: 75vw;
     height: 8vh;
+    display: flex;
     justify-content: center;
 }
 

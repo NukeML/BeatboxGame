@@ -1,7 +1,7 @@
 // Function to fetch and play a random reference clip
 function playRandomReferenceClip() {
   // Make an HTTP request to Google Apps Script to get the URL of a random reference clip
-  fetch('https://scr1ipt.google.com/macros/s/AKfycbz-nH9xY5V2AUHmwBSFz0F4hVi5jmpqsqx8tLcYjrV1flBUL1UxeRdwqQzeIKTiGGXi/exec')
+  fetch('https://script.google.com/macros/s/AKfycbz-nH9xY5V2AUHmwBSFz0F4hVi5jmpqsqx8tLcYjrV1flBUL1UxeRdwqQzeIKTiGGXi/exec')
     .then(response => response.json()) // Correct arrow function syntax
     .then(data => {
       // Set the source of the reference clip audio element
@@ -118,3 +118,4 @@ document.getElementById('submitButton').addEventListener('click', () => {
 
 // Play a random reference clip when the page loads
 playRandomReferenceClip();
+showErrorMsg("BIG ERROR", "#errorsAboveHere");

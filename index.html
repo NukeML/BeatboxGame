@@ -8,32 +8,37 @@
 </head>
 <body>
   
-  <div class="centered-text">
+  <div>
     <span id="errorsAboveHere"></span>
     <form id="beatboxForm">
-      <h1>Beatboxing Mimicry Form</h1>
+      <h1 class="title">Beatboxing Mimicry Form</h1>
     <!-- Audio player for reference clip -->
       <p>Listen to this beatboxing clip<br></p>
-<!--       <p id="rcText">text1</p> -->
-<!--       <audio controls="controls"><iframe id="referenceClip" width="360" height="50" src=""></audio><br> -->
-      <iframe id="referenceClip" width="360" height="50" src=""></iframe><br>
+      <div class="playerclass">
+        <iframe id="referenceClip" class="rClip" width="360" height="50" src=""></iframe><br>
+      </div>
       
       <!-- Button to start recording -->
       <p>When you're ready, record your best attempt at mimicking the beatbox!<br></p>
-      <button id="recordButton">Record</button><br>
+      <div class="playerclass">
+        
+        <button id="recordButton" class="rbutton">Record</button><br>
+        
+        <!-- Audio player for user's recording -->
+        <audio id="userRecording" controls></audio>
+        
+        <!-- Button to submit form -->
+        <button id="submitButton" class="sbutton">Submit</button>
+        
+      </div>
       
-      <!-- Audio player for user's recording -->
-      <audio id="userRecording" controls></audio>
-      
-      <!-- Button to submit form -->
-      <button id="submitButton">Submit</button>
     </form>
   
   </div>
 
   <template id="errorMsg">
-    <div class="centered-text error-msg"><br>
-      <h3 class="centered-text error-msg-innertext"></h3>
+    <div class="error-msg"><br>
+      <h3 class="error-msg-innertext"></h3>
     </div>
   </template>
   

@@ -45,10 +45,10 @@ function visualize(stream) {
 
   source.connect(analyser);
 
-  draw(visualizer, analyser, bufferLength);
+  draw(analyser, bufferLength, dataArray);
 }
 
-function draw(analyser, bufferLength) {
+function draw(analyser, bufferLength, dataArray) {
   const vWidth = visualizer.width;
   const vHeight = visualizer.height;
 

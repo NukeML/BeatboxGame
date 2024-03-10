@@ -23,19 +23,20 @@ function playRandomReferenceClip() {
     });
 }
 
-function showErrorMsg(error, parentSelector, above=true) {
+function showErrorMsg(error, anchorSelector, above=true) {
   if (!("content" in document.createElement("template"))) {
     alert('ERROR MESSAGE CANNOT BE DISPLAYED');
   } else {
-    const parent = document.querySelector(parentSelector);
+    const anchor = document.querySelector(anchorSelector);
+    const parent = anchor.parentNode;
     const template = document.querySelector("#errorMsg");
     const errorMsg = template.content.cloneNode(true);
     var errorMsgText = errorMsg.querySelector(".error-msg-innertext");
     errorMsgText.textContent = "error: " + String(error);
     if (above == true) {
-      document.insertBefore(errorMsg, parent);
+      parent.insertBefore(errorMsg, anchor);
     } else {
-      document.insertBefore(errorMsg, parent.nextSibling);
+      parent.insertBefore(errorMsg, anchor.nextSibling);
     }
     
   }

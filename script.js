@@ -10,7 +10,7 @@ if (!(navigator.mediaDevices.getUserMedia)) {
   showErrorMsg("MediaDevices.getUserMedia() not supported on your browser!", "#errorsAboveHere");
 } else {
   console.log("The mediaDevices.getUserMedia() method is supported.");
-  showErrorMsg("The mediaDevices.getUserMedia() method is supported.", "#errorsAboveHere");
+  showErrorMsg("NO ERROR: The mediaDevices.getUserMedia() method is supported.", "#errorsAboveHere");
 
   const constraints = { audio: true };
   let chunks = [];
@@ -46,46 +46,43 @@ function visualize(stream) {
 
   source.connect(analyser);
 
-  draw(analyser, bufferLength, dataArray);
-}
+  draw();
 
-function draw(myAnalyser, myBufferLength, myDataArray) {
-  const vWidth = visualizer.width;
-  const vHeight = visualizer.height;
-  const analyser = myAnalyser;
-  const bufferLength = myBufferLength;
-  const dataArray = myDataArray;
-
-  requestAnimationFrame(draw);
+  function draw() {
+    const vWidth = visualizer.width;
+    const vHeight = visualizer.height;
   
-  analyser.getByteTimeDomainData(dataArray);
-
-  canvasCtx.fillStyle = "rgb(200, 200, 200)";
-  canvasCtx.fillRect(0, 0, vWidth, vHeight);
-  canvasCtx.lineWidth = 2;
-  canvasCtx.strokeStyle = "rgb(0, 0, 0)";
-  canvasCtx.beginPath();
-
-  var sliceWidth = (vWidth * 1.0) / bufferLength;
-  var x = 0;
-
-  for (let i = 0; i < bufferLength; i++) {
-    let v = dataArray[i] / 128.0;
-    let y = (v * vHeight) / 2;
-
-    if (i === 0) {
-      canvasCtx.moveTo(x, y);
-    } else {
-      canvasCtx.lineTo(x, y);
+    requestAnimationFrame(draw);
+    
+    analyser.getByteTimeDomainData(dataArray);
+  
+    canvasCtx.fillStyle = "rgb(200, 200, 200)";
+    canvasCtx.fillRect(0, 0, vWidth, vHeight);
+    canvasCtx.lineWidth = 2;
+    canvasCtx.strokeStyle = "rgb(0, 0, 0)";
+    canvasCtx.beginPath();
+  
+    var sliceWidth = (vWidth * 1.0) / bufferLength;
+    var x = 0;
+  
+    for (let i = 0; i < bufferLength; i++) {
+      let v = dataArray[i] / 128.0;
+      let y = (v * vHeight) / 2;
+  
+      if (i === 0) {
+        canvasCtx.moveTo(x, y);
+      } else {
+        canvasCtx.lineTo(x, y);
+      }
+  
+      x += sliceWidth;
+      
     }
-
-    x += sliceWidth;
+  
+    canvasCtx.lineTo(vWidth, vHeight / 2);
+    canvasCtx.stroke();
     
   }
-
-  canvasCtx.lineTo(vWidth, vHeight / 2);
-  canvasCtx.stroke();
-  
 }
 
 // Function to fetch and play a random reference clip

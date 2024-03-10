@@ -30,7 +30,7 @@ function showErrorMsg(error, parentSelector, above=true) {
     const parent = document.querySelector(parentSelector);
     const template = document.querySelector("#errorMsg");
     const errorMsg = template.content.cloneNode(true);
-    var errorMsgTxt = errorMsg.querySelector(".error-msg-innertext");
+    var errorMsgText = errorMsg.querySelector(".error-msg-innertext");
     errorMsgText.textContent = "error: " + String(error);
     if (above == true) {
       document.insertBefore(errorMsg, parent);

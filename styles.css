@@ -13,17 +13,13 @@ body {
 }
 
 .error-msg {
-    margin: auto;
+    margin: 0;
     position: relative;
     width: 70vw;
     height: 10vh;
-/*     padding: 0.5em; */
+    padding: 0.5em;
     background-color: #ffa500; /* orange */
     color: white;
     top: 1em;
 }
 
-.error-msg-innertext {
-  margin: auto;
-  position: absolute;
-}

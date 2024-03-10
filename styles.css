@@ -139,7 +139,8 @@ audio {
     margin-bottom: 0.5rem;
     position: relative;
     width: 75vw;
-    height: 8vh
+    height: 8vh;
+    justify-content: center;
 }
 
 

@@ -32,7 +32,6 @@ p {
     text-align: center;
     vertical-align: middle;
     margin: auto;
-    margin-top: 0%;
     width: 80%;
     padding-right: 1em;
     padding-left: 1em;
@@ -106,7 +105,7 @@ audio {
     color: white;
     border-radius: 10px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 1.2em;
+    font-size: 1em;
     margin-inline: auto;
     margin-top: 1.2em;
     box-shadow: 5px 0px 20px #f1b570;
@@ -136,8 +135,12 @@ audio {
 
 .visualizer {
     margin-bottom: 0.5rem;
-    width: 75vw;
-    height: 8vh;
+    border-radius: 5px;
+    border: 9px solid;
+    color: #cfcfcf;
+    width: 90%;
+    height: 7vh;
+    box-shadow: 0 0 20px rgba(255, 255, 255, .5);
 }
 
 

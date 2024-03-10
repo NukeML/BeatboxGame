@@ -137,6 +137,9 @@ audio {
 .visualizer {
     display: block;
     margin-bottom: 0.5rem;
+    position: relative;
+    width: 75vw;
+    height: 8vh
 }
 
 

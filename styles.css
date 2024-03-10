@@ -9,7 +9,7 @@ body {
 
 .centered-text {
     text-align: center;
-    margin: auto;
+/*     margin: auto; */
 }
 
 .error-msg {

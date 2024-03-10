@@ -15,14 +15,14 @@
     <!-- Audio player for reference clip -->
       <p>Listen to this beatboxing clip<br></p>
       <div class="playerclass">
-        <iframe id="referenceClip" class="rClip" width="50%" height="7%" src=""></iframe><br>
+        <iframe id="referenceClip" class="rClip" height="60vh" src=""></iframe><br>
       </div>
       
       <!-- Button to start recording -->
       <p>When you're ready, record your best attempt at mimicking the beatbox!<br></p>
       <div class="playerclass">
         
-        <button id="recordButton" class="rbutton">Record</button><br>
+        <button id="recordButton" class="rbutton" onclick="recordUserAttempt()">Record</button><br>
         <canvas class="visualizer"></canvas>
         
         <!-- Audio player for user's recording -->

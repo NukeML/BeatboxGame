@@ -13,10 +13,19 @@ body {
 
 .error-msg {
     margin: auto;
+    position: relative;
     width: 70vw;
     height: 10vh;
 /*     padding: 0.5em; */
     background-color: #ffa500; /* orange */
     color: white;
     top: 1em;
+}
+
+.error-msg-innertext {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }

@@ -49,9 +49,12 @@ function visualize(stream) {
   draw(analyser, bufferLength, dataArray);
 }
 
-function draw(analyser, bufferLength, dataArray) {
+function draw(myAnalyser, myBufferLength, myDataArray) {
   const vWidth = visualizer.width;
   const vHeight = visualizer.height;
+  const analyser = myAnalyser;
+  const bufferLength = myBufferLength;
+  const dataArray = myDataArray;
 
   requestAnimationFrame(draw);
   

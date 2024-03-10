@@ -135,12 +135,9 @@ audio {
 }
 
 .visualizer {
-    margin-inline: auto;
     margin-bottom: 0.5rem;
     width: 75vw;
     height: 8vh;
-    display: flex;
-    justify-content: center;
 }
 
 

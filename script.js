@@ -1,7 +1,34 @@
 const visualizer = document.querySelector(".visualizer");
+const record = document.querySelector("#recordButton");
+
 
 var audioCtx;
 const canvasCtx = visualizer.getContext("2d");
+
+if !(navigator.mediaDevices.getUserMedia) {
+  console.log("MediaDevices.getUserMedia() not supported on your browser!");
+  showErrorMsg("MediaDevices.getUserMedia() not supported on your browser!", "#errorsAboveHere");
+} else {
+  console.log("The mediaDevices.getUserMedia() method is supported.");
+  showErrorMsg("The mediaDevices.getUserMedia() method is supported.", "#errorsAboveHere");
+
+  const constraints = { audio: true };
+  let chunks = [];
+
+  let onSuccess = function (stream) {
+    const mediaRecorder = new MediaRecorder(stream);
+    visualize(stream);
+  };
+
+  let onError = function (err) {
+    console.log("The following error occured: " + err);
+    showErrorMsg(err, "#errorsAboveHere");
+  };
+
+  navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
+}
+
+
 
 
 
@@ -131,7 +158,7 @@ function showErrorMsg(error, anchorSelector, above=true) {
 // }
 
 function recordUserAttempt() {
-  
+
 }
 
 // Function to submit form data

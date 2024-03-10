@@ -1,6 +1,7 @@
 const visualizer = document.querySelector(".visualizer");
 const record = document.querySelector("#recordButton");
 var recordingState = false;
+var mediaRecorder;
 
 
 var audioCtx;
@@ -17,7 +18,7 @@ if (!(navigator.mediaDevices.getUserMedia)) {
   let chunks = [];
 
   let onSuccess = function (stream) {
-    const mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder = new MediaRecorder(stream);
     visualize(stream);
   };
 

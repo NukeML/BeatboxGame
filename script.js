@@ -23,13 +23,14 @@ function playRandomReferenceClip() {
     });
 }
 
-function showErrorMsg(error, parentSelector) {
+function showErrorMsg(error, parentSelector, above=true) {
   if (!("content" in document.createElement("template"))) {
     alert('ERROR MESSAGE CANNOT BE DISPLAYED');
   } else {
     const parent = document.querySelector(parentSelector);
     const template = document.querySelector("#errorMsg");
-    
+    const errorMsg = template.content.cloneNode(true);
+    var errorMsgTxt = errorMsg.querySelector(".error-msg-innertext");
     
   }
 

@@ -6,6 +6,7 @@ const afterRecordText = document.querySelector("#afterRecordText");
 var recordIntervalObject;
 var recordTimer = 0;
 const timerText = document.querySelector("#timer");
+var timeoutObject;
 
 
 var audioCtx;
@@ -199,7 +200,7 @@ function startAttempt() {
   recordTimer = 0;
   timerIncrement();
   recordIntervalObject = setInterval(timerIncrement, 500);
-  setTimeout(stopAttempt, 30000);
+  timeoutObject = setTimeout(stopAttempt, 30000);
 }
 
 function stopAttempt () {
@@ -209,7 +210,9 @@ function stopAttempt () {
   recordingState = false;
   record.textContent = "Record";
   afterRecordText.style.display = "";
+  timerIncrement();
   clearInterval(recordIntervalObject);
+  clearTimeout(timeoutObject);
 }
 
 function timerIncrement() {

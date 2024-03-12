@@ -20,6 +20,22 @@ if (!(navigator.mediaDevices.getUserMedia)) {
   let onSuccess = function (stream) {
     mediaRecorder = new MediaRecorder(stream);
     visualize(stream);
+
+    mediaRecorder.onstop = function () {
+      console.log("Data stream capture finished.");
+      const userRecording = document.querySelector("#userRecording");
+      const blob = new Blob(chunks, {type: mediaRecorder.mimeType});
+      chunks = [];
+      const userRecordingUrl = window.URL.createObjectURL(blob);
+      userRecording.src = userRecordingUrl;
+      console.log("Preview loaded.");
+      record.textContent = "Re-record";
+    };
+
+    mediaRecorder.ondataavailable = function (event) {
+      chunks.push(event.data);
+    };
+    
   };
 
   let onError = function (err) {

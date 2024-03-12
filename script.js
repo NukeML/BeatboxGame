@@ -190,7 +190,8 @@ function recordUserAttempt() {
     record.textContent = "Stop";
     afterRecordText.style.display = "none";
     recordTimer = 0;
-    recordIntervalObject = setInterval(timerIncrement, 100);
+    recordIntervalObject = setInterval(timerIncrement, 10);
+    setTimeout(recordUserAttempt, 30000);
   } else {
     mediaRecorder.stop();
     console.log(mediaRecorder.state);
@@ -204,8 +205,13 @@ function recordUserAttempt() {
 
 function timerIncrement() {
   recordTimer++;
-  var timeInSeconds = recordTimer / 10;
-  timerText.textContent = String(timeInSeconds);
+  let tenSec = recordTimer % 1000;
+  let onesSec = recordTimer - tenSec;
+  let oneSec = onesSec % 100;
+  let tenthsSec = onesSec - oneSec;
+  let tenthSec = tenthsSec % 10;
+  let hunthSec = tenthsSec - tenthSec;
+  timerText.textContent = String(tenSec) + String(oneSec) + "." + String(tenthSec) + String(hunthSec);
 }
 
 // Function to submit form data

@@ -214,12 +214,12 @@ function stopAttempt () {
 function timerIncrement() {
   recordTimer++;
   let tenSec = recordTimer % 1000;
-  let onesSec = recordTimer - tenSec;
+  let onesSec = recordTimer - (tenSec * 1000);
   let oneSec = onesSec % 100;
-  let tenthsSec = onesSec - oneSec;
+  let tenthsSec = onesSec - (oneSec * 100);
   let tenthSec = tenthsSec % 10;
-  let hunthSec = tenthsSec - tenthSec;
-  timerText.textContent = String(String(tenSec) + String(oneSec) + "." + String(tenthSec) + String(hunthSec));
+  let hunthSec = tenthsSec - (tenthSec * 10);
+  timerText.textContent = String(tenSec) + String(oneSec) + "." + String(tenthSec) + String(hunthSec);
 }
 
 // Function to submit form data

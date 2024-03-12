@@ -216,7 +216,7 @@ function timerIncrement() {
   let seconds = recordTimer / 2;
   let 
     tens = Math.floor(seconds / 10).toFixed(0),
-    ones = (seconds % 10).toFixed(2);
+    ones = (seconds % 10).toFixed(1);
   timerText.textContent = tens + ones;
   recordTimer++;
 }

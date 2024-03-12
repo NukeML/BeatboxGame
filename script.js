@@ -6,8 +6,6 @@ const afterRecordText = document.querySelector("#afterRecordText");
 var recordIntervalObject;
 var recordTimer = 0;
 const timerText = document.querySelector("#timer");
-const timerDelay = 250;
-const secondsFactor = 1 / (timerDelay * 1000);
 
 
 var audioCtx;
@@ -199,7 +197,7 @@ function startAttempt() {
   record.textContent = "Stop";
   afterRecordText.style.display = "none";
   recordTimer = 0;
-  recordIntervalObject = setInterval(timerIncrement, timerDelay);
+  recordIntervalObject = setInterval(timerIncrement, 250);
   setTimeout(stopAttempt, 30000);
 }
 
@@ -215,7 +213,7 @@ function stopAttempt () {
 
 function timerIncrement() {
   recordTimer++;
-  let seconds = recordTimer * secondsFactor;
+  let seconds = recordTimer * 4;
   let 
     tens = (seconds / 10).toFixed(0),
     ones = (seconds % 10).toFixed(2);

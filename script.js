@@ -186,6 +186,7 @@ function recordUserAttempt() {
     startAttempt();
   } else {
     stopAttempt();
+  }
 }
 
 function startAttempt() {

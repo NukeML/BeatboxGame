@@ -2,6 +2,7 @@ const visualizer = document.querySelector(".visualizer");
 const record = document.querySelector("#recordButton");
 var recordingState = false;
 var mediaRecorder;
+const afterRecordText = document.querySelector("#afterRecordText");
 
 
 var audioCtx;
@@ -184,12 +185,14 @@ function recordUserAttempt() {
     console.log("Recorder started.");
     recordingState = true;
     record.textContent = "Stop";
+    afterRecordText.style.display = "none";
   } else {
     mediaRecorder.stop();
     console.log(mediaRecorder.state);
     console.log("Recorder stopped.");
     recordingState = false;
     record.textContent = "Record";
+    afterRecordText.style.display = "";
   }
 }
 

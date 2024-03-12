@@ -183,24 +183,31 @@ function showErrorMsg(error, anchorSelector, above=true) {
 
 function recordUserAttempt() {
   if (recordingState == false) {
-    mediaRecorder.start();
-    console.log(mediaRecorder.state);
-    console.log("Recorder started.");
-    recordingState = true;
-    record.textContent = "Stop";
-    afterRecordText.style.display = "none";
-    recordTimer = 0;
-    recordIntervalObject = setInterval(timerIncrement, 10);
-    setTimeout(recordUserAttempt, 30000);
+    startAttempt();
   } else {
-    mediaRecorder.stop();
-    console.log(mediaRecorder.state);
-    console.log("Recorder stopped.");
-    recordingState = false;
-    record.textContent = "Record";
-    afterRecordText.style.display = "";
-    clearInterval(recordIntervalObject);
-  }
+    stopAttempt();
+}
+
+function startAttempt() {
+  mediaRecorder.start();
+  console.log(mediaRecorder.state);
+  console.log("Recorder started.");
+  recordingState = true;
+  record.textContent = "Stop";
+  afterRecordText.style.display = "none";
+  recordTimer = 0;
+  recordIntervalObject = setInterval(timerIncrement, 10);
+  setTimeout(stopAttempt, 30000);
+}
+
+function stopAttempt () {
+  mediaRecorder.stop();
+  console.log(mediaRecorder.state);
+  console.log("Recorder stopped.");
+  recordingState = false;
+  record.textContent = "Record";
+  afterRecordText.style.display = "";
+  clearInterval(recordIntervalObject);
 }
 
 function timerIncrement() {
@@ -211,7 +218,7 @@ function timerIncrement() {
   let tenthsSec = onesSec - oneSec;
   let tenthSec = tenthsSec % 10;
   let hunthSec = tenthsSec - tenthSec;
-  timerText.textContent = String(tenSec) + String(oneSec) + "." + String(tenthSec) + String(hunthSec);
+  timerText.textContent = String(String(tenSec) + String(oneSec) + "." + String(tenthSec) + String(hunthSec));
 }
 
 // Function to submit form data

@@ -211,7 +211,6 @@ function stopAttempt () {
   record.textContent = "Record";
   afterRecordText.style.display = "";
   timerIncrement();
-  timerIncrement();
   clearInterval(recordIntervalObject);
   clearTimeout(timeoutObject);
 }

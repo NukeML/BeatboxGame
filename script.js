@@ -213,7 +213,7 @@ function stopAttempt () {
 
 function timerIncrement() {
   recordTimer++;
-  timerText.textContent = Number(recordTimer / 500).toFixed(2);
+  timerText.textContent = Number(recordTimer / 20).toFixed(1);
 }
 
 // Function to submit form data

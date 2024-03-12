@@ -197,7 +197,7 @@ function startAttempt() {
   record.textContent = "Stop";
   afterRecordText.style.display = "none";
   recordTimer = 0;
-  recordIntervalObject = setInterval(timerIncrement, 50);
+  recordIntervalObject = setInterval(timerIncrement, 100);
   setTimeout(stopAttempt, 30000);
 }
 
@@ -213,7 +213,7 @@ function stopAttempt () {
 
 function timerIncrement() {
   recordTimer++;
-  timerText.textContent = Number(recordTimer / 20).toFixed(1);
+  timerText.textContent = Number(recordTimer / 10).toFixed(1);
 }
 
 // Function to submit form data

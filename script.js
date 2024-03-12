@@ -3,6 +3,9 @@ const record = document.querySelector("#recordButton");
 var recordingState = false;
 var mediaRecorder;
 const afterRecordText = document.querySelector("#afterRecordText");
+var recordIntervalObject;
+var recordTimer = 0;
+const timerText = document.querySelector("#timer");
 
 
 var audioCtx;
@@ -186,6 +189,8 @@ function recordUserAttempt() {
     recordingState = true;
     record.textContent = "Stop";
     afterRecordText.style.display = "none";
+    recordTimer = 0;
+    recordIntervalObject = setInterval(timerIncrement, 100);
   } else {
     mediaRecorder.stop();
     console.log(mediaRecorder.state);
@@ -193,7 +198,14 @@ function recordUserAttempt() {
     recordingState = false;
     record.textContent = "Record";
     afterRecordText.style.display = "";
+    clearInterval(recordIntervalObject);
   }
+}
+
+function timerIncrement() {
+  recordTimer++;
+  var timeInSeconds = recordTimer / 10;
+  timerText.textContent = String(timeInSeconds);
 }
 
 // Function to submit form data

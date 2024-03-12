@@ -213,7 +213,7 @@ function stopAttempt () {
 
 function timerIncrement() {
   recordTimer++;
-  let seconds = recordTimer * 4;
+  let seconds = recordTimer / 4;
   let 
     tens = (seconds / 10).toFixed(0),
     ones = (seconds % 10).toFixed(2);

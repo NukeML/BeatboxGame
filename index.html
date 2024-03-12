@@ -28,7 +28,12 @@
         <button id="recordButton" class="rbutton" type="button">Record</button><br>
         <canvas class="visualizer"></canvas>
         
-        <span id="afterRecordTextAnchor"></span>
+        <div class="playerclass" id="afterRecordText" style="display: none;">
+          <p>
+            <br>Listen to your imitation below.<br>
+            If you think you could do even better, feel free to re-record using the button above!<br>
+          </p>
+        </div>
         
         <!-- Audio player for user's recording -->
         <audio id="userRecording" controls></audio>
@@ -46,15 +51,6 @@
     <div class="error-msg"><br>
       <h3 class="error-msg-innertext"></h3>
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-    </div>
-  </template>
-
-  <template id="afterRecordText">
-    <div class="playerclass">
-      <p>
-        <br>Listen to your imitation below.<br>
-        If you think you could do even better, feel free to re-record using the button above!<br>
-      </p>
     </div>
   </template>
   

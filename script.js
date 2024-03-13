@@ -7,6 +7,7 @@ var recordIntervalObject;
 var recordTimer = 0;
 const timerText = document.querySelector("#timer");
 var timeoutObject;
+var audioBlob;
 
 
 var audioCtx;
@@ -29,9 +30,9 @@ if (!(navigator.mediaDevices.getUserMedia)) {
     mediaRecorder.onstop = function () {
       console.log("Data stream capture finished.");
       const userRecording = document.querySelector("#userRecording");
-      const blob = new Blob(chunks, {type: mediaRecorder.mimeType});
+      audioBlob = new Blob(chunks, {type: mediaRecorder.mimeType});
       chunks = [];
-      const userRecordingUrl = window.URL.createObjectURL(blob);
+      const userRecordingUrl = window.URL.createObjectURL(audioBlob);
       userRecording.src = userRecordingUrl;
       console.log("Preview loaded.");
       record.textContent = "Re-record";
@@ -111,7 +112,10 @@ function visualize(stream) {
 // Function to fetch and play a random reference clip
 function playRandomReferenceClip() {
   // Make an HTTP request to Google Apps Script to get the URL of a random reference clip
-  fetch('https://script.google.com/macros/s/AKfycbz-nH9xY5V2AUHmwBSFz0F4hVi5jmpqsqx8tLcYjrV1flBUL1UxeRdwqQzeIKTiGGXi/exec')
+  fetch('https://script.google.com/macros/s/AKfycbz3Dulg4mavtbTfcCy6yjzhEYD9bvlOz72W8wgERU0kkKRJWwGFFboVA1Lh8eLvnHcG/exec',
+        {
+          method="GET"
+        })
     .then(response => response.json()) // Correct arrow function syntax
     .then(data => {
       // Set the source of the reference clip audio element
@@ -227,26 +231,26 @@ function timerIncrement() {
 // Function to submit form data
 function submitFormData() {
   // Get user's recording and reference clip URL
-  const userRecording = document.getElementById('userRecording').src;
   const referenceClipUrl = document.getElementById('referenceClip').src;
-
+  var form = new FormData();
+  form.append("reference", referenceClipUrl);
+  form.append("attempt", audioBlob);
   // Make HTTP request to Google Apps Script to submit form data
-  fetch('https://script.google.com/macros/s/your-script-id/exec', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ userRecording, referenceClipUrl })
-  })
-  .then(response => {
-    if (response.ok) {
+  fetch('https://script.google.com/macros/s/AKfycbz3Dulg4mavtbTfcCy6yjzhEYD9bvlOz72W8wgERU0kkKRJWwGFFboVA1Lh8eLvnHcG/exec', 
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          body: form
+        })
+    .then(response => {
       // Form submitted successfully
-      alert('Form submitted successfully!');
-    } else {
-      // Error handling
-      alert('Error submitting form. Please try again.');
-    }
-  });
+      console.log('Form submitted successfully!');
+    })
+    .catch(error => {
+      showErrorMsg('Submit error: ' + error.message, "#errorsAboveHere");
+    });
 }
 
 // Event listener for record button

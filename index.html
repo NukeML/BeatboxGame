@@ -10,43 +10,41 @@
   
   <div>
     <span id="errorsAboveHere"></span>
-    <form id="beatboxForm">
-      <h1 class="title">Beatboxing Mimicry Form</h1>
-    <!-- Audio player for reference clip -->
-      <p>Listen to this beatboxing clip<br></p>
-      <div class="playerclass">
-        <iframe id="referenceClip" class="rClip" height="60vh" src=""></iframe><br>
+    <h1 class="title">Beatboxing Mimicry Form</h1>
+  <!-- Audio player for reference clip -->
+    <p>Listen to this beatboxing clip<br></p>
+    <div class="playerclass">
+      <iframe id="referenceClip" class="rClip" height="60vh" src=""></iframe><br>
+    </div>
+    
+    <!-- Button to start recording -->
+    <p>
+      When you're ready, record your best attempt at mimicking the beatbox!<br><br>
+      Try to make the length of your recording as close to the above reference clip as possible! The longest you can record for is 30 seconds.<br><br>
+      The timer below will start counting up when you press record.
+    </p>
+    <div class="playerclass">
+      <h1 id="timer">
+        00.0
+      </h1>
+      <button id="recordButton" class="rbutton" type="button">Record</button><br>
+      <canvas class="visualizer"></canvas>
+      
+      <div class="playerclass" id="afterRecordText" style="display: none;">
+        <p>
+          Listen to your imitation below.<br>
+          If you think you could do even better, feel free to re-record using the button above!<br>
+        </p>
       </div>
       
-      <!-- Button to start recording -->
-      <p>
-        When you're ready, record your best attempt at mimicking the beatbox!<br><br>
-        Try to make the length of your recording as close to the above reference clip as possible! The longest you can record for is 30 seconds.<br><br>
-        The timer below will start counting up when you press record.
-      </p>
-      <div class="playerclass">
-        <h1 id="timer">
-          00.0
-        </h1>
-        <button id="recordButton" class="rbutton" type="button">Record</button><br>
-        <canvas class="visualizer"></canvas>
-        
-        <div class="playerclass" id="afterRecordText" style="display: none;">
-          <p>
-            Listen to your imitation below.<br>
-            If you think you could do even better, feel free to re-record using the button above!<br>
-          </p>
-        </div>
-        
-        <!-- Audio player for user's recording -->
-        <audio id="userRecording" controls></audio>
-        
-        <!-- Button to submit form -->
-        <button id="submitButton" class="sbutton">Submit</button>
-        
-      </div>
+      <!-- Audio player for user's recording -->
+      <audio id="userRecording" controls></audio>
       
-    </form>
+      <!-- Button to submit form -->
+      <button id="submitButton" class="sbutton" type="button">Submit</button>
+      
+    </div>
+    
   
   </div>
 

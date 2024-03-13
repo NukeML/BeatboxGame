@@ -114,7 +114,7 @@ function playRandomReferenceClip() {
   // Make an HTTP request to Google Apps Script to get the URL of a random reference clip
   fetch('https://script.google.com/macros/s/AKfycbz3Dulg4mavtbTfcCy6yjzhEYD9bvlOz72W8wgERU0kkKRJWwGFFboVA1Lh8eLvnHcG/exec',
         {
-          method="GET"
+          method: "GET"
         })
     .then(response => response.json()) // Correct arrow function syntax
     .then(data => {

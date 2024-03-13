@@ -239,8 +239,10 @@ function submitFormData() {
   fetch('https://script.google.com/macros/s/AKfycbz3Dulg4mavtbTfcCy6yjzhEYD9bvlOz72W8wgERU0kkKRJWwGFFboVA1Lh8eLvnHcG/exec', 
         {
           method: 'POST',
+          redirect: "follow",
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
+            "Access-Control-Allow-Origin": *,
           },
           body: form
         })

@@ -240,6 +240,7 @@ function submitFormData() {
         {
           method: 'POST',
           redirect: "follow",
+          mode: "no-cors",
           headers: {
             'Content-Type': 'multipart/form-data',
             "Access-Control-Allow-Origin": "nukeml.github.com",

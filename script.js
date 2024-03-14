@@ -112,7 +112,7 @@ function visualize(stream) {
 // Function to fetch and play a random reference clip
 function playRandomReferenceClip() {
   // Make an HTTP request to Google Apps Script to get the URL of a random reference clip
-  fetch('https://script.google.com/macros/s/AKfycbz3Dulg4mavtbTfcCy6yjzhEYD9bvlOz72W8wgERU0kkKRJWwGFFboVA1Lh8eLvnHcG/exec',
+  fetch('https://script.google.com/macros/s/AKfycbxsSsMn_QUhkmCGSsuBBBFvIlpdCx-8AHQ3W-TErfaXSDK2dMPztI4crjMTeBZuwK5N/exec',
         {
           method: "GET"
         })
@@ -236,13 +236,13 @@ function submitFormData() {
   form.append("reference", referenceClipUrl);
   form.append("attempt", audioBlob);
   // Make HTTP request to Google Apps Script to submit form data
-  fetch('https://script.google.com/macros/s/AKfycbz3Dulg4mavtbTfcCy6yjzhEYD9bvlOz72W8wgERU0kkKRJWwGFFboVA1Lh8eLvnHcG/exec', 
+  fetch('https://script.google.com/macros/s/AKfycbxsSsMn_QUhkmCGSsuBBBFvIlpdCx-8AHQ3W-TErfaXSDK2dMPztI4crjMTeBZuwK5N/exec', 
         {
           method: 'POST',
           redirect: "follow",
           headers: {
             'Content-Type': 'multipart/form-data',
-            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Origin": "nukeml.github.com",
           },
           body: form
         })

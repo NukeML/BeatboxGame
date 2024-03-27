@@ -26,7 +26,7 @@ if (!(navigator.mediaDevices.getUserMedia)) {
   let onSuccess = function (stream) {
     mediaRecorder = new MediaRecorder(stream);
     visualize(stream);
-
+ 
     mediaRecorder.onstop = function () {
       console.log("Data stream capture finished.");
       const userRecording = document.querySelector("#userRecording");

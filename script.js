@@ -333,7 +333,7 @@ window.addEventListener("load", () => {
 function uploadAudioFile(referenceClipName, audioBlob) {
 
   // Referencing target user audio location
-  const useraudioRef = refS(storage, `training_data/${referenceClipName}/${Date.now()}.wav`);
+  const useraudioRef = refS(storage, `training_data/${referenceClipName}/${Date.now()}.webp`);
 
   // Upload audio to database
   uploadBytes(useraudioRef, audioBlob)

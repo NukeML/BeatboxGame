@@ -6,6 +6,22 @@ import { getStorage, ref as refS, uploadBytes, getDownloadURL, list, listAll }  
 // https://firebase.google.com/docs/web/setup#available-libraries
 import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js';
 import Hover from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/hover.esm.js';
+// import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
+
+// const convertToM4A = async (inputBlob) => {
+//   const ffmpeg = createFFmpeg({ log: true });
+
+//   await ffmpeg.load();
+
+//   ffmpeg.FS('writeFile', 'input.mp3', await fetchFile(inputBlob));
+
+//   await ffmpeg.run('-i', 'input.mp3', '-c:a', 'aac', '-strict', 'experimental', 'output.m4a');
+
+//   const m4aData = ffmpeg.FS('readFile', 'output.m4a');
+//   const m4aBlob = new Blob([m4aData.buffer], { type: 'audio/mp4' });
+
+//   return m4aBlob;
+// };
 
 const visualizer = document.querySelector(".visualizer");
 const record = document.querySelector("#recordButton");
@@ -34,22 +50,22 @@ if (!(navigator.mediaDevices.getUserMedia)) {
   let chunks = [];
 
   let onSuccess = function (stream) {
-    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
     visualize(stream);
- 
+    
+    mediaRecorder.ondataavailable = function (event) {
+      chunks.push(event.data);
+    };
+
     mediaRecorder.onstop = function () {
       console.log("Data stream capture finished.");
       const userRecording = document.querySelector("#userRecording");
-      audioBlob = new Blob(chunks, {type: mediaRecorder.mimeType});
+      audioBlob = new Blob(chunks, { type : 'audio/webm' });
       chunks = [];
       const userRecordingUrl = window.URL.createObjectURL(audioBlob);
       userRecording.src = userRecordingUrl;
       console.log("Preview loaded.");
       record.textContent = "Re-record";
-    };
-
-    mediaRecorder.ondataavailable = function (event) {
-      chunks.push(event.data);
     };
     
   };
@@ -62,6 +78,14 @@ if (!(navigator.mediaDevices.getUserMedia)) {
   navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
 }
 
+
+// CONVERT TO WAV
+
+// Function to convert WebM Blob to WAV
+
+
+
+// //////////////
 
 
 
@@ -330,13 +354,13 @@ window.addEventListener("load", () => {
   fetchAudioFile();
 });
 
-function uploadAudioFile(referenceClipName, audioBlob) {
+function uploadAudioFile(referenceClipName, wavBlob) {
 
   // Referencing target user audio location
-  const useraudioRef = refS(storage, `training_data/${referenceClipName}/${Date.now()}.wav`);
+  const useraudioRef = refS(storage, `training_data/${referenceClipName}/${Date.now()}.webm`);
 
   // Upload audio to database
-  uploadBytes(useraudioRef, audioBlob)
+  uploadBytes(useraudioRef, wavBlob)
   .then(() => {
     alert("Audio submitted!");
   })
@@ -428,8 +452,14 @@ function fetchAudioFile() {
     // SUBMIT AUDIO
     const submitButton = document.querySelector(".sbutton");
     submitButton.addEventListener("click", () => {
+      // Audio Validation
       if (duration >= 5) {
+        // Assume webmBlob contains the Blob data of your WebM audio file
+        // var wavBlob = convertWebMToWAV(audioBlob);
         uploadAudioFile(randomAudioName, audioBlob);
+        let chunks = [];
+        audioBlob = new Blob(chunks, { type : 'audio/webm' });
+        duration = 0;
       } else if (duration == 0) {
         alert("Please start recording before submitting your audio.")
       } else {

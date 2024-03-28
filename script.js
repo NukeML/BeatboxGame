@@ -6,22 +6,6 @@ import { getStorage, ref as refS, uploadBytes, getDownloadURL, list, listAll }  
 // https://firebase.google.com/docs/web/setup#available-libraries
 import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js';
 import Hover from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/hover.esm.js';
-// import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
-
-// const convertToM4A = async (inputBlob) => {
-//   const ffmpeg = createFFmpeg({ log: true });
-
-//   await ffmpeg.load();
-
-//   ffmpeg.FS('writeFile', 'input.mp3', await fetchFile(inputBlob));
-
-//   await ffmpeg.run('-i', 'input.mp3', '-c:a', 'aac', '-strict', 'experimental', 'output.m4a');
-
-//   const m4aData = ffmpeg.FS('readFile', 'output.m4a');
-//   const m4aBlob = new Blob([m4aData.buffer], { type: 'audio/mp4' });
-
-//   return m4aBlob;
-// };
 
 const visualizer = document.querySelector(".visualizer");
 const record = document.querySelector("#recordButton");
@@ -78,18 +62,6 @@ if (!(navigator.mediaDevices.getUserMedia)) {
   navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
 }
 
-
-// CONVERT TO WAV
-
-// Function to convert WebM Blob to WAV
-
-
-
-// //////////////
-
-
-
-
 function visualize(stream) {
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -143,34 +115,6 @@ function visualize(stream) {
   }
 }
 
-// // Function to fetch and play a random reference clip
-// function playRandomReferenceClip() {
-//   // Make an HTTP request to Google Apps Script to get the URL of a random reference clip
-//   fetch('https://script.google.com/macros/s/AKfycbxsSsMn_QUhkmCGSsuBBBFvIlpdCx-8AHQ3W-TErfaXSDK2dMPztI4crjMTeBZuwK5N/exec',
-//         {
-//           method: "GET"
-//         })
-//     .then(response => response.json()) // Correct arrow function syntax
-//     .then(data => {
-//       // Set the source of the reference clip audio element
-//       const referenceClip = document.getElementById('referenceClip');
-      
-//       // Regular expression to match Google Drive file IDs in URLs
-//       var regex = /(?:\/)([\w-]{25,})/;
-//       // Match the regex against the URL
-//       var match = regex.exec(data.randomClipUrl);
-//       // var playUrlFormat = "https://docs.google.com/uc?export=download&id=";
-//       var playUrlFormat = "https://drive.google.com/file/d/";
-//       var playUrl = playUrlFormat + match[1] + "/preview";
-      
-//       referenceClip.src = playUrl;
-//       // alert('Data fetched successfully');
-//     })
-//     .catch(error => {
-//       showErrorMsg('Fetch error: ' + error.message, "#errorsAboveHere"); // Add message property to access error message
-//     });
-// }
-
 function showErrorMsg(error, anchorSelector, above=true) {
   if (!("content" in document.createElement("template"))) {
     alert('ERROR MESSAGE CANNOT BE DISPLAYED');
@@ -190,35 +134,6 @@ function showErrorMsg(error, anchorSelector, above=true) {
   }
 
 }
-
-
-// // Function to record user's mimicry attempt
-// function recordUserAttempt() {
-//   // Use MediaRecorder API to record audio from microphone
-//   navigator.mediaDevices.getUserMedia({ audio: true })
-//     .then(stream => {
-//       const mediaRecorder = new MediaRecorder(stream);
-//       const chunks = [];
-
-//       mediaRecorder.addEventListener('dataavailable', event => {
-//         chunks.push(event.data);
-//       });
-
-//       mediaRecorder.addEventListener('stop', () => {
-//         const blob = new Blob(chunks, { type: 'audio/wav' });
-//         const userRecording = document.getElementById('userRecording');
-//         userRecording.src = URL.createObjectURL(blob);
-//       });
-
-//       // Start recording
-//       mediaRecorder.start();
-
-//       // Set time limit for recording
-//       setTimeout(() => {
-//         mediaRecorder.stop();
-//       }, 10000); // Adjust time limit as needed (10 seconds in this example)
-//     });
-// }
 
 function recordUserAttempt() {
   if (recordingState == false) {
@@ -264,56 +179,11 @@ function timerIncrement() {
   recordTimer++;
 }
 
-// // Function to submit form data
-// function submitFormData() {
-//   // Get user's recording and reference clip URL
-//   const referenceClipUrl = document.getElementById('referenceClip').src;
-//   var form = new FormData();
-//   form.append("reference", referenceClipUrl);
-//   form.append("attempt", audioBlob);
-//   // Make HTTP request to Google Apps Script to submit form data
-//   fetch('https://script.google.com/macros/s/AKfycbxsSsMn_QUhkmCGSsuBBBFvIlpdCx-8AHQ3W-TErfaXSDK2dMPztI4crjMTeBZuwK5N/exec', 
-//         {
-//           method: 'POST',
-//           redirect: "follow",
-//           mode: "no-cors",
-//           headers: {
-//             'Content-Type': 'multipart/form-data',
-//             "Access-Control-Allow-Origin": "nukeml.github.com",
-//           },
-//           body: form
-//         })
-//     .then(response => {
-//       // Form submitted successfully
-//       console.log('Form submitted successfully!');
-//     })
-//     .catch(error => {
-//       showErrorMsg('Submit error: ' + error.message, "#errorsAboveHere");
-//     });
-// }
-
 // Event listener for record button
 record.addEventListener('click', () => {
   // Record user's mimicry attempt
   recordUserAttempt();
 });
-
-// Event listener for submit button
-// document.getElementById('submitButton').addEventListener('click', () => {
-//   // Submit form data
-//   submitFormData();
-// });
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     alert("Ready!");
-// }, false);
-
-// Play a random reference clip when the page loads
-// playRandomReferenceClip();
-// showErrorMsg("BIG ERROR", "#errorsAboveHere");
-
-
-
 
 
 // FIREBASE
@@ -372,7 +242,7 @@ function uploadAudioFile(referenceClipName, wavBlob) {
 
 function fetchAudioFile() {
 
-  var audio = new Audio();
+  var referenceAudioDuration;
 
   const referenceAudioFolderRef = refS(storage, "labels/");
 
@@ -448,23 +318,38 @@ function fetchAudioFile() {
   })
   .then((randomAudioName) => {
     audioname.textContent = randomAudioName;
+    const referenceAudioFolderRef = refS(storage, `labels/${randomAudioName}.m4a`);
+    getDownloadURL(referenceAudioFolderRef)
+    .then((url) => {
 
-    // SUBMIT AUDIO
-    const submitButton = document.querySelector(".sbutton");
-    submitButton.addEventListener("click", () => {
-      // Audio Validation
-      if (duration >= 5) {
-        // Assume webmBlob contains the Blob data of your WebM audio file
-        // var wavBlob = convertWebMToWAV(audioBlob);
-        uploadAudioFile(randomAudioName, audioBlob);
-        let chunks = [];
-        audioBlob = new Blob(chunks, { type : 'audio/webm' });
-        duration = 0;
-      } else if (duration == 0) {
-        alert("Please start recording before submitting your audio.")
-      } else {
-        alert("Your recorded audio is too short! Please re-try.");
-      }
+      var audio = new Audio(url)
+
+      audio.addEventListener("loadedmetadata", () => {
+        var referenceAudioDuration = audio.duration;
+        // SUBMIT AUDIO
+        const submitButton = document.querySelector(".sbutton");
+        submitButton.addEventListener("click", () => {
+          // Audio Validation
+          if (duration >= referenceAudioDuration*0.9 && duration <= referenceAudioDuration*1.1) {
+            // Assume webmBlob contains the Blob data of your WebM audio file
+            // var wavBlob = convertWebMToWAV(audioBlob);
+            uploadAudioFile(randomAudioName, audioBlob);
+            let chunks = [];
+            audioBlob = new Blob(chunks, { type : 'audio/webm' });
+            duration = 0;
+          } else if (duration == 0) {
+            alert("Please start recording before submitting your audio.")
+          } else if (duration > referenceAudioDuration*1.2) {
+            alert("Your recorded audio is too long! Please re-try.");
+          } else if (duration < referenceAudioDuration*0.8) {
+            alert("Your recorded audio is too short! Please re-try.");
+          }
+        });
+      });
+
+    })
+    .catch((error) => {
+      showErrorMsg(error.message, "#errorsAboveHere");
     });
 
   })

@@ -3,61 +3,47 @@
 <head>
   <meta charset="UTF-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beatboxing Mimicry Form</title>
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <title>Beatbox Aptitude Test</title>
+  <!-- <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> -->
   <link rel="icon" type="image/x-icon" href="graphics/beatbox-ml-webicon.png">
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="styles/index.css">
 </head>
 <body>
   
   <div>
     <span id="errorsAboveHere"></span>
-    <h1 class="title">Beatboxing Mimicry Form</h1>
-  <!-- Audio player for reference clip -->
-    <p>Listen to this beatboxing clip<br></p>
-    <div class="playerclass">
-      <!-- <iframe id="referenceClip" class="rClip" height="60vh" src=""></iframe> -->
-      <div class="audio-player-container">
-        <div class="audioinfo-container">
-          <div class="audioname-container">Audio name:</div>
-          <div class="audioname-container"><div class="audioname" id="audioname">Audio Name</div></div>
-        </div>
-        <!-- <div class="audio-player">
-            <i class="bx bx-play-circle"></i>
-            <div class="waveform-container" id="waveform-container"></div>
-        </div>
-        <div class="audio-duration">00:00</div> -->
-        <audio id="audio-source" controls>
-          <source src="" type="audio/wav">
-        </audio><br>
-      </div>
-    </div>
+    <h1 class="title">Beatbox Imitation Game</h1>
     
-    <!-- Button to start recording -->
-    <p>
-      When you're ready, record your best attempt at mimicking the beatbox!<br><br>
-      Try to make the length of your recording as close to the above reference clip as possible! The longest you can record for is 30 seconds.<br><br>
-      The timer below will start counting up when you press record.
-    </p>
+    <div class="audio-player-container">
+      <p>
+        Thank you for checking out our prototype!<br><br>
+        We are working on an AI beatbox coach tailored for those who are just starting to learn beatboxing.<br><br>
+        With this game, we aim to collect sound data to see how well the average person can imitate a professional's beatboxing.<br><br>
+        If you already have some beatboxing skill/experience and would like to learn more about what we're working on, please contact Aaron Lee on <br>
+        beatml.webcontact@gmail.com<br>
+        for something more exciting than this game!
+      </p>
+    </div><br>
+    <div class="audio-player-container">
+      <p>
+        In the next page, there is a short beatboxing clip recorded by a professional for you to mimic.<br><br>
+        Ideally, you should be in a quiet area with little to no background noise.<br><br>
+        As soon as you click Next Page, your browser will ask for microphone permissions.<br>
+        Please click "allow" to be able to record your attempt at imitating the beatboxing!<br><br>
+        After you record, there will be a preview of your recording that you can listen back to,<br>
+        and a Submit button to submit your recording.<br><br>
+        Only if you click Submit will we receive the exact sound data as in the preview.<br><br>
+        By clicking Next Page below, you consent to us collecting the sound data that you will have previewed before submitting,<br>
+        and you confirm that you have no prior beatboxing experience.
+      </p>
+    </div>
+
+    
+   
     <div class="playerclass">
-      <h1 id="timer">
-        00.0
-      </h1>
-      <button id="recordButton" class="rbutton" type="button">Record</button><br>
-      <canvas class="visualizer"></canvas>
-      
-      <div class="playerclass" id="afterRecordText" style="display: none;">
-        <p>
-          Listen to your imitation below.<br>
-          If you think you could do even better, feel free to re-record using the button above!<br>
-        </p>
-      </div>
-      
-      <!-- Audio player for user's recording -->
-      <audio id="userRecording" controls></audio>
       
       <!-- Button to submit form -->
-      <button id="submitButton" class="sbutton" type="button">Submit</button>
+      <button class="sbutton" onclick="window.location.href='main.html'">Next Page</button>
       
     </div>
     
@@ -72,7 +58,7 @@
   </template>
   
   <script src="https://apis.google.com/js/api.js"></script>
-  <script type="module" src="script.js"></script>
+  <!-- <script type="module" src="scripts/index.js"></script> -->
   
 </body>
 </html>

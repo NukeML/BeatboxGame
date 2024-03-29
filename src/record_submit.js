@@ -362,7 +362,7 @@ function fetchAudioFile() {
     const referenceAudioFolderRef = refS(storage, `labels/${randomAudioName}.m4a`);
     getDownloadURL(referenceAudioFolderRef)
     .then((url) => {
-
+      
       var audio = new Audio(url)
 
       audio.addEventListener("loadedmetadata", () => {
@@ -376,7 +376,7 @@ function fetchAudioFile() {
         const submitButton = document.querySelector(".sbutton");
         submitButton.addEventListener("click", () => {
           // Audio Validation
-          if (duration >= 0 && duration <= mostDuration) {
+          if (duration >= leastDuration && duration <= mostDuration) {
             
             // Upload file to Firebase
             uploadAudioFile(randomAudioName, audioBlob);
@@ -442,15 +442,17 @@ function sendMessage() {
 
   // Sending message
   Email.send({
-      SecureToken : "d5253f67-7350-40a1-a484-30e79ec7423e",
+      SecureToken : "606cfb4b-dd21-4b84-8104-4ebddecd2b51",
       To : 'beatml.webcontact@gmail.com',
       From : "beatml.webcontact@gmail.com",
       Subject : 'Data Collection Form - New Mailing Subscriber',
       Body : messageContent
   }).then(() => {
-    alert('Successfully signed up for newsletter!');
+    // alert('Successfully signed up for newsletter!');
     // Clearing form input field
     emailAddress.value = "";
+  }).catch((error) => {
+    alert(error.message);
   });
 }
 

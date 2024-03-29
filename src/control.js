@@ -42,7 +42,7 @@ navbackButton.addEventListener('click', () => {
 
     setTimeout(() => {
         audioRecordingPage.style.opacity = "1";
-        reload();
-        reload(true);
     }, 550);
+
+    window.location.reload();
 });

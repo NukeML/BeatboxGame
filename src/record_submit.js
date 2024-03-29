@@ -376,7 +376,7 @@ function fetchAudioFile() {
         const submitButton = document.querySelector(".sbutton");
         submitButton.addEventListener("click", () => {
           // Audio Validation
-          if (duration >= 0 && duration <= mostDuration) {
+          if (duration >= leastDuration && duration <= mostDuration) {
             
             // Upload file to Firebase
             uploadAudioFile(randomAudioName, audioBlob);

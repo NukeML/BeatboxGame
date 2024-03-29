@@ -1,3 +1,5 @@
+import {fetchAudioFile} from "./record_submit.js";
+
 const introductionPage = document.querySelector('.introduction-page');
 const audioRecordingPage = document.querySelector('.audio-recording-page');
 const postSubmitPage = document.querySelector('.post-submit-page');

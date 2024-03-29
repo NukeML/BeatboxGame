@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js';
-// import { getDatabase, ref as refD, set, child, get } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js';
+import { getDatabase, ref as refD, set, child, get } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js';
 import { getStorage, ref as refS, uploadBytes, getDownloadURL, list, listAll }  from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -239,7 +239,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
-// const database = getDatabase(firebaseApp);
+const database = getDatabase(firebaseApp);
 const storage = getStorage(firebaseApp);
 
 
@@ -437,23 +437,13 @@ function fetchAudioFile() {
 const emailAddress = document.getElementById('newsletterEmailAddress');
 const newsletterSubButton = document.getElementById('newsletter-subscribe');
 
-function sendMessage() {
-  const messageContent = `Email Address: ${emailAddress.value}`;
 
-  // Sending message
-  Email.send({
-      SecureToken : "606cfb4b-dd21-4b84-8104-4ebddecd2b51",
-      To : 'beatml.webcontact@gmail.com',
-      From : "beatml.webcontact@gmail.com",
-      Subject : 'Data Collection Form - New Mailing Subscriber',
-      Body : messageContent
-  }).then(() => {
-    alert('Successfully signed up for newsletter!');
-    // Clearing form input field
-    emailAddress.value = "";
-  }).catch((error) => {
-    alert(error.message);
-  });
+
+function sendEmailAddress() {
+  set(refD(database, `mailing_list/${Date.now()}`), emailAddress.value);
+  alert('Successfully signed up for newsletter!');
+  // Clearing form input field
+  emailAddress.value = "";
 }
 
 function checkInputs() {
@@ -493,8 +483,8 @@ newsletterSubButton.addEventListener("click", (e) => {
   checkInputs();
 
   if (!emailAddress.classList.contains("error")) {
-      // Send
-      sendMessage();
+      // Send Email Address to Database
+      sendEmailAddress();
   }
 
 });

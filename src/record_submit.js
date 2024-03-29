@@ -442,7 +442,7 @@ function sendMessage() {
 
   // Sending message
   Email.send({
-      SecureToken : "7770a1c1-1f5a-46fe-bf7a-610015a4a4cf",
+      SecureToken : "d5253f67-7350-40a1-a484-30e79ec7423e",
       To : 'beatml.webcontact@gmail.com',
       From : "beatml.webcontact@gmail.com",
       Subject : 'Data Collection Form - New Mailing Subscriber',

@@ -281,7 +281,7 @@ function uploadAudioFile(referenceClipName, wavBlob) {
 
 
 // SUBMIT BUTTON ONCLICK IS HERE
-function fetchAudioFile() {
+export function fetchAudioFile() {
 
   var referenceAudioDuration;
 

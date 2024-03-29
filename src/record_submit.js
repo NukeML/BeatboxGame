@@ -451,6 +451,8 @@ function sendMessage() {
     alert('Successfully signed up for newsletter!');
     // Clearing form input field
     emailAddress.value = "";
+  }).catch((error) => {
+    alert(error.message);
   });
 }
 

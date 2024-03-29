@@ -376,7 +376,7 @@ function fetchAudioFile() {
         const submitButton = document.querySelector(".sbutton");
         submitButton.addEventListener("click", () => {
           // Audio Validation
-          if (duration >= leastDuration && duration <= mostDuration) {
+          if (duration >= 0 && duration <= mostDuration) {
             
             // Upload file to Firebase
             uploadAudioFile(randomAudioName, audioBlob);
@@ -442,17 +442,16 @@ function sendMessage() {
 
   // Sending message
   Email.send({
-      SecureToken : "C973D7AD-F097-4B95-91F4-40ABC5567812",
-      Host : "smtp.elasticemail.com",
-      Username : "ytl34@cantab.ac.uk",
-      Password : "BBE631D8B8B78544F8C16FC4CE3F7E1D8790",
+      SecureToken : "7770a1c1-1f5a-46fe-bf7a-610015a4a4cf",
       To : 'beatml.webcontact@gmail.com',
       From : "beatml.webcontact@gmail.com",
       Subject : 'Data Collection Form - New Mailing Subscriber',
       Body : messageContent
-  }).then(
-      alert('Successfully signed up for newsletter!')
-  );
+  }).then(() => {
+    alert('Successfully signed up for newsletter!');
+    // Clearing form input field
+    emailAddress.value = "";
+  });
 }
 
 function checkInputs() {
@@ -494,8 +493,6 @@ newsletterSubButton.addEventListener("click", (e) => {
   if (!emailAddress.classList.contains("error")) {
       // Send
       sendMessage();
-      // Clearing form input field
-      emailAddress.value != "";
   }
 
 });

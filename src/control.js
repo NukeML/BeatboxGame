@@ -1,4 +1,4 @@
-import { fetchAudioFile } from "./record_submit.js";
+// import { fetchAudioFile } from "./record_submit.js";
 
 const introductionPage = document.querySelector('.introduction-page');
 const audioRecordingPage = document.querySelector('.audio-recording-page');
@@ -29,7 +29,7 @@ navButton.addEventListener('click', () => {
 navbackButton.addEventListener('click', () => {
     postSubmitPage.style.right = "200%";
     postSubmitPage.style.opacity = "0";
-    fetchAudioFile();
+    // fetchAudioFile();
     
     setTimeout(() => {
         postSubmitPage.style.display = "none";
@@ -38,9 +38,11 @@ navbackButton.addEventListener('click', () => {
 
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-    pageHeader.innerHTML = "Beatbox Imitation Game";
+    pageHeader.textContent = "Beatbox Imitation Game";
 
     setTimeout(() => {
         audioRecordingPage.style.opacity = "1";
+        reload();
+        reload(true);
     }, 550);
 });

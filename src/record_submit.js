@@ -448,7 +448,7 @@ function sendMessage() {
       Subject : 'Data Collection Form - New Mailing Subscriber',
       Body : messageContent
   }).then(() => {
-    // alert('Successfully signed up for newsletter!');
+    alert('Successfully signed up for newsletter!');
     // Clearing form input field
     emailAddress.value = "";
   }).catch((error) => {

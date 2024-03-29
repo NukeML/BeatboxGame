@@ -1,4 +1,4 @@
-import {fetchAudioFile} from "./record_submit.js";
+import { fetchAudioFile } from "./record_submit.js";
 
 const introductionPage = document.querySelector('.introduction-page');
 const audioRecordingPage = document.querySelector('.audio-recording-page');
@@ -29,6 +29,7 @@ navButton.addEventListener('click', () => {
 navbackButton.addEventListener('click', () => {
     postSubmitPage.style.right = "200%";
     postSubmitPage.style.opacity = "0";
+    fetchAudioFile();
     
     setTimeout(() => {
         postSubmitPage.style.display = "none";

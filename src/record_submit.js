@@ -28,8 +28,60 @@ const audioRecordingPage = document.querySelector('.audio-recording-page');
 const postSubmitPage = document.querySelector('.post-submit-page');
 const pageHeader = document.getElementById('header');
 
+const playbuttons = document.querySelectorAll(".audio-player i");
+const audioDurations = document.querySelectorAll(".audio-duration");
+
 var audioCtx;
 const canvasCtx = visualizer.getContext("2d");
+
+
+
+
+// WAVESURFER AUDIO VISUALISER SET-UP
+const wavesurfer_user = WaveSurfer.create({
+  container: '.waveform-user-container',
+  waveColor: '#008282',
+  progressColor: '#006666',
+  responsive: true,
+  height: 85,
+  cursorWidth: 1.5,
+  cursorColor: '#545454',
+  sampleRate: 48000,
+  plugins: [
+      Hover.create({
+          lineColor: '#fa8072',
+          lineWidth: 1.5,
+          labelBackground: '#777',
+          labelColor: '#fff',
+          labelSize: '12px',
+      }),
+  ],
+});
+// Audio controls
+playbuttons[1].addEventListener('click', () => {
+  if (playbuttons[1].className == "bx bx-play-circle") {
+    wavesurfer_user.playPause();
+      playbuttons[1].className = "bx bx-pause-circle";
+  } else {
+    wavesurfer_user.playPause();
+    playbuttons[1].className = "bx bx-play-circle";
+  }
+});
+// Show current time
+wavesurfer_user.on('ready', function () {
+  audioDurations[1].textContent = formatTime(wavesurfer_user.getDuration());
+});
+// Show current time
+wavesurfer_user.on('audioprocess', function () {
+  audioDurations[1].textContent = formatTime(wavesurfer_user.getCurrentTime());
+});
+// When audio ends
+wavesurfer_user.on('finish', () => {
+  playbuttons[1].className = "bx bx-play-circle";
+});
+
+
+
 
 if (!(navigator.mediaDevices.getUserMedia)) {
   console.log("MediaDevices.getUserMedia() not supported on your browser!");
@@ -51,11 +103,13 @@ if (!(navigator.mediaDevices.getUserMedia)) {
 
     mediaRecorder.onstop = function () {
       console.log("Data stream capture finished.");
-      const userRecording = document.querySelector("#userRecording");
+      // const userRecording = document.querySelector("#userRecording");
+
       audioBlob = new Blob(chunks, { type : 'audio/webm' });
       chunks = [];
       const userRecordingUrl = window.URL.createObjectURL(audioBlob);
-      userRecording.src = userRecordingUrl;
+
+      wavesurfer_user.load(userRecordingUrl);
       console.log("Preview loaded.");
       record.textContent = "Re-record";
     };
@@ -163,6 +217,8 @@ function recordUserAttempt() {
 }
 
 function startAttempt() {
+  wavesurfer_user.pause();
+  playbuttons[1].className = "bx bx-play-circle";
   mediaRecorder.start();
   console.log(mediaRecorder.state);
   console.log("Recorder started.");
@@ -250,9 +306,6 @@ const audioname = document.getElementById("audioname");
 
 const waveformContainer = document.querySelector(".waveform-container");
 
-const playbuttons = document.querySelector(".audio-player i");
-const audioDurations = document.querySelector(".audio-duration");
-
 var formatTime = function (time) {
   return [
       ('00' + Math.floor((time % 3600) / 60)).slice(-2), // minutes
@@ -308,26 +361,26 @@ function fetchAudioFile() {
     ],
   });
   // Audio controls
-  playbuttons.addEventListener('click', () => {
-    if (playbuttons.className == "bx bx-play-circle") {
+  playbuttons[0].addEventListener('click', () => {
+    if (playbuttons[0].className == "bx bx-play-circle") {
       wavesurfer.playPause();
-        playbuttons.className = "bx bx-pause-circle";
+        playbuttons[0].className = "bx bx-pause-circle";
     } else {
       wavesurfer.playPause();
-      playbuttons.className = "bx bx-play-circle";
+      playbuttons[0].className = "bx bx-play-circle";
     }
   });
   // Show current time
   wavesurfer.on('ready', function () {
-    audioDurations.textContent = formatTime(wavesurfer.getDuration());
+    audioDurations[0].textContent = formatTime(wavesurfer.getDuration());
   });
   // Show current time
   wavesurfer.on('audioprocess', function () {
-    audioDurations.textContent = formatTime(wavesurfer.getCurrentTime());
+    audioDurations[0].textContent = formatTime(wavesurfer.getCurrentTime());
   });
   // When audio ends
   wavesurfer.on('finish', () => {
-    playbuttons.className = "bx bx-play-circle";
+    playbuttons[0].className = "bx bx-play-circle";
   });
 
   return listAll(referenceAudioFolderRef).then((result) => {

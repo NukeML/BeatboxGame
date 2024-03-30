@@ -102,7 +102,13 @@
         </div>
         <!-- Audio player for user's recording -->
         <div class="audio-player-container">
-          <audio id="userRecording" controls></audio>
+          <!-- <audio id="userRecording" controls></audio> -->
+          <div class="audio-player">
+            <i class="bx bx-play-circle"></i>
+            <div class="waveform-user-container" id="waveform-container"></div>
+          </div>
+          <div class="audio-duration">00:00</div>     
+          <hr>   
           <!-- Button to submit form -->
           <div class="button-container">
             <button id="submitButton" class="sbutton" type="button">Submit</button>

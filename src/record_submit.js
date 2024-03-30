@@ -246,7 +246,7 @@ const storage = getStorage(firebaseApp);
 
 // LOAD RANDOM AUDIO WHEN WEBSITE IS LOADED
 const audioname = document.getElementById("audioname");
-const audioSource = document.getElementById("audio-source");
+// const audioSource = document.getElementById("audio-source");
 
 const waveformContainer = document.querySelector(".waveform-container");
 

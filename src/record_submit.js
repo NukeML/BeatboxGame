@@ -246,19 +246,19 @@ const storage = getStorage(firebaseApp);
 
 // LOAD RANDOM AUDIO WHEN WEBSITE IS LOADED
 const audioname = document.getElementById("audioname");
-const audioSource = document.getElementById("audio-source");
+// const audioSource = document.getElementById("audio-source");
 
-// const waveformContainer = document.querySelector(".waveform-container");
+const waveformContainer = document.querySelector(".waveform-container");
 
-// const playbuttons = document.querySelector(".audio-player i");
-// const audioDurations = document.querySelector(".audio-duration");
+const playbuttons = document.querySelector(".audio-player i");
+const audioDurations = document.querySelector(".audio-duration");
 
-// var formatTime = function (time) {
-//   return [
-//       ('00' + Math.floor((time % 3600) / 60)).slice(-2), // minutes
-//       ('00' + Math.floor(time % 60)).slice(-2) // seconds
-//   ].join(':');
-// };
+var formatTime = function (time) {
+  return [
+      ('00' + Math.floor((time % 3600) / 60)).slice(-2), // minutes
+      ('00' + Math.floor(time % 60)).slice(-2) // seconds
+  ].join(':');
+};
 
 
 
@@ -287,6 +287,50 @@ function fetchAudioFile() {
 
   const referenceAudioFolderRef = refS(storage, "labels/");
 
+  // WAVESURFER WAVEFORM VISUALISATION SETUP
+  const wavesurfer = WaveSurfer.create({
+    container: waveformContainer,
+    waveColor: '#ad961f',
+    progressColor: '#877416',
+    responsive: true,
+    height: 85,
+    cursorWidth: 1.5,
+    cursorColor: '#545454',
+    sampleRate: 48000,
+    // url: 'example_audio/2-example-explodemic-test.wav',
+    plugins: [
+      Hover.create({
+        lineColor: '#fa8072',
+        lineWidth: 1.5,
+        labelBackground: '#777',
+        labelColor: '#fff',
+        labelSize: '12px',
+      }),
+    ],
+  });
+  // Audio controls
+  playbuttons.addEventListener('click', () => {
+    if (playbuttons.className == "bx bx-play-circle") {
+      wavesurfer.playPause();
+        playbuttons.className = "bx bx-pause-circle";
+    } else {
+      wavesurfer.playPause();
+      playbuttons.className = "bx bx-play-circle";
+    }
+  });
+  // Show current time
+  wavesurfer.on('ready', function () {
+    audioDurations.textContent = formatTime(wavesurfer.getDuration());
+  });
+  // Show current time
+  wavesurfer.on('audioprocess', function () {
+    audioDurations.textContent = formatTime(wavesurfer.getCurrentTime());
+  });
+  // When audio ends
+  wavesurfer.on('finish', () => {
+    playbuttons.className = "bx bx-play-circle";
+  });
+
   return listAll(referenceAudioFolderRef).then((result) => {
 
     // Storing list of audio files fetched directly from Firebase storage
@@ -303,51 +347,11 @@ function fetchAudioFile() {
     // Get audio file URL and load selected audio file
     getDownloadURL(randomAudioRef)
     .then((url) => {
-      // const wavesurfer = WaveSurfer.create({
-      //   container: waveformContainer,
-      //   waveColor: '#ad961f',
-      //   progressColor: '#877416',
-      //   responsive: true,
-      //   height: 85,
-      //   cursorWidth: 1.5,
-      //   cursorColor: '#545454',
-      //   sampleRate: 48000,
-      //   url: url,
-      //   plugins: [
-      //       Hover.create({
-      //           lineColor: '#fa8072',
-      //           lineWidth: 1.5,
-      //           labelBackground: '#777',
-      //           labelColor: '#fff',
-      //           labelSize: '12px',
-      //       }),
-      //   ],
-      // });
-      // // Audio controls
-      // playbuttons.addEventListener('click', () => {
-      //   if (playbuttons.className == "bx bx-play-circle") {
-      //     wavesurfer.playPause();
-      //       playbuttons.className = "bx bx-pause-circle";
-      //   } else {
-      //     wavesurfer.playPause();
-      //     playbuttons.className = "bx bx-play-circle";
-      //   }
-      // });
-      // // Show current time
-      // wavesurfer.on('ready', function () {
-      //   audioDurations.textContent = formatTime(wavesurfer.getDuration());
-      // });
-      // // Show current time
-      // wavesurfer.on('audioprocess', function () {
-      //   audioDurations.textContent = formatTime(wavesurfer.getCurrentTime());
-      // });
-      // // When audio ends
-      // wavesurfer.on('finish', () => {
-      //   playbuttons.className = "bx bx-play-circle";
-      // });
+      // Method 1: Use wavesurfer to display waveforms
+      wavesurfer.load(`Labels/${randomAudioName}`);
 
       // Method 2: Using default audio plugin
-      audioSource.src = url;
+      // audioSource.src = url;
     })
     .catch((error) => {
       showErrorMsg(error.message, "#errorsAboveHere");

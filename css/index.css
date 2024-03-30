@@ -207,7 +207,7 @@ body {
 .introduction-page {
     position: relative;
     left: 0;
-    display: flex; /* none when debug */
+    display: flex; /* set to none when debug, originally set to flex */
     flex-direction: column;
     justify-content: center;
     margin-top: 40px;
@@ -220,8 +220,8 @@ body {
 
 /* Audio Recording Page */
 .audio-recording-page {
-    display: none;
-    opacity: 0;
+    display: none; /* set to block when debug, originally set to none */
+    opacity: 1;
     transition: opacity 0.55s ease-in-out;
 }
 
@@ -332,25 +332,6 @@ body {
     justify-content: space-around;
     align-items: center;
 }
-
-/* .audio-control-container i {
-    font-size: 40px;
-    margin-left: 30px;
-    margin-right: 25px;
-    padding: 6px;
-    color: beige;
-    background: rgba(128, 128, 128, 0.4);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-}
-
-.audio-control-container i:hover {
-    background: rgba(128, 128, 128, 0.55);
-    rotate: 180deg;
-    transition: all 0.2s ease-in-out;
-} */
 
 #audio-source {
     width: 100%;

@@ -23,6 +23,7 @@ let duration = 0;
 const leastDurationText = document.querySelector("#leastDuration");
 const mostDurationText = document.querySelector("#mostDuration");
 
+
 const audioRecordingPage = document.querySelector('.audio-recording-page');
 const postSubmitPage = document.querySelector('.post-submit-page');
 const pageHeader = document.getElementById('header');
@@ -259,15 +260,14 @@ const audioSource = document.getElementById("audio-source");
 //   ].join(':');
 // };
 
+
+
+
 window.addEventListener("load", () => {
   fetchAudioFile();
 });
 
-// Reload Audio Button
-// const audioRefreshButton = document.querySelector('.target-refresh');
-// audioRefreshButton.addEventListener("click", () => {
-//   fetchAudioFile();
-// });
+
 
 function uploadAudioFile(referenceClipName, wavBlob) {
 
@@ -281,7 +281,7 @@ function uploadAudioFile(referenceClipName, wavBlob) {
 
 
 // SUBMIT BUTTON ONCLICK IS HERE
-export function fetchAudioFile() {
+function fetchAudioFile() {
 
   var referenceAudioDuration;
 
@@ -299,7 +299,6 @@ export function fetchAudioFile() {
     const randomIndex = Math.floor(Math.random() * referenceAudioList.length);
     const randomAudioName = referenceAudioList[randomIndex];
     const randomAudioRef = refS(storage, "labels/" + randomAudioName);
-    var referenceAudioDruation;
 
     // Get audio file URL and load selected audio file
     getDownloadURL(randomAudioRef)
@@ -393,8 +392,8 @@ export function fetchAudioFile() {
             afterRecordingContainer.style.opacity = "0";
             
             setTimeout(() => {
-                audioRecordingPage.style.display = "none";
-                postSubmitPage.style.display = "block";
+              audioRecordingPage.style.display = "none";
+              postSubmitPage.style.display = "block";
             }, 350);
             
             document.body.scrollTop = 0;
@@ -402,7 +401,7 @@ export function fetchAudioFile() {
             pageHeader.innerHTML = "Submission successful!";
             
             setTimeout(() => {
-                postSubmitPage.style.opacity = "1";
+              postSubmitPage.style.opacity = "1";
             }, 550);
 
           } else {

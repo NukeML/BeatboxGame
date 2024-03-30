@@ -75,7 +75,7 @@ body {
     background-color: #ff9100;
     color: white;
     border-radius: 10px;
-    font-family: 'BrandG_med';
+    font-family: 'BrandG_reg';
     font-size: 1.5em;
     margin-inline: auto;
     margin-top: 1.2em;
@@ -119,14 +119,14 @@ body {
 }
 
 .content-section-header h1 {
-    color: aliceblue;
-    font-family: 'BrandG_blk';
+    color: beige;
+    font-family: 'BrandG_thin';
     font-size: 55px;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
 .content-section-header i {
-    color: aliceblue;
+    color: beige;
     font-size: 45px;
     padding-right: 20px;
 }
@@ -145,9 +145,9 @@ body {
 }
 
 .paragraph-header {
-    color: aliceblue;
+    color: beige;
     text-align: center;
-    font-family: 'BrandG_bld';
+    font-family: 'BrandG_light';
     font-size: 45px;
     font-weight: 300;
     margin-bottom: 35px;
@@ -155,8 +155,8 @@ body {
 }
 
 .paragraph-content {
-    color: aliceblue;
-    font-family: 'BrandG_reg';
+    color: beige;
+    font-family: 'BrandG_thin';
     font-size: 25px;
     font-weight: 100;
     text-align: center;
@@ -180,7 +180,7 @@ body {
 }
 
 .navButton {
-    font-family: 'BrandG_blk';
+    font-family: 'BrandG_reg';
     font-size: 20px;
     font-weight: bold;
     color: black;
@@ -238,8 +238,8 @@ body {
 }
 
 .instruction-content {
-    color: aliceblue;
-    font-family: 'BrandG_reg';
+    color: beige;
+    font-family: 'BrandG_thin';
     font-size: 25px;
     font-weight: 100;
     width: 650px;
@@ -313,14 +313,14 @@ body {
 .audio-duration {
     text-align: end;
     color: rgb(30, 30, 30);
-    font-family: 'BrandG_bld';
+    font-family: 'BrandG_reg';
     font-size: 16px;
     font-weight: 300;
     padding: 1px 2px 2px 0px;
 }
 
 #timer {
-    font-family: 'BrandG_bld';
+    font-family: 'BrandG_reg';
     font-size: 50px;
     font-weight: 300;
     margin-top: 20px;
@@ -338,7 +338,7 @@ body {
     margin-left: 30px;
     margin-right: 25px;
     padding: 6px;
-    color: aliceblue;
+    color: beige;
     background: rgba(128, 128, 128, 0.4);
     border: none;
     border-radius: 50%;
@@ -384,7 +384,7 @@ body {
     border: 0 solid;
     box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.1);
     font-size: 20px;
-    font-family: 'BrandG_blk';
+    font-family: 'BrandG_bld';
     font-weight: bold;
     background-color: #ff0000;
     outline: 1.2px solid;
@@ -409,7 +409,7 @@ body {
 
 .sbutton {
     margin: 40px;
-    font-family: 'BrandG_bld';
+    font-family: 'BrandG_reg';
     font-size: 20px;
     font-weight: bold;
     color: black;
@@ -470,8 +470,8 @@ body {
 
 .mailing-form-header h2 {
     text-align: center;
-    color: aliceblue;
-    font-family: 'BrandG_reg';
+    color: beige;
+    font-family: 'BrandG_thin';
     font-size: 20px;
 }
 
@@ -487,10 +487,10 @@ body {
 
 .newsletter-input-field {
     text-align: center;
-    font-family: 'BrandG_med';
+    font-family: 'BrandG_thin';
     font-size: 18px;
     background: rgba(255, 255, 255, 0.15);
-    color: aliceblue;
+    color: beige;
     height: 50px;
     width: 100%;
     border: none;
@@ -510,7 +510,7 @@ body {
 
 .error-text {
     font-size: 14px;
-    font-family: 'BrandG_med';
+    font-family: 'BrandG_light';
     color: rgb(255, 89, 70);
     margin-bottom: 4px;
     display: none;
@@ -522,7 +522,7 @@ body {
 
 .subscribe {
     text-align: center;
-    font-family: 'BrandG_bld';
+    font-family: 'BrandG_med';
     font-size: 18px;
     font-weight: 800;
     color: black;
@@ -542,7 +542,7 @@ body {
 }
 
 .navbackButton {
-    font-family: 'BrandG_bld';
+    font-family: 'BrandG_reg';
     font-size: 20px;
     font-weight: bold;
     color: black;

@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.10",
+    "firebase": "^10.9.0"
+  }
+}

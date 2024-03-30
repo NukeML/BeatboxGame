@@ -1,0 +1,7 @@
+[
+    {
+      "origin": ["https://nukeml.github.io/HarmonyBox-ML/"],
+      "method": ["GET"],
+      "maxAgeSeconds": 3600
+    }
+]

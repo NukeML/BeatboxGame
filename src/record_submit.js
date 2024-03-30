@@ -246,7 +246,7 @@ const storage = getStorage(firebaseApp);
 
 // LOAD RANDOM AUDIO WHEN WEBSITE IS LOADED
 const audioname = document.getElementById("audioname");
-// const audioSource = document.getElementById("audio-source");
+const audioSource = document.getElementById("audio-source");
 
 const waveformContainer = document.querySelector(".waveform-container");
 
@@ -287,7 +287,7 @@ function fetchAudioFile() {
 
   const referenceAudioFolderRef = refS(storage, "labels/");
 
-  // WAVESURFER WAVEFORM VISUALISATION SETUP
+  // WAVESURFER AUDIO VISUALISER SET-UP
   const wavesurfer = WaveSurfer.create({
     container: waveformContainer,
     waveColor: '#ad961f',
@@ -297,15 +297,14 @@ function fetchAudioFile() {
     cursorWidth: 1.5,
     cursorColor: '#545454',
     sampleRate: 48000,
-    // url: 'example_audio/2-example-explodemic-test.wav',
     plugins: [
-      Hover.create({
-        lineColor: '#fa8072',
-        lineWidth: 1.5,
-        labelBackground: '#777',
-        labelColor: '#fff',
-        labelSize: '12px',
-      }),
+        Hover.create({
+            lineColor: '#fa8072',
+            lineWidth: 1.5,
+            labelBackground: '#777',
+            labelColor: '#fff',
+            labelSize: '12px',
+        }),
     ],
   });
   // Audio controls
@@ -347,9 +346,8 @@ function fetchAudioFile() {
     // Get audio file URL and load selected audio file
     getDownloadURL(randomAudioRef)
     .then((url) => {
-      // Method 1: Use wavesurfer to display waveforms
-      wavesurfer.load(`Labels/${randomAudioName}`);
-
+      // Method 1: Wavesurfer visualisation
+      wavesurfer.load(url);
       // Method 2: Using default audio plugin
       // audioSource.src = url;
     })

@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
     font-family: 'BrandG_bld_it';
     src: url('Fonts/brandon-grotesque/Brandon_bld_it.woff2') format('woff2');
 }
@@ -56,13 +56,109 @@
 @font-face {
     font-family: 'BrandG_thin';
     src: url('Fonts/brandon-grotesque/Brandon_thin.woff2') format('woff2');
+} */
+
+
+/* REDEFINE */
+
+@font-face {
+    font-family: 'BrandG';
+    src: url('Fonts/brandon-grotesque/Brandon_bld_it.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BrandG';
+    src: url('Fonts/brandon-grotesque/Brandon_bld.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BrandG';
+    src: url('Fonts/brandon-grotesque/Brandon_blk_it.woff2') format('woff2');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BrandG';
+    src: url('Fonts/brandon-grotesque/Brandon_blk.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BrandG';
+    src: url('Fonts/brandon-grotesque/Brandon_light_it.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BrandG';
+    src: url('Fonts/brandon-grotesque/Brandon_light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BrandG';
+    src: url('Fonts/brandon-grotesque/Brandon_med_it.woff2') format('woff2');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BrandG';
+    src: url('Fonts/brandon-grotesque/Brandon_med.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BrandG';
+    src: url('Fonts/brandon-grotesque/Brandon_reg_it.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BrandG';
+    src: url('Fonts/brandon-grotesque/Brandon_reg.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BrandG';
+    src: url('Fonts/brandon-grotesque/Brandon_thin_it.woff2') format('woff2');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'BrandG';
+    src: url('Fonts/brandon-grotesque/Brandon_thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
 }
 
 
-
-
 /* styles.css */
+
+:root {
+    font-size: 1.7vmin;
+    font-family: 'BrandG';
+    font-weight: 500;
+}
+
+
 body {
+    font-size: 1rem;
+    color: aliceblue;
+    /* -webkit-text-stroke: 0.02em navy; */
     scroll-behavior: smooth;
     background: url('graphics/Sound-Wave-3.jpg');
     background-color: black;
@@ -72,31 +168,33 @@ body {
 }
 
 .error-msg {
-    padding: 6px;
-    width: 70%;
+    font-size: 1rem;
+    padding-inline-start: 1.3em;
+    width: 90vw;
     background-color: #ff9100;
     color: white;
-    border-radius: 10px;
-    font-family: 'BrandG_reg';
-    font-size: 1.5em;
+    border-radius: 1em;
     margin-inline: auto;
-    margin-top: 1.2em;
-    box-shadow: 5px 0px 20px #f1b570;
+    margin-top: 0em;
+    box-shadow: 0px 0px 10px #f1b570;
     opacity: 1;
     transition: opacity 0.6s;
-    transition: 0.3s;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
+.error-msg-innertext {
+    font-size: 2rem;
+}
+
 .closebtn {
-    margin-right: 0.6em;
+    font-size: 3rem;
+    margin-right: 0.4em;
     color: white;
     font-weight: bold;
     float: right;
-    font-size: 40px;
-    line-height: 20px;
+    line-height: 0em;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
 }
@@ -116,22 +214,27 @@ body {
 /* Sections, Paragraphs & Content */
 
 .info-container {
+    font-size: 1rem;
     position: fixed;
-    top: 2vw;
-    right: 5vw;
+    top: 1em;
+    right: 1.7em;
     display: flex;
     justify-content: center;
-    font-family: 'BrandG_light';
-    font-size: 1.5vw;
-    color: aliceblue;
+    align-items: center;
+    color: rgba(240, 248, 255, 0.7);
     z-index: 999;
 }
 
+.info-text {
+    font-size: 1.7rem;
+    /* margin-top: 0.23em; */
+}
+
 .infoButton i {
-    margin-right: 10px;
-    font-family: 'BrandG_light';
-    font-size: 2vw;
-    color: aliceblue;
+    font-size: 3rem;
+    margin-left: 0.2em;
+    margin-top: 0.21em;
+    color: rgba(240, 248, 255, 0.85);
     z-index: 999;
 }
 
@@ -140,22 +243,21 @@ body {
 }
 
 .more-info-content {
+    font-size: 1.7rem;
     display: none;
     position: fixed;
-    top: 60px;
-    right: 60px;
+    top: 3em;
+    right: 1.5em;
     z-index: 99;
     transition: all 0.35s ease-in-out;
     color: aliceblue;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
-    font-family: 'BrandG_light';
-    font-size: 1.2vw;
     font-weight: 100;
     text-align: center;
-    width: 70%;
-    background: rgba(80, 80, 80, 0.75);
+    width: 80vw;
+    background: rgba(80, 80, 80, 0.95);
     box-shadow: 0 0 25px rgba(241, 255, 248, 0.3);
-    padding: 30px 45px 30px 45px;
+    padding: 1em 1em 1em 1em;
     border: none;
     border-radius: 30px;
 }
@@ -166,52 +268,65 @@ body {
 }
 
 .content-section-header {
-    width: 100%;
+    font-size: 1rem;
+    width: 90vw;
+    margin: auto;
     text-align: center;
-    padding: 20px;
+    padding-top: 1em;
 }
 
 .content-section-header h1 {
     color: aliceblue;
-    font-family: 'BrandG_light';
-    font-size: 4vw;
+    font-size: 4rem;
+    font-weight: 400;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
-.content-section-header i {
+/* .content-section-header i {
     color: aliceblue;
-    font-size: 4vw;
+    font-size: 4em;
     padding-right: 20px;
-}
-
-.instruction-header {
-    color: aliceblue;
-    font-family: 'BrandG_light';
-    font-size: 3.6vw;
-    font-weight: 100;
-    margin-top: 40px;
-    margin-bottom: 40px;
-}
+} */
 
 .instruction-container {
     display: flex;
     justify-content: center;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .instruction-content {
+    font-size: 1rem;
     color: aliceblue;
-    font-family: 'BrandG_light';
-    font-size: 2.4vw;
-    font-weight: 100;
-    width: 80%;
-    margin: 40px;
+    font-weight: 300;
+    width: 85vw;
+    margin: 0.5em 0em 0.5em 0em;
     text-align: center;
     background: rgba(162, 162, 162, 0.32);
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
-    padding: 30px 45px 30px 45px;
+    padding: 2em 2em 2em 2em;
     border: none;
-    border-radius: 30px;
+    border-radius: 2em;
+}
+
+.instruction-content p {
+    font-size: 1.6rem;
+    margin: 0.4em 0em 0.4em 0em;
+}
+
+.instruction-header {
+    font-size: 2rem;
+    color: aliceblue;
+    font-weight: 400;
+    margin-top: 0.2em;
+    margin-bottom: 0.8em;
+}
+
+.permission-header {
+    font-size: 2rem;
+    color: aliceblue;
+    font-weight: 300;
+    margin-top: 0em;
+    margin-bottom: 0em;
 }
 
 .social-media-link {
@@ -221,7 +336,6 @@ body {
     margin-top: 20px;
     margin-bottom: 90px;
     color: aliceblue;
-    font-family: 'BrandG_med';
     box-shadow: 0 0 25px rgba(255, 239, 92, 0.45);
     transition: all 0.3s ease-in-out;
 }
@@ -233,7 +347,6 @@ body {
 
 .social-media-link i {
     color: aliceblue;
-    font-family: 'BrandG_light';
     font-size: 8vw;
     margin-right: 15px;
 }
@@ -243,19 +356,7 @@ body {
     cursor: pointer;
 }
 
-/* .paragraph-content {
-    color: aliceblue;
-    font-family: 'BrandG_light';
-    font-size: 1.2vw;
-    font-weight: 100;
-    text-align: center;
-    width: 80%;
-    margin: 40px;
-    background: rgba(80, 80, 80, 0.65);
-    padding: 30px 45px 30px 45px;
-    border: none;
-    border-radius: 30px;
-} */
+
 
 
 
@@ -268,7 +369,6 @@ body {
 }
 
 .navButton {
-    font-family: 'BrandG_reg';
     font-size: 20px;
     font-weight: bold;
     color: black;
@@ -298,8 +398,8 @@ body {
     display: flex; /* set to none when debug, otherwise set to flex */
     flex-direction: column;
     justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 60px;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
     transition: all 0.55s ease-in-out;
 }
 
@@ -349,6 +449,7 @@ body {
     justify-content: center;
     margin: auto;
     width: 80%;
+    /* height: 10%; */
     background: rgba(255, 255, 255, 0.78);
     padding: 1%;
     border: none;
@@ -360,14 +461,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 18px;
-    margin-bottom: 18px;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
     text-shadow: none;
+    /* height: 10%; */
 }
 
 .audio-player i {
-    font-size: 50px;
-    padding: 10px;
+    font-size: 3rem;
+    padding: 1rem;
     color: rgba(57, 57, 57, 0.7);
 }
 
@@ -381,17 +483,15 @@ body {
 }
 
 .audio-duration {
+    font-size: 1.4rem;
     text-align: end;
     color: rgb(30, 30, 30);
-    font-family: 'BrandG_reg';
-    font-size: 16px;
     font-weight: 300;
-    padding: 1px 2px 2px 0px;
+    padding: 1em 1em 1em 1em;
     text-shadow: none;
 }
 
 #timer {
-    font-family: 'BrandG_reg';
     color: aliceblue;
     text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
     font-size: 2.6vw;
@@ -436,7 +536,6 @@ hr {
     border: 0 solid;
     box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.1);
     font-size: 1.4vw;
-    font-family: 'BrandG_bld';
     font-weight: bold;
     background-color: #ff0000;
     outline: 1.2px solid;
@@ -463,7 +562,6 @@ hr {
     padding: 0.8em;
     padding-inline: 1.6em;
     margin: 20px;
-    font-family: 'BrandG_reg';
     font-size: 1.4vw;
     font-weight: bold;
     color: black;
@@ -523,7 +621,6 @@ hr {
 .mailing-header {
     text-align: center;
     color: aliceblue;
-    font-family: 'BrandG_light';
     font-size: 2vw;
 }
 
@@ -534,7 +631,6 @@ hr {
 .mailing-form-header h2 {
     text-align: center;
     color: aliceblue;
-    font-family: 'BrandG_light';
     font-size: 1.5vw;
 }
 
@@ -550,7 +646,6 @@ hr {
 
 .newsletter-input-field {
     text-align: center;
-    font-family: 'BrandG_light';
     font-size: 18px;
     background: rgba(255, 255, 255, 0.15);
     color: aliceblue;
@@ -582,7 +677,6 @@ hr {
 
 .error-text {
     font-size: 14px;
-    font-family: 'BrandG_light';
     color: rgb(255, 89, 70);
     margin-bottom: 4px;
     display: none;
@@ -594,7 +688,6 @@ hr {
 
 .subscribe {
     text-align: center;
-    font-family: 'BrandG_med';
     font-size: 18px;
     font-weight: 800;
     color: black;
@@ -614,7 +707,6 @@ hr {
 }
 
 .navbackButton {
-    font-family: 'BrandG_reg';
     font-size: 20px;
     font-weight: bold;
     color: black;
@@ -634,7 +726,7 @@ hr {
     box-shadow: inset 10em 0 0 0 rgba(255, 255, 255, 0.8);
 }
 
-@media only screen and (max-width: 950px) {
+/* @media only screen and (max-width: 950px) {
     .infoButton i {
         font-size: 3vw;
     }
@@ -662,4 +754,4 @@ hr {
     .paragraph-content {
         font-size: 3.5vw;
     }
-}
+} */

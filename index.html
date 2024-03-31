@@ -30,10 +30,28 @@
   <div class="introduction-page">
     <!-- Instructions -->
     <div class="instruction-container">
-      <p class="instruction-content">
-        1. Please click <strong>"allow"</strong> to enable your microphone in the browser.<br><br>
-        2. SHOWCASE VIDEO - TBC
-      </p>
+      <div class="instruction-content">
+        <div class="instruction-header">Instructions:</div>
+        * Please click <strong>"allow"</strong> to enable your microphone in the browser.
+        <div class="instruction-header">An Example:</div>
+        1. Play the reference beatbox clip:<br>
+        <div class="audio-player-container">
+          <div class="audio-player">
+            <i class="bx bx-play-circle"></i>
+            <div class="intro-waveform-container" id="waveform-container"></div>
+          </div>
+          <div class="audio-duration">00:00</div>
+        </div>
+        2. Try to mimic it:<br>
+        <div class="audio-player-container">
+          <div class="audio-player">
+            <i class="bx bx-play-circle"></i>
+            <div class="intro-waveform-container" id="waveform-container"></div>
+          </div>
+          <div class="audio-duration">00:00</div>
+        </div>
+        3. Done!<br><br>
+      </div>
     </div>
     <!-- Navigate to next page -->
     <div class="button-container">
@@ -56,8 +74,8 @@
           <div class="audio-player">
             <i class="bx bx-play-circle"></i>
             <div class="waveform-container" id="waveform-container"></div>
-        </div>
-        <div class="audio-duration">00:00</div>
+          </div>
+          <div class="audio-duration">00:00</div>
         </div>
         <!-- Method 2: Ugly default audio player -->
         <!-- <audio id="audio-source" controls>

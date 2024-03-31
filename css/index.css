@@ -184,6 +184,15 @@ body {
     padding-right: 20px;
 }
 
+.instruction-header {
+    color: aliceblue;
+    font-family: 'BrandG_light';
+    font-size: 3.6vw;
+    font-weight: 100;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
 .instruction-container {
     display: flex;
     justify-content: center;
@@ -344,7 +353,7 @@ body {
     padding: 1%;
     border: none;
     border-radius: 1em;
-    box-shadow: 0 0 20px rgba(255, 239, 92, 0.35)
+    box-shadow: 0 0 20px rgba(255, 239, 92, 0.35);
 }
 
 .audio-player {
@@ -353,6 +362,7 @@ body {
     align-items: center;
     margin-top: 18px;
     margin-bottom: 18px;
+    text-shadow: none;
 }
 
 .audio-player i {
@@ -377,6 +387,7 @@ body {
     font-size: 16px;
     font-weight: 300;
     padding: 1px 2px 2px 0px;
+    text-shadow: none;
 }
 
 #timer {

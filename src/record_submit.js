@@ -40,7 +40,7 @@ var audioCtx;
 
 // INSTRUCTION PAGE AUDIO
 const introPageWaveContainers = document.querySelectorAll('.intro-waveform-container');
-const introAudioPlaylist = ['css/audio/2 after_basic.mp3', 'css/audio/1 first_before.mp3'];
+const introAudioPlaylist = ['css/audio/Instruction showcase01-lengbeat.m4a', 'css/audio/Instruction showcase01-9beat.m4a'];
 
 for (let i = 0; i < 2; i++) {
   const wavesurfer_intro = WaveSurfer.create({

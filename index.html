@@ -43,27 +43,27 @@
     </div>
     <div class="instruction-container">
       <div class="instruction-content">
-        <div class="instruction-header">Welcome!</div>
-        <div class="instruction-header">Below are the instructions for the game on the next page.</div>
-        <p>
-          1. Listen to the provided professional beatbox clip. <br>It could be something like this:
-        </p>
-        <div class="audio-player-container">
+        <div class="instruction-header">Welcome to the game!</div>
+        <div class="instruction-header">Here are instructions for the game on the next page:</div>
+        <h5 class="left">
+          1. Listen to the randomly provided professional beatbox clip, e.g.:
+        </h5>
+        <div class="audio-player-container left">
           <div class="audio-player">
             <i class="bx bx-play-circle"></i>
             <div class="intro-waveform-container" id="waveform-container"></div>
           </div>
           <div class="audio-duration">00:00</div>
         </div>
-        <br>2. Try to mimic it like the following:<br>
-        <div class="audio-player-container">
+        <h5 class="right"><br>2. Try to mimic it like the following:<br></h5>
+        <div class="audio-player-container right">
           <div class="audio-player">
             <i class="bx bx-play-circle"></i>
             <div class="intro-waveform-container" id="waveform-container"></div>
           </div>
           <div class="audio-duration">00:00</div>
         </div>
-        <br>3. Done!<br><br>
+        <!-- <h5 class="left"><br>3. Done!<br><br></h5> -->
       </div>
     </div>
     <!-- Navigate to next page -->
@@ -80,7 +80,7 @@
       <div class="recording-section-container">
         <!-- Instuructions -->
         <div class="instruction-container">
-          <p class="instruction-content"><strong>Reference Clip: </strong><span class="audioname" id="audioname"></span></p>
+          <div class="instruction-content"><p><strong>Reference Clip: </strong><span class="audioname" id="audioname"></span></p></div>
         </div>
         <!-- Method 1: Wavesurfer -->
         <div class="audio-player-container">
@@ -96,10 +96,10 @@
         </audio> -->
         <!-- Instuructions -->
         <div class="instruction-container">
-          <p class="instruction-content">
+          <div class="instruction-content"><p>
             - Your recording should be <strong><span id="leastDuration">0</span>-<span id="mostDuration">0</span></strong> seconds long.
             <br>- Try to match its <strong>speed</strong> and <strong>duration</strong>!
-          </p>
+          </p></div>
         </div>
         <!-- Recorder -->
         <div class="audio-player-container">
@@ -116,9 +116,9 @@
         <div class="after-recording-container">
           <!-- Instuructions -->
           <div class="instruction-container">
-            <p class="instruction-content">
+            <div class="instruction-content"><p>
               GOOD JOB! Listen to your audio & feel free to record again!
-            </p>
+            </p></div>
           </div>
           <!-- Audio player for user's recording -->
           <div class="audio-player-container">
@@ -170,10 +170,10 @@
     </div>
     <div class="instruction-container">
       <div class="instruction-content">
-        Follow our social media account to REVEAL our project SECRETS!
+        <p>Follow our social media account to REVEAL our project SECRETS!</p>
         <div type="button" class="social-media-link" onclick="window.open('https://www.instagram.com/beatbox.ml/','_blank')"><img src="css/graphics/beat-ml-logo-circular.png"><i class="bx bxl-instagram"></i>@beatbox.ml</div>
-        Find out more professional beatboxing clips to mimic below!
-        </div>
+        <p>Find out more professional beatboxing clips to mimic below!</p>
+      </div>
     </div>
     <div class="button-container">
       <button class="navbackButton">Play Again</button>

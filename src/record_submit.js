@@ -37,6 +37,8 @@ var audioCtx;
 
 
 
+
+// Responsive waveform height calculation
 function vh(percent) {
   var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
   return (percent * h) / 100;
@@ -47,29 +49,6 @@ function vw(percent) {
   return (percent * w) / 100;
 }
 
-function vmin(percent) {
-  return Math.min(vh(percent), vw(percent));
-}
-
-function vmax(percent) {
-  return Math.max(vh(percent), vw(percent));
-}
-
-function diagonal(percent) {
-  var d = Math.sqrt((vh(100) ** 2) + (vw(100) ** 2));
-  return (percent * d) / 100;
-}
-
-function g_mean(percent) {
-  return Math.sqrt(vh(percent) * vw(percent));
-}
-
-function a_mean(percent) {
-  return (vh(percent) + vw(percent)) / 2;
-}
-
-
-// 0.462 to 1.778
 const R_PHONE = 0.462;
 const R_PC = 2.101;
 const P_SHIFT = 2;
@@ -80,7 +59,6 @@ function empirical(percent) {
   return d + vw(percent);
 }
 
-// console.log("vh=" + String(vh(100)) + ", vw=" + String(vw(100)))
 
 
 
@@ -142,7 +120,7 @@ const wavesurfer_user = WaveSurfer.create({
   waveColor: '#008282',
   progressColor: '#006666',
   responsive: true,
-  height: 160,
+  height: empirical(7),
   cursorWidth: 1.5,
   cursorColor: '#545454',
   sampleRate: 48000,
@@ -187,7 +165,6 @@ if (!(navigator.mediaDevices.getUserMedia)) {
   showErrorMsg("MediaDevices.getUserMedia() not supported on your browser!", "#errorsAboveHere");
 } else {
   console.log("The mediaDevices.getUserMedia() method is supported.");
-  // showErrorMsg("NO ERROR: The mediaDevices.getUserMedia() method is supported.", "#errorsAboveHere");
 
   const constraints = { audio: true };
   let chunks = [];
@@ -417,7 +394,6 @@ var formatTime = function (time) {
 
 window.addEventListener("load", () => {
   fetchAudioFile();
-  showErrorMsg("爆炸", "#errorsAboveHere");
 });
 
 
@@ -446,7 +422,7 @@ function fetchAudioFile() {
     waveColor: '#ad961f',
     progressColor: '#877416',
     responsive: true,
-    height: 160,
+    height: empirical(7),
     cursorWidth: 1.5,
     cursorColor: '#545454',
     sampleRate: 48000,

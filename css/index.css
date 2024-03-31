@@ -282,11 +282,21 @@ body {
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
-/* .content-section-header i {
+.permission-header {
+    font-size: 2.5rem;
     color: aliceblue;
-    font-size: 4em;
-    padding-right: 20px;
-} */
+    font-weight: 300;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.instruction-header {
+    font-size: 3.5rem;
+    color: aliceblue;
+    font-weight: 400;
+    margin-top: 0.2em;
+    margin-bottom: 1.2em;
+}
 
 .instruction-container {
     display: flex;
@@ -299,56 +309,60 @@ body {
     color: aliceblue;
     font-weight: 300;
     width: 85vw;
-    margin: 0.5em 0em 0.5em 0em;
+    margin: 1em 0em 1em 0em;
     text-align: center;
     background: rgba(162, 162, 162, 0.32);
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
-    padding: 2em 2em 2em 2em;
+    padding: 2em 4em 2em 4em;
     border: none;
     border-radius: 2em;
 }
 
-.instruction-content p {
-    font-size: 1.6rem;
+.instruction-content h5 {
+    text-align: left;
+    font-weight: 300;
+    font-size: 2.5rem;
     margin: 0.4em 0em 0.4em 0em;
 }
 
-.instruction-header {
+.instruction-content p {
+    text-align: center;
     font-size: 2rem;
-    color: aliceblue;
-    font-weight: 400;
-    margin-top: 0.2em;
-    margin-bottom: 0.8em;
+    margin: 0.4em 0em 0.4em 0em;
 }
 
-.permission-header {
-    font-size: 2rem;
-    color: aliceblue;
-    font-weight: 300;
-    margin-top: 0em;
-    margin-bottom: 0em;
+/* Floating left or right */
+.left {
+    float: left;
+    clear: both;
+}
+
+.right {
+    float: right;
+    clear: both;
 }
 
 .social-media-link {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
-    margin-bottom: 90px;
+    font-size: 4rem;
+    margin-top: 1em;
+    margin-bottom: 2.5em;
     color: aliceblue;
     box-shadow: 0 0 25px rgba(255, 239, 92, 0.45);
     transition: all 0.3s ease-in-out;
 }
 
 .social-media-link img {
-    width: 6.5vw;
-    margin-right: 15px;
+    width: 7rem;
+    margin-right: 0.4em;
 }
 
 .social-media-link i {
     color: aliceblue;
-    font-size: 8vw;
-    margin-right: 15px;
+    font-size: 8rem;
+    margin-right: 0.4em;
 }
 
 .social-media-link:hover {
@@ -369,12 +383,15 @@ body {
 }
 
 .navButton {
-    font-size: 20px;
-    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 3em;
+    font-family: 'BrandG';
+    font-size: 2rem;
+    font-weight: 500;
     color: black;
     text-align: center;
-    height: 80px;
-    width: 200px;
+    height: 7rem;
+    width: 14rem;
     border: none;
     border-radius: 30px;
     outline: none;
@@ -468,7 +485,7 @@ body {
 }
 
 .audio-player i {
-    font-size: 3rem;
+    font-size: 5rem;
     padding: 1rem;
     color: rgba(57, 57, 57, 0.7);
 }
@@ -493,8 +510,8 @@ body {
 
 #timer {
     color: aliceblue;
-    text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
-    font-size: 2.6vw;
+    text-shadow: 0 0 13px rgba(0, 0, 0, 0.9);
+    font-size: 4rem;
     font-weight: 300;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -535,8 +552,9 @@ hr {
     border-radius: 30px;
     border: 0 solid;
     box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.1);
-    font-size: 1.4vw;
-    font-weight: bold;
+    font-family: 'BrandG';
+    font-size: 1.8rem;
+    font-weight: 700;
     background-color: #ff0000;
     outline: 1.2px solid;
     color: #f6f6f6;
@@ -562,10 +580,11 @@ hr {
     padding: 0.8em;
     padding-inline: 1.6em;
     margin: 20px;
-    font-size: 1.4vw;
-    font-weight: bold;
+    font-size: 1.8rem;
+    font-weight: 700;
     color: black;
     text-align: center;
+    font-family: 'BrandG';
     border: none;
     border-radius: 30px;
     outline: none;
@@ -590,7 +609,6 @@ hr {
 
 /* Post-submit Page */
 .post-submit-page {
-    /* position: relative; */
     display: none; /* set to block when debug, otherwise set to none */
     right: 0;
     opacity: 0; /* set to 1 when debug, otherwise set to 0 */
@@ -602,8 +620,8 @@ hr {
     position: relative;
     display: flex;
     justify-content: center;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 .mailing-signup-container {
@@ -620,18 +638,24 @@ hr {
 
 .mailing-header {
     text-align: center;
-    color: aliceblue;
-    font-size: 2vw;
 }
 
 .mailing-header i {
     padding-right: 15px;
 }
 
+.mailing-header h1 {
+    font-weight: 100;
+    color: aliceblue;
+    font-size: 3.8rem;
+    font-weight: 100;
+}
+
 .mailing-form-header h2 {
     text-align: center;
     color: aliceblue;
-    font-size: 1.5vw;
+    font-weight: 300;
+    font-size: 1.6rem;
 }
 
 .newsletter-input-box-container {
@@ -645,11 +669,13 @@ hr {
 }
 
 .newsletter-input-field {
+    font-family: 'BrandG';
     text-align: center;
-    font-size: 18px;
+    font-size: 1.6rem;
+    font-weight: 300;
     background: rgba(255, 255, 255, 0.15);
     color: aliceblue;
-    height: 50px;
+    height: 5rem;
     width: 100%;
     border: none;
     border-radius: 0px;
@@ -659,6 +685,7 @@ hr {
 
 ::placeholder {
     color: aliceblue;
+    font-size: 1.6rem;
     opacity: 1; /* Firefox */
 }
 
@@ -676,7 +703,8 @@ hr {
 }
 
 .error-text {
-    font-size: 14px;
+    font-family: 'BrandG';
+    font-size: 1rem;
     color: rgb(255, 89, 70);
     margin-bottom: 4px;
     display: none;
@@ -687,11 +715,12 @@ hr {
 }
 
 .subscribe {
+    font-family: 'BrandG';
     text-align: center;
-    font-size: 18px;
-    font-weight: 800;
+    font-size: 1.6rem;
+    font-weight: 500;
     color: black;
-    height: 45px;
+    height: 5rem;
     width: 100%;
     border: none;
     border-radius: 0px;
@@ -707,12 +736,15 @@ hr {
 }
 
 .navbackButton {
-    font-size: 20px;
-    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 3em;
+    font-family: 'BrandG';
+    font-size: 2rem;
+    font-weight: 500;
     color: black;
     text-align: center;
-    height: 80px;
-    width: 200px;
+    height: 7rem;
+    width: 14rem;
     border: none;
     border-radius: 30px;
     outline: none;

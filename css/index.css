@@ -289,7 +289,7 @@ body {
     display: flex; /* set to none when debug, otherwise set to flex */
     flex-direction: column;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-bottom: 60px;
     transition: all 0.55s ease-in-out;
 }

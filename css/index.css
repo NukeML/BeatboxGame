@@ -114,6 +114,57 @@ body {
 
 
 /* Sections, Paragraphs & Content */
+
+.info-container {
+    position: fixed;
+    top: 2vw;
+    right: 5vw;
+    display: flex;
+    justify-content: center;
+    font-family: 'BrandG_light';
+    font-size: 1.5vw;
+    color: aliceblue;
+    z-index: 999;
+}
+
+.infoButton i {
+    margin-right: 10px;
+    font-family: 'BrandG_light';
+    font-size: 2vw;
+    color: aliceblue;
+    z-index: 999;
+}
+
+.infoButton i:hover {
+    cursor: pointer;
+}
+
+.more-info-content {
+    display: none;
+    position: fixed;
+    top: 60px;
+    right: 60px;
+    z-index: 99;
+    transition: all 0.35s ease-in-out;
+    color: aliceblue;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+    font-family: 'BrandG_light';
+    font-size: 1.2vw;
+    font-weight: 100;
+    text-align: center;
+    width: 70%;
+    background: rgba(80, 80, 80, 0.75);
+    box-shadow: 0 0 25px rgba(241, 255, 248, 0.3);
+    padding: 30px 45px 30px 45px;
+    border: none;
+    border-radius: 30px;
+}
+
+.show {
+    display: block;
+    transition: all 0.5s ease-in-out;
+}
+
 .content-section-header {
     width: 100%;
     text-align: center;
@@ -121,45 +172,72 @@ body {
 }
 
 .content-section-header h1 {
-    color: beige;
+    color: aliceblue;
     font-family: 'BrandG_light';
-    font-size: 55px;
+    font-size: 4vw;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
 .content-section-header i {
-    color: beige;
-    font-size: 45px;
+    color: aliceblue;
+    font-size: 4vw;
     padding-right: 20px;
 }
 
-.paragraph-box {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.paragraph-container {
+.instruction-container {
     display: flex;
     justify-content: center;
-    margin-inline: 5%;
+    width: 100%;
 }
 
-.paragraph-header {
-    color: beige;
-    text-align: center;
-    font-family: 'BrandG_reg';
-    font-size: 45px;
-    font-weight: 300;
-    margin-bottom: 35px;
-    text-shadow: 0 0 25px rgba(255, 255, 255, 0.75);
-}
-
-.paragraph-content {
+.instruction-content {
     color: aliceblue;
     font-family: 'BrandG_light';
-    font-size: 25px;
+    font-size: 2.4vw;
+    font-weight: 100;
+    width: 80%;
+    margin: 40px;
+    text-align: center;
+    background: rgba(162, 162, 162, 0.32);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
+    padding: 30px 45px 30px 45px;
+    border: none;
+    border-radius: 30px;
+}
+
+.social-media-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 90px;
+    color: aliceblue;
+    font-family: 'BrandG_med';
+    box-shadow: 0 0 25px rgba(255, 239, 92, 0.45);
+    transition: all 0.3s ease-in-out;
+}
+
+.social-media-link img {
+    width: 6.5vw;
+    margin-right: 15px;
+}
+
+.social-media-link i {
+    color: aliceblue;
+    font-family: 'BrandG_light';
+    font-size: 8vw;
+    margin-right: 15px;
+}
+
+.social-media-link:hover {
+    background: rgba(122, 122, 122, 0.2);
+    cursor: pointer;
+}
+
+/* .paragraph-content {
+    color: aliceblue;
+    font-family: 'BrandG_light';
+    font-size: 1.2vw;
     font-weight: 100;
     text-align: center;
     width: 80%;
@@ -168,13 +246,12 @@ body {
     padding: 30px 45px 30px 45px;
     border: none;
     border-radius: 30px;
-}
+} */
 
 
 
 
-/* Buttons */
-/* Next page button */
+/* Navigation Buttons */
 .button-container {
     display: flex;
     justify-content: center;
@@ -209,7 +286,7 @@ body {
 .introduction-page {
     position: relative;
     left: 0;
-    display: flex; /* none when debug */
+    display: flex; /* set to none when debug, otherwise set to flex */
     flex-direction: column;
     justify-content: center;
     margin-top: 40px;
@@ -222,8 +299,8 @@ body {
 
 /* Audio Recording Page */
 .audio-recording-page {
-    display: none;
-    opacity: 0;
+    display: none; /* set to block when debug, otherwise set to none */
+    opacity: 0; /* set to 1 when debug, otherwise set to 0 */
     transition: opacity 0.55s ease-in-out;
 }
 
@@ -233,27 +310,8 @@ body {
     justify-content: center;
 }
 
-.instruction-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.instruction-content {
-    color: aliceblue;
-    font-family: 'BrandG_light';
-    font-size: 25px;
-    font-weight: 100;
-    width: 650px;
-    margin: 40px;
-    text-align: center;
-    background: rgba(80, 80, 80, 0.65);
-    padding: 30px 45px 30px 45px;
-    border: none;
-    border-radius: 30px;
-}
-
 .visualizer {
+    display: none;
     margin-bottom: 0.5rem;
     border-radius: 5px;
     border: 9px solid;
@@ -263,18 +321,17 @@ body {
     box-shadow: 0 0 20px rgba(255, 255, 255, .5);
 }
 
-.audioinfo-container {
+.recording-section-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    text-align: center;
-    font-size: 1.4em;
-    font-weight: 600;
-}
-
-.audioname-container {
-    padding: 10px;
+    margin: auto;
+    width: 80%;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 1%;
+    border: none;
+    border-radius: 1em;
+    box-shadow: 0 0 20px rgba(255, 239, 92, 0.35)
 }
 
 .audio-player-container {
@@ -283,8 +340,7 @@ body {
     justify-content: center;
     margin: auto;
     width: 80%;
-    /* height: 6em; */
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.78);
     padding: 1%;
     border: none;
     border-radius: 1em;
@@ -295,6 +351,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 18px;
+    margin-bottom: 18px;
 }
 
 .audio-player i {
@@ -323,7 +381,9 @@ body {
 
 #timer {
     font-family: 'BrandG_reg';
-    font-size: 50px;
+    color: aliceblue;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+    font-size: 2.6vw;
     font-weight: 300;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -342,39 +402,11 @@ hr {
     border: solid 1px rgba(128, 128, 128, 0.3);
 }
 
-/* .audio-control-container i {
-    font-size: 40px;
-    margin-left: 30px;
-    margin-right: 25px;
-    padding: 6px;
-    color: beige;
-    background: rgba(128, 128, 128, 0.4);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-}
-
-.audio-control-container i:hover {
-    background: rgba(128, 128, 128, 0.55);
-    rotate: 180deg;
-    transition: all 0.2s ease-in-out;
-} */
-
-#audio-source {
-    width: 100%;
-    /* margin-left: 25px; */
-}
-
 #userRecording {
     width: 100%;
 }
 
 #waveform-container {
-    width: 100%;
-}
-
-#visualizer {
     width: 100%;
 }
 
@@ -385,14 +417,14 @@ hr {
 }
 
 .rbutton {
-    width: 175px;
+    /* width: 175px; */
     padding: 0.8em;
     padding-inline: 1.6em;
     margin-bottom: 0.9em;
     border-radius: 30px;
     border: 0 solid;
     box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.1);
-    font-size: 20px;
+    font-size: 1.4vw;
     font-family: 'BrandG_bld';
     font-weight: bold;
     background-color: #ff0000;
@@ -417,14 +449,14 @@ hr {
 }
 
 .sbutton {
+    padding: 0.8em;
+    padding-inline: 1.6em;
     margin: 20px;
     font-family: 'BrandG_reg';
-    font-size: 20px;
+    font-size: 1.4vw;
     font-weight: bold;
     color: black;
     text-align: center;
-    height: 80px;
-    width: 200px;
     border: none;
     border-radius: 30px;
     outline: none;
@@ -450,9 +482,9 @@ hr {
 /* Post-submit Page */
 .post-submit-page {
     /* position: relative; */
-    display: none;
+    display: none; /* set to block when debug, otherwise set to none */
     right: 0;
-    opacity: 0;
+    opacity: 0; /* set to 1 when debug, otherwise set to 0 */
     margin-bottom: 160px;
     transition: all 0.55s ease-in-out;
 }
@@ -477,11 +509,22 @@ hr {
     border-radius: 10px;
 }
 
+.mailing-header {
+    text-align: center;
+    color: aliceblue;
+    font-family: 'BrandG_light';
+    font-size: 2vw;
+}
+
+.mailing-header i {
+    padding-right: 15px;
+}
+
 .mailing-form-header h2 {
     text-align: center;
     color: aliceblue;
     font-family: 'BrandG_light';
-    font-size: 20px;
+    font-size: 1.5vw;
 }
 
 .newsletter-input-box-container {
@@ -506,6 +549,15 @@ hr {
     border-radius: 0px;
     outline: none;
     transition: 0.2s ease;
+}
+
+::placeholder {
+    color: aliceblue;
+    opacity: 1; /* Firefox */
+}
+
+::-ms-input-placeholder { /* Edge 12 -18 */
+    color: aliceblue;
 }
 
 .newsletter-input-field:hover, .newsletter-input-field:focus {
@@ -569,4 +621,34 @@ hr {
 .navbackButton:hover {
     background: rgba(255, 255, 255, 0.6);
     box-shadow: inset 10em 0 0 0 rgba(255, 255, 255, 0.8);
+}
+
+@media only screen and (max-width: 950px) {
+    .infoButton i {
+        font-size: 3vw;
+    }
+    .rbutton {
+        font-size: 3vw;
+    }
+    .sbutton {
+        font-size: 3vw;
+    }
+    .mailing-form-header h2 {
+        font-size: 2vw;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .more-info-content {
+        font-size: 2vw;
+    }
+    .content-section-header h1 {
+        font-size: 6vw;
+    }
+    .instruction-content {
+        font-size: 3.5vw;
+    }
+    .paragraph-content {
+        font-size: 3.5vw;
+    }
 }

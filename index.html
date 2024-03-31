@@ -9,7 +9,17 @@
   <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
-  
+
+  <!-- Information Button -->
+  <div class="info-container">
+    <div class="infoButton"><i class="bx bx-info-circle"></i></div>
+    More info
+  </div>
+  <!-- More about this game -->
+  <div class="more-info-container">
+    <p class="more-info-content">We are currently working on a project about AI beatboxing.<br><br> With this game, we aim to collect sound data to see how well the average person can imitate a professional's beatboxing.<br><br>If you already have some beatboxing skill/experience and would like to learn more about what we're working on, please contact Aaron Lee on beatml.webcontact@gmail.com for something more exciting than this game!</p>
+  </div>
+
   <!----------------- HEADER ----------------->
   <div class="content-section-header">
     <h1 id="header">Beatbox Imitation Game</h1>
@@ -18,98 +28,75 @@
   
   <!----------------------------------------------------- INTRODUCTION PAGE ----------------------------------------------------->
   <div class="introduction-page">
-    <!-- Introduction -->
-    <div class="paragraph-box">
-      <div class="paragraph-container">
-          <p class="paragraph-content">Thank you for checking out our prototype!<br><br>
-            We are working on an AI beatbox coach tailored for those who are just starting to learn beatboxing.<br><br>
-            With this game, we aim to collect sound data to see how well the average person can imitate a professional's beatboxing.<br><br>
-            If you already have some beatboxing skill/experience and would like to learn more about what we're working on, please contact Aaron Lee on <br>
-            beatml.webcontact@gmail.com<br>
-            for something more exciting than this game!</p>
-      </div>
-      <div class="paragraph-container">
-        <p class="paragraph-content">
-          In the next page, there is a short beatboxing clip recorded by a professional for you to mimic.<br><br>
-          Ideally, you should be in a quiet area with little to no background noise.<br><br>
-          As soon as you click Next Page, your browser will ask for microphone permissions.<br>
-          Please click "allow" to be able to record your attempt at imitating the beatboxing!<br><br>
-          After you record, there will be a preview of your recording that you can listen back to,<br>
-          and a Submit button to submit your recording.<br><br>
-          Only if you click Submit will we receive the exact sound data as in the preview.<br><br>
-          By clicking Next Page below, you consent to us collecting the sound data that you will have previewed before submitting,<br>
-          and you confirm that you have no prior beatboxing experience.
-        </p>
-      </div>
+    <!-- Instructions -->
+    <div class="instruction-container">
+      <p class="instruction-content">
+        1. Please click <strong>"allow"</strong> to enable your microphone in the browser.<br><br>
+        2. SHOWCASE VIDEO - TBC
+      </p>
     </div>
     <!-- Navigate to next page -->
     <div class="button-container">
       <!-- Button to submit form -->
-      <button class="navButton">Next Page</button>
+      <button class="navButton">I'm ready!</button>
     </div>
   </div>
 
   <!----------------------------------------------------- AUDIO RECORDING PAGE ----------------------------------------------------->
   <div class="audio-recording-page">
     <div class="content">
-      <!-- Instructions -->
-      <div class="instruction-container">
-        <p class="instruction-content">Ready to test your beatboxing skills?<br><br>Listen to the clip below!</p>
-      </div>
-      <!-- Reference Clip Player -->
-      <div class="audio-player-container">
-        <div class="audioinfo-container">
-          <div class="audioname-container">Audio name:</div>
-          <div class="audioname-container"><div class="audioname" id="audioname">Audio Name</div></div>
+      <!-- Reference Clip Player & Recorder Section -->
+      <div class="recording-section-container">
+        <!-- Instuructions -->
+        <div class="instruction-container">
+          <p class="instruction-content"><strong>Reference Clip: </strong><span class="audioname" id="audioname"></span></p>
         </div>
         <!-- Method 1: Wavesurfer -->
-        <div class="audio-player">
+        <div class="audio-player-container">
+          <div class="audio-player">
             <i class="bx bx-play-circle"></i>
             <div class="waveform-container" id="waveform-container"></div>
         </div>
         <div class="audio-duration">00:00</div>
+        </div>
         <!-- Method 2: Ugly default audio player -->
         <!-- <audio id="audio-source" controls>
           <source src="" type="audio/wav">
         </audio> -->
-      </div>
-      <!-- Instructions -->
-      <div class="paragraph-container">
-        <p class="paragraph-content">
-          When you're ready, record your best imitation attempt below!<br><br>
-          Try to match the speed and total duration as closely as possible! Only a recording of <span id="leastDuration">LEAST</span>-<span id="mostDuration">MOST</span> seconds long can be submitted.<br><br>
-          The timer will start counting up when you press Record.
-        </p>
-      </div>
-      <!-- Wave Monitor -->
-      <div class="audio-player-container">
-        <div class="recorder-container">
-          <div id="timer">
-            00.0
-          </div>
-        </div>
-        <div class="recorder-container">
-          <button id="recordButton" class="rbutton" type="button">Record</button><br>
-        </div>
-        <div class="recorder-container">
-          <canvas class="visualizer"></canvas>
-        </div>        
-      </div>
-      <div class="after-recording-container">
+        <!-- Instuructions -->
         <div class="instruction-container">
           <p class="instruction-content">
-            Listen to your recording below.<br><br>We have no doubt that you've done well :)<br><br>
-            However, you are free to re-record using the button above!
+            - Your recording should be <strong><span id="leastDuration">0</span>-<span id="mostDuration">0</span></strong> seconds long.
+            <br>- Try to match its <strong>speed</strong> and <strong>duration</strong>!
           </p>
         </div>
-        <!-- Audio player for user's recording -->
+        <!-- Recorder -->
         <div class="audio-player-container">
-          <!-- <audio id="userRecording" controls></audio> -->
-          <div class="audio-player">
-            <i class="bx bx-play-circle"></i>
-            <div class="waveform-user-container" id="waveform-container"></div>
+          <div class="recorder-container">
+            <div id="timer">
+              00.00
+            </div>
           </div>
-          <div class="audio-duration">00:00</div>     
+          <div class="recorder-container">
+            <button id="recordButton" class="rbutton" type="button">Record</button><br>
+          </div>
+        </div>
+        <!-- Post-recording Section -->
+        <div class="after-recording-container">
+          <!-- Instuructions -->
+          <div class="instruction-container">
+            <p class="instruction-content">
+              GOOD JOB! Listen to your audio & feel free to record again!
+            </p>
+          </div>
+          <!-- Audio player for user's recording -->
+          <div class="audio-player-container">
+            <div class="audio-player">
+              <i class="bx bx-play-circle"></i>
+              <div class="waveform-user-container" id="waveform-container"></div>
+            </div>
+            <div class="audio-duration">00:00</div> 
+          </div>    
           <hr>   
           <!-- Button to submit form -->
           <div class="button-container">
@@ -117,31 +104,26 @@
           </div>
         </div>
       </div>
+      <!-- Wave Monitor (Backup, now can use wavesurfer, a better visualisation technique) -->
+      <!-- <div class="audio-player-container">
+        <div class="recorder-container">
+          <canvas class="visualizer"></canvas>
+        </div>        
+      </div> -->
     </div>
   </div>
 
   <!----------------------------------------------------- POST-SUBMIT PAGE ----------------------------------------------------->
   <div class="post-submit-page">
-    <div class="paragraph-container">
-      <p class="paragraph-content">
-        Thank you so much for playing!<br><br>
-        With your help, we will be able to improve our AI model.<br><br>
-        We would love to keep you updated on our progress, as we are currently working on a website and possibly an installable application!<br><br>
-        If you would like to receive progress updates from us, please join our mailing list by entering your email address below!<br><br>
-        Of course, this is all optional.<br>
-        We do not aim to annoy you with random emails.<br>
-        We'll only send communications when we've got something major ready to launch :)
-      </p>
-    </div>
     <!------------------------------------------------------- Mailing List ------------------------------------------------------->
     <div class="mailing-signup-box">
       <div class="mailing-signup-container">
-          <div class="content-section-header">
+          <div class="mailing-header">
               <h1><i class="bx bxs-envelope"></i>Join our newsletter!</h1>
           </div>
           <form class="mailing-form-container" id="mailing-form">
               <div class="mailing-form-header">
-                  <h2>Click the Join button below to submit your email address for our mailing list.</h2>
+                  <h2>Click the Join button below to join our newsletter for MORE AMAZING UPDATES on our project as you wish!</h2>
                   <div class="newsletter-input-box-container">
                       <div class="newsletter-input-box">
                           <div class="error-text newsletter-email">* Required</div>
@@ -155,13 +137,12 @@
           </form>
       </div>
     </div>
-    <div class="paragraph-container">
-      <p class="paragraph-content">
-        We'll send you an automated email so you know what our communications look like. <br>
-        Make sure to check your spam folder just in case!<br><br>
-        If you would like to play the imitation game again, click the <strong>PLAY AGAIN</strong> button below!<br><br>
-        There are multiple professional beatboxing clips available for you to mimic: one is chosen at random each time you play!
-      </p>
+    <div class="instruction-container">
+      <div class="instruction-content">
+        Follow our social media account to REVEAL our project SECRETS!
+        <div type="button" class="social-media-link" onclick="window.open('https://www.instagram.com/beatbox.ml/','_blank')"><img src="css/graphics/beat-ml-logo-circular.png"><i class="bx bxl-instagram"></i>@beatbox.ml</div>
+        Find out more professional beatboxing clips to mimic below!
+        </div>
     </div>
     <div class="button-container">
       <button class="navbackButton">Play Again</button>

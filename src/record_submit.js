@@ -5,10 +5,11 @@ import { getStorage, ref as refS, uploadBytes, getDownloadURL, list, listAll }  
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js';
+import RecordPlugin from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/record.esm.js'
 import Hover from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/hover.esm.js';
 
 
-const visualizer = document.querySelector(".visualizer");
+// const visualizer = document.querySelector(".visualizer");
 const record = document.querySelector("#recordButton");
 var recordingState = false;
 var mediaRecorder;
@@ -32,7 +33,7 @@ const playbuttons = document.querySelectorAll(".audio-player i");
 const audioDurations = document.querySelectorAll(".audio-duration");
 
 var audioCtx;
-const canvasCtx = visualizer.getContext("2d");
+// const canvasCtx = visualizer.getContext("2d");
 
 
 
@@ -43,7 +44,7 @@ const wavesurfer_user = WaveSurfer.create({
   waveColor: '#008282',
   progressColor: '#006666',
   responsive: true,
-  height: 85,
+  height: 160,
   cursorWidth: 1.5,
   cursorColor: '#545454',
   sampleRate: 48000,
@@ -95,7 +96,7 @@ if (!(navigator.mediaDevices.getUserMedia)) {
 
   let onSuccess = function (stream) {
     mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
-    visualize(stream);
+    // visualize(stream);
     
     mediaRecorder.ondataavailable = function (event) {
       chunks.push(event.data);
@@ -130,58 +131,58 @@ if (!(navigator.mediaDevices.getUserMedia)) {
 
 
 
-function visualize(stream) {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
+// function visualize(stream) {
+//   if (!audioCtx) {
+//     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+//   }
 
-  const source = audioCtx.createMediaStreamSource(stream);
-  const analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 4096;
-  const bufferLength = analyser.frequencyBinCount;
-  const dataArray = new Uint8Array(bufferLength);
-  analyser.getByteTimeDomainData(dataArray);
+//   const source = audioCtx.createMediaStreamSource(stream);
+//   const analyser = audioCtx.createAnalyser();
+//   analyser.fftSize = 4096;
+//   const bufferLength = analyser.frequencyBinCount;
+//   const dataArray = new Uint8Array(bufferLength);
+//   analyser.getByteTimeDomainData(dataArray);
 
-  source.connect(analyser);
+//   source.connect(analyser);
 
-  draw();
+//   draw();
 
-  function draw() {
-    const vWidth = visualizer.width;
-    const vHeight = visualizer.height;
+//   function draw() {
+//     const vWidth = visualizer.width;
+//     const vHeight = visualizer.height;
   
-    requestAnimationFrame(draw);
+//     requestAnimationFrame(draw);
     
-    analyser.getByteTimeDomainData(dataArray);
+//     analyser.getByteTimeDomainData(dataArray);
   
-    canvasCtx.fillStyle = "rgb(200, 200, 200)";
-    canvasCtx.fillRect(0, 0, vWidth, vHeight);
-    canvasCtx.lineWidth = 2;
-    canvasCtx.strokeStyle = "rgb(0, 0, 0)";
-    canvasCtx.beginPath();
+//     canvasCtx.fillStyle = "rgb(200, 200, 200)";
+//     canvasCtx.fillRect(0, 0, vWidth, vHeight);
+//     canvasCtx.lineWidth = 2;
+//     canvasCtx.strokeStyle = "rgb(0, 0, 0)";
+//     canvasCtx.beginPath();
   
-    var sliceWidth = (vWidth * 1.0) / bufferLength;
-    var x = 0;
+//     var sliceWidth = (vWidth * 1.0) / bufferLength;
+//     var x = 0;
   
-    for (let i = 0; i < bufferLength; i++) {
-      let v = dataArray[i] / 128.0;
-      let y = (v * vHeight) / 2;
+//     for (let i = 0; i < bufferLength; i++) {
+//       let v = dataArray[i] / 128.0;
+//       let y = (v * vHeight) / 2;
   
-      if (i === 0) {
-        canvasCtx.moveTo(x, y);
-      } else {
-        canvasCtx.lineTo(x, y);
-      }
+//       if (i === 0) {
+//         canvasCtx.moveTo(x, y);
+//       } else {
+//         canvasCtx.lineTo(x, y);
+//       }
   
-      x += sliceWidth;
+//       x += sliceWidth;
       
-    }
+//     }
   
-    canvasCtx.lineTo(vWidth, vHeight / 2);
-    canvasCtx.stroke();
+//     canvasCtx.lineTo(vWidth, vHeight / 2);
+//     canvasCtx.stroke();
     
-  }
-}
+//   }
+// }
 
 
 
@@ -259,7 +260,7 @@ function timerIncrement() {
   let seconds = recordTimer / 2;
   let 
     tens = Math.floor(seconds / 10).toFixed(0),
-    ones = (seconds % 10).toFixed(1);
+    ones = (seconds % 10).toFixed(1) + '0';
   timerText.innerHTML = tens + ones;
   recordTimer++;
 }
@@ -346,7 +347,7 @@ function fetchAudioFile() {
     waveColor: '#ad961f',
     progressColor: '#877416',
     responsive: true,
-    height: 85,
+    height: 160,
     cursorWidth: 1.5,
     cursorColor: '#545454',
     sampleRate: 48000,
@@ -400,6 +401,7 @@ function fetchAudioFile() {
     getDownloadURL(randomAudioRef)
     .then((url) => {
       // Method 1: Wavesurfer visualisation
+      // wavesurfer.load('css/debug/DEBUG_AUDIO.mp3'); // For debug purpose
       wavesurfer.load(url);
       // Method 2: Using default audio plugin
       // audioSource.src = url;
@@ -437,7 +439,7 @@ function fetchAudioFile() {
             let chunks = [];
             audioBlob = new Blob(chunks, { type : 'audio/webm' });
             duration = 0;
-            timerText.innerHTML = "00.0";
+            timerText.innerHTML = "00.00";
             record.textContent = "Record";
 
             // Navigate to post-submit page
@@ -463,6 +465,7 @@ function fetchAudioFile() {
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
             showErrorMsg("your recording must be between " + leastDuration + " and " + mostDuration + " seconds long", "#errorsAboveHere");
+            timerText.innerHTML = "00.00";
           }
         });
       });

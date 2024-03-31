@@ -4,6 +4,28 @@ const postSubmitPage = document.querySelector('.post-submit-page');
 const pageHeader = document.getElementById('header');
 const navButton = document.querySelector('.navButton');
 const navbackButton = document.querySelector('.navbackButton');
+const infoButton = document.querySelector('.infoButton');
+const infoButtonIcon = document.querySelector('.infoButton i');
+const moreInfoContent = document.querySelector('.more-info-content');
+
+
+infoButton.addEventListener("click", () => {
+    if (moreInfoContent.classList.contains('show')) {
+        infoButtonIcon.className = "bx bx-info-circle";
+        moreInfoContent.style.opacity = "0";
+        setTimeout(() => {
+            moreInfoContent.classList.toggle('show');
+        }, 250)
+    } else {
+        infoButtonIcon.className = "bx bxs-info-circle";
+        moreInfoContent.classList.toggle('show');
+        setTimeout(() => {
+            moreInfoContent.style.opacity = "1";
+        }, 100)
+    }
+    
+});
+
 
 navButton.addEventListener('click', () => {
     introductionPage.style.left = "-200%";
@@ -22,7 +44,7 @@ navButton.addEventListener('click', () => {
     }, 550);
 });
 
-// Nav back to reload audio
+
 navbackButton.addEventListener('click', () => {
 
     postSubmitPage.style.right = "-200%";

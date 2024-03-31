@@ -37,6 +37,52 @@ var audioCtx;
 
 
 
+function vh(percent) {
+  var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  return (percent * h) / 100;
+}
+
+function vw(percent) {
+  var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+  return (percent * w) / 100;
+}
+
+function vmin(percent) {
+  return Math.min(vh(percent), vw(percent));
+}
+
+function vmax(percent) {
+  return Math.max(vh(percent), vw(percent));
+}
+
+function diagonal(percent) {
+  var d = Math.sqrt((vh(100) ** 2) + (vw(100) ** 2));
+  return (percent * d) / 100;
+}
+
+function g_mean(percent) {
+  return Math.sqrt(vh(percent) * vw(percent));
+}
+
+function a_mean(percent) {
+  return (vh(percent) + vw(percent)) / 2;
+}
+
+
+// 0.462 to 1.778
+const R_PHONE = 0.462;
+const R_PC = 2.101;
+const P_SHIFT = 2;
+
+function empirical(percent) {
+  var r = vw(100) / vh(100);
+  var d = vw(P_SHIFT) / (R_PC - R_PHONE) * (r - R_PHONE);
+  return d + vw(percent);
+}
+
+// console.log("vh=" + String(vh(100)) + ", vw=" + String(vw(100)))
+
+
 
 // INSTRUCTION PAGE AUDIO
 const introPageWaveContainers = document.querySelectorAll('.intro-waveform-container');
@@ -48,7 +94,7 @@ for (let i = 0; i < 2; i++) {
     waveColor: ['#ad961f', '#008282'][i],
     progressColor: ['#877416', '#006666'][i],
     responsive: true,
-    height: 160,
+    height: empirical(7),
     cursorWidth: 1.5,
     cursorColor: '#545454',
     url: introAudioPlaylist[i],
@@ -371,6 +417,7 @@ var formatTime = function (time) {
 
 window.addEventListener("load", () => {
   fetchAudioFile();
+  showErrorMsg("爆炸", "#errorsAboveHere");
 });
 
 

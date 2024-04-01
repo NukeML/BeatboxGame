@@ -38,6 +38,17 @@ var audioCtx;
 
 
 
+// Check if the user is using a mobile device
+var deviceFormat = 'audio/webm';
+var extension = '.webm';
+if(/Mobi|Android/i.test(navigator.userAgent)) {
+  deviceFormat = 'audio/mp4';
+  extension = '.mp4';
+}
+
+
+
+
 // Responsive waveform height calculation
 function vh(percent) {
   var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
@@ -157,14 +168,6 @@ wavesurfer_user.on('finish', () => {
   playbuttons[3].className = "bx bx-play-circle";
 });
 
-// Check if the user is using a mobile device
-var deviceFormat = 'audio/webm';
-var extension = '.webm';
-if(/Mobi|Android/i.test(navigator.userAgent)) {
-  deviceFormat = 'audio/mp4';
-  extension = '.mp4';
-}
-
 
 if (!(navigator.mediaDevices.getUserMedia)) {
   console.log("MediaDevices.getUserMedia() not supported on your browser!");
@@ -190,9 +193,9 @@ if (!(navigator.mediaDevices.getUserMedia)) {
 
       audioBlob = new Blob(chunks, { type : deviceFormat });
       chunks = [];
-      const userRecordingUrl = window.URL.createObjectURL(audioBlob);
+      
+      wavesurfer_user.loadBlob(audioBlob);
 
-      wavesurfer_user.load(userRecordingUrl);
       console.log("Preview loaded.");
       record.textContent = "Re-record";
     };

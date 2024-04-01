@@ -170,7 +170,7 @@ if (!(navigator.mediaDevices.getUserMedia)) {
   let chunks = [];
 
   let onSuccess = function (stream) {
-    mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+    mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/mp4' });
     // visualize(stream);
     
     mediaRecorder.ondataavailable = function (event) {

@@ -170,7 +170,13 @@ if (!(navigator.mediaDevices.getUserMedia)) {
   let chunks = [];
 
   let onSuccess = function (stream) {
-    mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/mp4' });
+    // Detect if the user is using a mobile device
+    var deviceFormat = 'audio/webm';
+    if(/Mobi|Android/i.test(navigator.userAgent)) {
+      deviceFormat = 'audio/mp4'
+    }
+    
+    mediaRecorder = new MediaRecorder(stream, { mimeType: deviceFormat });
     // visualize(stream);
     
     mediaRecorder.ondataavailable = function (event) {

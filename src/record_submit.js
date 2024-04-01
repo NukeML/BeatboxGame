@@ -157,7 +157,13 @@ wavesurfer_user.on('finish', () => {
   playbuttons[3].className = "bx bx-play-circle";
 });
 
-
+// Check if the user is using a mobile device
+var deviceFormat = 'audio/webm';
+var extension = '.webm';
+if(/Mobi|Android/i.test(navigator.userAgent)) {
+  deviceFormat = 'audio/mp4';
+  extension = '.mp4';
+}
 
 
 if (!(navigator.mediaDevices.getUserMedia)) {
@@ -170,12 +176,7 @@ if (!(navigator.mediaDevices.getUserMedia)) {
   let chunks = [];
 
   let onSuccess = function (stream) {
-    // Detect if the user is using a mobile device
-    var deviceFormat = 'audio/webm';
-    if(/Mobi|Android/i.test(navigator.userAgent)) {
-      deviceFormat = 'audio/mp4'
-    }
-    
+
     mediaRecorder = new MediaRecorder(stream, { mimeType: deviceFormat });
     // visualize(stream);
     
@@ -187,7 +188,7 @@ if (!(navigator.mediaDevices.getUserMedia)) {
       console.log("Data stream capture finished.");
       // const userRecording = document.querySelector("#userRecording");
 
-      audioBlob = new Blob(chunks, { type : 'audio/webm' });
+      audioBlob = new Blob(chunks, { type : deviceFormat });
       chunks = [];
       const userRecordingUrl = window.URL.createObjectURL(audioBlob);
 
@@ -407,7 +408,7 @@ window.addEventListener("load", () => {
 function uploadAudioFile(referenceClipName, wavBlob) {
 
   // Referencing target user audio location
-  const useraudioRef = refS(storage, `training_data/${referenceClipName}/${Date.now()}.webm`);
+  const useraudioRef = refS(storage, `training_data/${referenceClipName}/${Date.now()}${extension}`);
 
   // Upload audio to database
   uploadBytes(useraudioRef, wavBlob);
@@ -518,7 +519,7 @@ function fetchAudioFile() {
             // Upload file to Firebase
             uploadAudioFile(randomAudioName, audioBlob);
             let chunks = [];
-            audioBlob = new Blob(chunks, { type : 'audio/webm' });
+            audioBlob = new Blob(chunks, { type : deviceFormat });
             duration = 0;
             timerText.innerHTML = "00.00";
             record.textContent = "Record";

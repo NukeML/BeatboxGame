@@ -22,7 +22,7 @@
   </div>
   <!-- More about this game -->
   <div class="more-info-container">
-    <p class="more-info-content">We are currently working on a project about AI beatboxing.<br><br> With this game, we aim to collect sound data to see how well the average person can imitate a professional's beatboxing.<br><br>If you already have some beatboxing skill/experience and would like to learn more about what we're working on, please contact Aaron Lee on <br>beatml.webcontact@gmail.com <br>for something more exciting than this game!</p>
+    <p class="more-info-content">We are currently working on an AI music project.<br><br> With this game, we aim to collect sound data to analyse the average person's attempt at beatboxing.<br><br>If you already have some beatboxing skill/experience and would like to learn more about our project, please contact Aaron Lee on <br>beatml.webcontact@gmail.com <br>for something more exciting than this game!</p>
   </div>
 
   <!----------------- HEADER ----------------->
@@ -34,38 +34,46 @@
   <!----------------------------------------------------- INTRODUCTION PAGE ----------------------------------------------------->
   <div class="introduction-page">
     <!-- Instructions -->
+    
+
     <div class="instruction-container">
       <div class="instruction-content">
-        <div class="permission-header">
-          * First, please click "allow" to enable your microphone in the browser.
-        </div>
-      </div>
-    </div>
-    <div class="instruction-container">
-      <div class="instruction-content">
-        <div class="instruction-header">Welcome to the game!</div>
-        <div class="instruction-header">Here are instructions for the game on the next page:</div>
+        <div class="instruction-header">Welcome!</div>
+        <div class="instruction-header">Here are the instructions for the game on the next page:</div>
         <h5 class="left">
-          1. Listen to the randomly provided professional beatbox clip, e.g.:
+          1. Allow <i class='bx bxs-microphone' ></i> microphone permissions when prompted
+        </h5>
+        <h5 class="left">
+          2. Listen to the randomly provided professional beatbox clip, e.g.:
         </h5>
         <div class="audio-player-container left">
           <div class="audio-player">
             <i class="bx bx-play-circle"></i>
-            <div class="intro-waveform-container" id="waveform-container"></div>
+            <div class="waveform-container intro-waveform-container"></div>
           </div>
           <div class="audio-duration">00:00</div>
         </div>
-        <h5 class="right"><br>2. Try to mimic it like the following:<br></h5>
+        <h5 class="right">3. Try to mimic the rhythm <span class="equalizer-icon"><i class='bx bx-equalizer'></i></span> e.g.:<br></h5>
         <div class="audio-player-container right">
           <div class="audio-player">
             <i class="bx bx-play-circle"></i>
-            <div class="intro-waveform-container" id="waveform-container"></div>
+            <div class="waveform-container intro-waveform-container"></div>
           </div>
           <div class="audio-duration">00:00</div>
         </div>
         <!-- <h5 class="left"><br>3. Done!<br><br></h5> -->
       </div>
     </div>
+
+    <!-- CONSENT -->
+    <!-- <div class="instruction-container">
+      <div class="instruction-content">
+        <div class="permission-header">
+          * First, please click "allow" to enable your microphone in the browser.
+        </div>
+      </div>
+    </div> -->
+
     <!-- Navigate to next page -->
     <div class="button-container">
       <!-- Button to submit form -->
@@ -80,13 +88,13 @@
       <div class="recording-section-container">
         <!-- Instuructions -->
         <div class="instruction-container">
-          <div class="instruction-content"><p><strong>Reference Clip: </strong><span class="audioname" id="audioname"></span></p></div>
+          <div class="instruction-content less-padding"><p class="less-margin"><strong>Clip name: </strong><span class="audioname" id="audioname"></span></p></div>
         </div>
         <!-- Method 1: Wavesurfer -->
         <div class="audio-player-container">
           <div class="audio-player">
             <i class="bx bx-play-circle"></i>
-            <div class="waveform-container" id="waveform-container"></div>
+            <div class="waveform-container" id="reference-waveform-container"></div>
           </div>
           <div class="audio-duration">00:00</div>
         </div>
@@ -96,9 +104,9 @@
         </audio> -->
         <!-- Instuructions -->
         <div class="instruction-container">
-          <div class="instruction-content"><p>
-            - Your recording should be <strong><span id="leastDuration">0</span>-<span id="mostDuration">0</span></strong> seconds long.
-            <br>- Try to match its <strong>speed</strong> and <strong>duration</strong>!
+          <div class="instruction-content"><p class="less-margin">
+            <i class='bx bx-time-five'></i> Recording time limit: <strong><span id="leastDuration">0</span>-<span id="mostDuration">0</span></strong>s.
+            <br>Prioritise matching the <strong>rhythm</strong> over resembling each sound effect!
           </p></div>
         </div>
         <!-- Recorder -->
@@ -107,6 +115,7 @@
             <div id="timer">
               00.00
             </div>
+            <canvas class="visualizer"></canvas>
           </div>
           <div class="recorder-container">
             <button id="recordButton" class="rbutton" type="button">Record</button><br>
@@ -117,14 +126,14 @@
           <!-- Instuructions -->
           <div class="instruction-container">
             <div class="instruction-content"><p>
-              GOOD JOB! Listen to your audio & feel free to record again!
+              Well done!<br>Play your recording below. Re-record if needed!
             </p></div>
           </div>
           <!-- Audio player for user's recording -->
           <div class="audio-player-container">
             <div class="audio-player">
               <i class="bx bx-play-circle"></i>
-              <div class="waveform-user-container" id="waveform-container"></div>
+              <div class="waveform-container waveform-user-container"></div>
             </div>
             <div class="audio-duration">00:00</div> 
           </div>    
@@ -150,11 +159,11 @@
     <div class="mailing-signup-box">
       <div class="mailing-signup-container">
           <div class="mailing-header">
-              <h1><i class="bx bxs-envelope"></i>Join our newsletter!</h1>
+              <h1><i class="bx bxs-envelope"></i>Join our mailing list!</h1>
           </div>
           <form class="mailing-form-container" id="mailing-form">
               <div class="mailing-form-header">
-                  <h2>Click the Join button below to join our newsletter for MORE AMAZING UPDATES on our project as you wish!</h2>
+                  <h2><i class='bx bx-calendar-star'></i> Receive important announcements from us, including launch dates! 👀</h2>
                   <div class="newsletter-input-box-container">
                       <div class="newsletter-input-box">
                           <div class="error-text newsletter-email">* Required</div>
@@ -170,12 +179,15 @@
     </div>
     <div class="instruction-container">
       <div class="instruction-content">
-        <p>Follow our social media account to REVEAL our project SECRETS!</p>
+        <p>Follow our social media page for sneak peeks!</p>
         <div type="button" class="social-media-link" onclick="window.open('https://www.instagram.com/beatbox.ml/','_blank')"><img src="css/graphics/beat-ml-logo-circular.png"><i class="bx bxl-instagram"></i>@beatbox.ml</div>
-        <p>Find out more professional beatboxing clips to mimic below!</p>
       </div>
     </div>
+    <div>
+      <h3 class="play-again-text">Want to try imitating a different beatbox clip? Play again!</h3>
+    </div>
     <div class="button-container">
+      
       <button class="navbackButton">Play Again</button>
     </div>
   </div>

@@ -26,6 +26,8 @@ const leastDurationText = document.querySelector("#leastDuration");
 const mostDurationText = document.querySelector("#mostDuration");
 
 
+const introductionPage = document.querySelector('.introduction-page');
+const navButton = document.querySelector('.navButton');
 const audioRecordingPage = document.querySelector('.audio-recording-page');
 const postSubmitPage = document.querySelector('.post-submit-page');
 const pageHeader = document.getElementById('header');
@@ -211,8 +213,24 @@ if (!(navigator.mediaDevices.getUserMedia)) {
     console.log("The following error occured: " + err);
     showErrorMsg(err, "#errorsAboveHere");
   };
+  // Request Audio permission on navigation
+  navButton.addEventListener('click', () => {
+    introductionPage.style.left = "-200%";
+    introductionPage.style.opacity = "0";
+    
+    setTimeout(() => {
+        introductionPage.style.display = "none";
+        audioRecordingPage.style.display = "block";
+    }, 350);
 
-  navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+
+    setTimeout(() => {
+        audioRecordingPage.style.opacity = "1";
+        navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
+    }, 550);
+  });
 }
 
 

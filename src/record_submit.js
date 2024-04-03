@@ -378,6 +378,7 @@ function timerIncrement() {
 // Event listener for record button
 record.addEventListener('click', () => {
   // Record user's mimicry attempt
+  alert('RECORD');
   recordUserAttempt();
 });
 

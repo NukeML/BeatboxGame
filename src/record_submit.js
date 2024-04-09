@@ -393,13 +393,9 @@ var formatTime = function (time) {
   ].join(':');
 };
 
-
-
-
 window.addEventListener("load", () => {
   fetchAudioFile();
 });
-
 
 function uploadAudioFile(referenceClipName, wavBlob) {
 
@@ -410,7 +406,6 @@ function uploadAudioFile(referenceClipName, wavBlob) {
   uploadBytes(useraudioRef, wavBlob);
 
 }
-
 
 // SUBMIT BUTTON ONCLICK IS HERE
 function fetchAudioFile() {
@@ -556,10 +551,6 @@ function fetchAudioFile() {
       showErrorMsg(error.message, "#errorsAboveHere");
     });
 }
-
-
-
-
 
 
 

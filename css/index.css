@@ -250,9 +250,9 @@ body {
     right: 1.5em;
     z-index: 99;
     transition: all 0.35s ease-in-out;
-    color: aliceblue;
+    color: rgb(235, 255, 102);
     text-shadow: 0 0 10px rgba(245, 245, 245, 0.9);
-    font-weight: 100;
+    font-weight: 300;
     text-align: center;
     width: 80vw;
     background: rgba(80, 80, 80, 0.95);

@@ -251,7 +251,7 @@ body {
     z-index: 99;
     transition: all 0.35s ease-in-out;
     color: aliceblue;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+    text-shadow: 0 0 10px rgba(245, 245, 245, 0.9);
     font-weight: 100;
     text-align: center;
     width: 80vw;

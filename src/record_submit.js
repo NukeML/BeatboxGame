@@ -1,19 +1,16 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js';
 import { getDatabase, ref as refD, set, child, get } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js';
-import { getStorage, ref as refS, uploadBytes, getDownloadURL, list, listAll }  from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js'
+import { getStorage, ref as refS, uploadBytes, getDownloadURL, list, listAll } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js';
-import RecordPlugin from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/record.esm.js'
 import Hover from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/hover.esm.js';
 // TODO: MICROPHONE PERMISSION ONLY ON "PAGE" 2
 
 
-const visualizer = document.querySelector(".visualizer");
-const record = document.querySelector("#recordButton");
+const recordButton = document.querySelector("#recordButton");
 var recordingState = false;
-var mediaRecorder;
 const afterRecordingContainer = document.querySelector(".after-recording-container");
 var recordIntervalObject;
 var recordTimer = 0;
@@ -39,19 +36,10 @@ const HEADER2 = "Submission successful.<br>Thanks for playing!";
 const playbuttons = document.querySelectorAll(".audio-player i");
 const audioDurations = document.querySelectorAll(".audio-duration");
 
-var audioCtx;
-const canvasCtx = visualizer.getContext("2d");
-
-
-
-
-// Check if the user is using a mobile device
-var deviceFormat = 'audio/webm';
-var extension = '.webm';
-if(/Mobi|Android/i.test(navigator.userAgent)) {
-  deviceFormat = 'audio/mp4';
-  extension = '.mp4';
-}
+var isEdge = navigator.userAgent.indexOf('Edge') !== -1 && (!!navigator.msSaveOrOpenBlob || !!navigator.msSaveBlob);
+var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+var recorder;
+var microphone;
 
 
 
@@ -96,20 +84,20 @@ for (let i = 0; i < 2; i++) {
     url: introAudioPlaylist[i],
     sampleRate: 48000,
     plugins: [
-        Hover.create({
-            lineColor: '#fa8072',
-            lineWidth: 1.5,
-            labelBackground: '#777',
-            labelColor: '#fff',
-            labelSize: '12px',
-        }),
+      Hover.create({
+        lineColor: '#fa8072',
+        lineWidth: 1.5,
+        labelBackground: '#777',
+        labelColor: '#fff',
+        labelSize: '12px',
+      }),
     ],
   });
   // Audio controls
   playbuttons[i].addEventListener('click', () => {
     if (playbuttons[i].className == "bx bx-play-circle") {
       wavesurfer_intro.playPause();
-        playbuttons[i].className = "bx bx-pause-circle";
+      playbuttons[i].className = "bx bx-pause-circle";
     } else {
       wavesurfer_intro.playPause();
       playbuttons[i].className = "bx bx-play-circle";
@@ -143,20 +131,20 @@ const wavesurfer_user = WaveSurfer.create({
   cursorColor: '#545454',
   sampleRate: 48000,
   plugins: [
-      Hover.create({
-          lineColor: '#fa8072',
-          lineWidth: 1.5,
-          labelBackground: '#777',
-          labelColor: '#fff',
-          labelSize: '12px',
-      }),
+    Hover.create({
+      lineColor: '#fa8072',
+      lineWidth: 1.5,
+      labelBackground: '#777',
+      labelColor: '#fff',
+      labelSize: '12px',
+    }),
   ],
 });
 // Audio controls
 playbuttons[3].addEventListener('click', () => {
   if (playbuttons[3].className == "bx bx-play-circle") {
     wavesurfer_user.playPause();
-      playbuttons[3].className = "bx bx-pause-circle";
+    playbuttons[3].className = "bx bx-pause-circle";
   } else {
     wavesurfer_user.playPause();
     playbuttons[3].className = "bx bx-play-circle";
@@ -177,124 +165,38 @@ wavesurfer_user.on('finish', () => {
 
 
 if (!(navigator.mediaDevices.getUserMedia)) {
-  console.log("MediaDevices.getUserMedia() not supported on your browser!");
   showErrorMsg("MediaDevices.getUserMedia() not supported on your browser!", "#errorsAboveHere");
 } else {
   console.log("The mediaDevices.getUserMedia() method is supported.");
 
-  const constraints = { audio: true };
-  let chunks = [];
-
-  let onSuccess = function (stream) {
-
-    mediaRecorder = new MediaRecorder(stream, { mimeType: deviceFormat });
-    visualize(stream);
-    
-    mediaRecorder.ondataavailable = function (event) {
-      chunks.push(event.data);
-    };
-
-    mediaRecorder.onstop = function () {
-      console.log("Data stream capture finished.");
-      // const userRecording = document.querySelector("#userRecording");
-
-      audioBlob = new Blob(chunks, { type : deviceFormat });
-      chunks = [];
-      
-      wavesurfer_user.loadBlob(audioBlob);
-
-      console.log("Preview loaded.");
-      record.textContent = "Re-record";
-    };
-    
-  };
-
-  let onError = function (err) {
-    console.log("The following error occured: " + err);
-    showErrorMsg(err, "#errorsAboveHere");
-  };
   // Request Audio permission on navigation
   navButton.addEventListener('click', () => {
     introductionPage.style.left = "-200%";
     introductionPage.style.opacity = "0";
-    
+
     setTimeout(() => {
-        introductionPage.style.display = "none";
-        audioRecordingPage.style.display = "block";
+      introductionPage.style.display = "none";
+      audioRecordingPage.style.display = "block";
     }, 350);
 
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 
     setTimeout(() => {
-        audioRecordingPage.style.opacity = "1";
-        navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
+      audioRecordingPage.style.opacity = "1";
+      if (!microphone) {
+        captureMicrophone(function (mic) {
+          microphone = mic;
+        });
+        return;
+      }
     }, 550);
   });
 }
 
 
 
-
-
-
-
-function visualize(stream) {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-
-  const source = audioCtx.createMediaStreamSource(stream);
-  const analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 4096;
-  const bufferLength = analyser.frequencyBinCount;
-  const dataArray = new Uint8Array(bufferLength);
-  analyser.getByteTimeDomainData(dataArray);
-
-  source.connect(analyser);
-
-  draw();
-
-  function draw() {
-    const vWidth = visualizer.width;
-    const vHeight = visualizer.height;
-  
-    requestAnimationFrame(draw);
-    
-    analyser.getByteTimeDomainData(dataArray);
-  
-    canvasCtx.fillStyle = "rgb(200, 200, 200)";
-    canvasCtx.fillRect(0, 0, vWidth, vHeight);
-    canvasCtx.lineWidth = 2;
-    canvasCtx.strokeStyle = "rgb(0, 0, 0)";
-    canvasCtx.beginPath();
-  
-    var sliceWidth = (vWidth * 1.0) / bufferLength;
-    var x = 0;
-  
-    for (let i = 0; i < bufferLength; i++) {
-      let v = dataArray[i] / 128.0;
-      let y = (v * vHeight) / 2;
-  
-      if (i === 0) {
-        canvasCtx.moveTo(x, y);
-      } else {
-        canvasCtx.lineTo(x, y);
-      }
-  
-      x += sliceWidth;
-      
-    }
-  
-    canvasCtx.lineTo(vWidth, vHeight / 2);
-    canvasCtx.stroke();
-    
-  }
-}
-
-
-
-function showErrorMsg(error, anchorSelector, above=true) {
+function showErrorMsg(error, anchorSelector, above = true) {
   if (!("content" in document.createElement("template"))) {
     alert('ERROR MESSAGE CANNOT BE DISPLAYED');
   } else {
@@ -309,14 +211,47 @@ function showErrorMsg(error, anchorSelector, above=true) {
     } else {
       parent.insertBefore(errorMsg, anchor.nextSibling);
     }
-    
+
   }
 
 }
 
 
 
+// RECORDER SET-UP FUNCTIONS
+function captureMicrophone(callback) {
 
+  if(microphone) {
+      callback(microphone);
+      return;
+  }
+
+  if(typeof navigator.mediaDevices === 'undefined' || !navigator.mediaDevices.getUserMedia) {
+      alert('This browser does not supports WebRTC getUserMedia API.');
+
+      if(!!navigator.getUserMedia) {
+          alert('This browser seems supporting deprecated getUserMedia API.');
+      }
+  }
+
+  navigator.mediaDevices.getUserMedia({
+      audio: isEdge ? true : {
+          echoCancellation: false
+      }
+  }).then(function(mic) {
+      callback(mic);
+  }).catch(function(error) {
+      alert('Unable to capture your microphone. Please check console logs.');
+  });
+}
+
+function stopRecordingCallback() {
+  audioBlob = recorder.getBlob()
+  wavesurfer_user.loadBlob(audioBlob);
+}
+
+
+// SWITCH BETWEEN START AND STOP RECORDING
 function recordUserAttempt() {
   if (recordingState == false) {
     startAttempt();
@@ -325,45 +260,83 @@ function recordUserAttempt() {
   }
 }
 
+
+// START RECORDING
 function startAttempt() {
-  wavesurfer_user.pause();
-  playbuttons[3].className = "bx bx-play-circle";
-  mediaRecorder.start();
-  console.log(mediaRecorder.state);
+
   console.log("Recorder started.");
   recordingState = true;
-  record.textContent = "Stop";
+
+  // Styling
+  wavesurfer_user.pause();
+  playbuttons[3].className = "bx bx-play-circle";
+  recordButton.textContent = "Stop";
   afterRecordingContainer.style.opacity = "0";
   setTimeout(() => {
     afterRecordingContainer.style.display = "none";
   }, 400);
   document.body.scrollTop = document.body.scrollHeight;
   document.documentElement.scrollTop = document.documentElement.scrollHeight;
+
+  // Reset Time Zero
   recordTimer = 0;
   startTime = Date.now();
+
+  // Start Recording
+  var options = {
+    type: 'audio',
+    numberOfAudioChannels: isEdge ? 1 : 2,
+    checkForInactiveTracks: true,
+    bufferSize: 16384
+  };
+  if (isSafari || isEdge) {
+    options.recorderType = StereoAudioRecorder;
+  }
+  if (navigator.platform && navigator.platform.toString().toLowerCase().indexOf('win') === -1) {
+    options.sampleRate = 48000; // or 44100 or remove this line for default
+  }
+  if (isSafari) {
+    options.sampleRate = 44100;
+    options.bufferSize = 4096;
+    options.numberOfAudioChannels = 2;
+  }
+  if (recorder) {
+    recorder.destroy();
+    recorder = null;
+  }
+  recorder = RecordRTC(microphone, options);
+  recorder.startRecording();
+
+  // Log Time
   timerIncrement();
   recordIntervalObject = setInterval(timerIncrement, 500);
   timeoutObject = setTimeout(stopAttempt, 30000);
 }
 
+
+// STOP RECORDING
 function stopAttempt () {
-  mediaRecorder.stop();
-  console.log(mediaRecorder.state);
+  // Stop Recording
+  recorder.stopRecording(stopRecordingCallback);
   console.log("Recorder stopped.");
   recordingState = false;
-  record.textContent = "Record";
+
+  // Styling
+  recordButton.textContent = "Re-record";
   afterRecordingContainer.style.display = "block";
   document.body.scrollTop = document.body.scrollHeight;
   document.documentElement.scrollTop = document.documentElement.scrollHeight;
   setTimeout(() => {
     afterRecordingContainer.style.opacity = "1";
   }, 200);
-  // timerIncrement();
+
+  // Log Time
   duration = (Date.now() - startTime) / 1000;
   clearInterval(recordIntervalObject);
   clearTimeout(timeoutObject);
 }
 
+// Time Increment Function for Recording
 function timerIncrement() {
   let seconds = recordTimer / 2;
   let 
@@ -374,11 +347,8 @@ function timerIncrement() {
 }
 
 
-
 // Event listener for record button
-record.addEventListener('click', () => {
-  // Record user's mimicry attempt
-  // alert('RECORD');
+recordButton.addEventListener('click', () => {
   recordUserAttempt();
 });
 
@@ -418,8 +388,8 @@ const waveformContainer = document.querySelector("#reference-waveform-container"
 
 var formatTime = function (time) {
   return [
-      ('00' + Math.floor((time % 3600) / 60)).slice(-2), // minutes
-      ('00' + Math.floor(time % 60)).slice(-2) // seconds
+    ('00' + Math.floor((time % 3600) / 60)).slice(-2), // minutes
+    ('00' + Math.floor(time % 60)).slice(-2) // seconds
   ].join(':');
 };
 
@@ -431,11 +401,10 @@ window.addEventListener("load", () => {
 });
 
 
-
 function uploadAudioFile(referenceClipName, wavBlob) {
 
   // Referencing target user audio location
-  const useraudioRef = refS(storage, `training_data/${referenceClipName}/${Date.now()}${extension}`);
+  const useraudioRef = refS(storage, `training_data/${referenceClipName}/${Date.now()}.webm`);
 
   // Upload audio to database
   uploadBytes(useraudioRef, wavBlob);
@@ -461,20 +430,20 @@ function fetchAudioFile() {
     cursorColor: '#545454',
     sampleRate: 48000,
     plugins: [
-        Hover.create({
-            lineColor: '#fa8072',
-            lineWidth: 1.5,
-            labelBackground: '#777',
-            labelColor: '#fff',
-            labelSize: '12px',
-        }),
+      Hover.create({
+        lineColor: '#fa8072',
+        lineWidth: 1.5,
+        labelBackground: '#777',
+        labelColor: '#fff',
+        labelSize: '12px',
+      }),
     ],
   });
   // Audio controls
   playbuttons[2].addEventListener('click', () => {
     if (playbuttons[2].className == "bx bx-play-circle") {
       wavesurfer.playPause();
-        playbuttons[2].className = "bx bx-pause-circle";
+      playbuttons[2].className = "bx bx-pause-circle";
     } else {
       wavesurfer.playPause();
       playbuttons[2].className = "bx bx-play-circle";
@@ -508,86 +477,84 @@ function fetchAudioFile() {
 
     // Get audio file URL and load selected audio file
     getDownloadURL(randomAudioRef)
-    .then((url) => {
-      // Method 1: Wavesurfer visualisation
-      // wavesurfer.load('css/debug/DEBUG_AUDIO.mp3'); // For debug purpose
-      wavesurfer.load(url);
-      // Method 2: Using default audio plugin
-      // audioSource.src = url;
-    })
-    .catch((error) => {
-      showErrorMsg(error.message, "#errorsAboveHere");
-    });
+      .then((url) => {
+        // Wavesurfer visualisation
+        // wavesurfer.load('css/debug/DEBUG_AUDIO.mp3'); // For debug purpose
+        wavesurfer.load(url);
+      })
+      .catch((error) => {
+        showErrorMsg(error.message, "#errorsAboveHere");
+      });
     // Return filename of the randomly selected audio, matching user's audio to the correct label
     var lastIndex = randomAudioName.lastIndexOf(".");
     return randomAudioName.substring(0, lastIndex);
   })
-  .then((randomAudioName) => {
-    audioname.textContent = randomAudioName;
-    const referenceAudioFolderRef = refS(storage, `labels/${randomAudioName}.m4a`);
-    getDownloadURL(referenceAudioFolderRef)
-    .then((url) => {
-      
-      var audio = new Audio(url)
+    .then((randomAudioName) => {
+      audioname.textContent = randomAudioName;
+      const referenceAudioFolderRef = refS(storage, `labels/${randomAudioName}.m4a`);
+      getDownloadURL(referenceAudioFolderRef)
+        .then((url) => {
 
-      audio.addEventListener("loadedmetadata", () => {
-        referenceAudioDuration = audio.duration;
-        var leastDuration = Math.floor(referenceAudioDuration * 0.8);
-        var mostDuration = Math.ceil(referenceAudioDuration * 1.2);
-        leastDurationText.textContent = leastDuration;
-        mostDurationText.textContent = mostDuration;
+          var audio = new Audio(url)
 
-        // SUBMIT AUDIO
-        const submitButton = document.querySelector(".sbutton");
-        submitButton.addEventListener("click", () => {
-          // Audio Validation
-          if (duration >= leastDuration && duration <= mostDuration) {
-            
-            // Upload file to Firebase
-            uploadAudioFile(randomAudioName, audioBlob);
-            let chunks = [];
-            audioBlob = new Blob(chunks, { type : deviceFormat });
-            duration = 0;
-            timerText.textContent = "00.00";
-            record.textContent = "Record";
+          audio.addEventListener("loadedmetadata", () => {
+            referenceAudioDuration = audio.duration;
+            var leastDuration = Math.floor(referenceAudioDuration * 0.8);
+            var mostDuration = Math.ceil(referenceAudioDuration * 1.2);
+            leastDurationText.textContent = leastDuration;
+            mostDurationText.textContent = mostDuration;
 
-            // Navigate to post-submit page
-            audioRecordingPage.style.left = "-200%";
-            audioRecordingPage.style.opacity = "0";
-            afterRecordingContainer.style.display = "none";
-            afterRecordingContainer.style.opacity = "0";
-            
-            setTimeout(() => {
-              audioRecordingPage.style.display = "none";
-              postSubmitPage.style.display = "block";
-            }, 350);
-            
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-            pageHeader.innerHTML = HEADER2;
-            
-            setTimeout(() => {
-              postSubmitPage.style.opacity = "1";
-            }, 550);
+            // SUBMIT AUDIO
+            const submitButton = document.querySelector(".sbutton");
+            submitButton.addEventListener("click", () => {
+              // Audio Validation
+              if (duration >= leastDuration && duration <= mostDuration) {
 
-          } else {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-            showErrorMsg("Invalid duration. Remember: " + leastDuration + "-" + mostDuration + "s!", "#errorsAboveHere");
-            timerText.textContent = "00.00";
-          }
+                // Upload file to Firebase
+                uploadAudioFile(randomAudioName, audioBlob);
+                let chunks = [];
+                audioBlob = new Blob(chunks, { type: 'audio/webm' });
+                duration = 0;
+                timerText.textContent = "00.00";
+                recordButton.textContent = "Record";
+
+                // Navigate to post-submit page
+                audioRecordingPage.style.left = "-200%";
+                audioRecordingPage.style.opacity = "0";
+                afterRecordingContainer.style.display = "none";
+                afterRecordingContainer.style.opacity = "0";
+
+                setTimeout(() => {
+                  audioRecordingPage.style.display = "none";
+                  postSubmitPage.style.display = "block";
+                }, 350);
+
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+                pageHeader.innerHTML = HEADER2;
+
+                setTimeout(() => {
+                  postSubmitPage.style.opacity = "1";
+                }, 550);
+
+              } else {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+                showErrorMsg("Invalid duration. Remember: " + leastDuration + "-" + mostDuration + "s!", "#errorsAboveHere");
+                timerText.textContent = "00.00";
+              }
+            });
+          });
+
+        })
+        .catch((error) => {
+          showErrorMsg(error.message, "#errorsAboveHere");
         });
-      });
 
     })
     .catch((error) => {
       showErrorMsg(error.message, "#errorsAboveHere");
     });
-
-  })
-  .catch((error) => {
-    showErrorMsg(error.message, "#errorsAboveHere");
-  });
 }
 
 
@@ -598,11 +565,8 @@ function fetchAudioFile() {
 
 
 // MAILIING LIST
-
-
 const emailAddress = document.getElementById('newsletterEmailAddress');
 const newsletterSubButton = document.getElementById('newsletter-subscribe');
-
 
 function sendEmailAddress() {
   set(refD(database, `mailing_list/${Date.now()}`), emailAddress.value);
@@ -620,7 +584,7 @@ function checkInputs() {
   }
 
   emailAddress.addEventListener("keyup", () => {
-      checkEmail();
+    checkEmail();
   });
 }
 
@@ -629,27 +593,27 @@ function checkEmail() {
   const emailAddressErr = document.querySelector(".error-text.newsletter-email");
 
   if (!emailAddress.value.match(emailRegex)) {
-      emailAddress.classList.add("error");
-      emailAddress.parentElement.classList.add("error");
+    emailAddress.classList.add("error");
+    emailAddress.parentElement.classList.add("error");
 
-      if (emailAddress.value != "") {
-          emailAddressErr.innerText = "* Please provide a valid email address";
-      } else {
-          emailAddressErr.innerText = "* Required";
-      }
+    if (emailAddress.value != "") {
+      emailAddressErr.innerText = "* Please provide a valid email address";
+    } else {
+      emailAddressErr.innerText = "* Required";
+    }
   } else {
-      emailAddress.classList.remove("error");
-      emailAddress.parentElement.classList.remove("error");
+    emailAddress.classList.remove("error");
+    emailAddress.parentElement.classList.remove("error");
   }
 }
 
 newsletterSubButton.addEventListener("click", (e) => {
-  
+
   checkInputs();
 
   if (!emailAddress.classList.contains("error")) {
-      // Send Email Address to Database
-      sendEmailAddress();
+    // Send Email Address to Database
+    sendEmailAddress();
   }
 
 });

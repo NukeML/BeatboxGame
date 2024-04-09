@@ -304,15 +304,15 @@ function startAttempt() {
     recorder.destroy();
     recorder = null;
   }
-  setTimeout(() => {
-    recorder = RecordRTC(microphone, options);
-    recorder.startRecording();
+  
+  recorder = RecordRTC(microphone, options);
+  recorder.startRecording();
 
-    // Log Time
-    timerIncrement();
-    recordIntervalObject = setInterval(timerIncrement, 500);
-    timeoutObject = setTimeout(stopAttempt, 30000);
-  }, 2000);
+  // Log Time
+  timerIncrement();
+  recordIntervalObject = setInterval(timerIncrement, 500);
+  timeoutObject = setTimeout(stopAttempt, 30000);
+  
 }
 
 

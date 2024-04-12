@@ -4,9 +4,24 @@ import { getDatabase, ref as refD, set, child, get } from 'https://www.gstatic.c
 import { getStorage, ref as refS, uploadBytes, getDownloadURL, list, listAll } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js';
-import Hover from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/hover.esm.js';
-// TODO: MICROPHONE PERMISSION ONLY ON "PAGE" 2
+
+// import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js';
+// ABOVE wavesurfer source is down. Using BELOW local source instead:
+import WaveSurfer from './wavesurfer.js';
+
+// import Hover from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/hover.esm.js';
+// ABOVE wavesurfer source is down. Using the BELOW local source, but also making the Hover-related code (wavesurfer instantiation plugins parameter) into a variable:
+import Hover from './wavesurfer_hover.js';
+const hoverPlugin = Hover ? Hover.create({
+  lineColor: '#fa8072',
+  lineWidth: 1.5,
+  labelBackground: '#777',
+  labelColor: '#fff',
+  labelSize: '12px',
+}) : null;
+
+// TODO: turn all uncertain imports (unpkg.com, cloudflare) into try...catch blocks with options to import locally, and show error messages if all fail.
+
 
 
 const recordButton = document.querySelector("#recordButton");
@@ -36,10 +51,39 @@ const HEADER2 = "Submission successful.<br>Thanks for playing!";
 const playbuttons = document.querySelectorAll(".audio-player i");
 const audioDurations = document.querySelectorAll(".audio-duration");
 
+// detections for audio recording functionality
 var isEdge = navigator.userAgent.indexOf('Edge') !== -1 && (!!navigator.msSaveOrOpenBlob || !!navigator.msSaveBlob);
 var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
 var recorder;
 var microphone;
+
+// configurations for RecordRTC
+// DO NOT DELETE commented parts. only commented for debug purposes
+const RTC_CONFIG = {
+  type: 'audio',
+  mimeType: 'audio/webm',
+  // numberOfAudioChannels: isEdge ? 1 : 2,
+  // numberOfAudioChannels: 1,
+  recorderType: StereoAudioRecorder,
+  timeSlice: 200,
+  numberOfAudioChannels: 1
+};
+// const RecorderType = GetRecorderType(RTC_CONFIG);
+// RTC_CONFIG.recorderType = RecorderType;
+
+// DO NOT DELETE. only commented for debug purposes
+// if (isSafari || isEdge) {
+//   RTC_CONFIG.recorderType = StereoAudioRecorder;
+// }
+// if (navigator.platform && navigator.platform.toString().toLowerCase().indexOf('win') === -1) {
+//   RTC_CONFIG.sampleRate = 48000; // or 44100 or remove this line for default
+// }
+// if (isSafari) {
+//   RTC_CONFIG.sampleRate = 44100;
+//   RTC_CONFIG.bufferSize = 4096;
+//   RTC_CONFIG.numberOfAudioChannels = 2;
+// }
 
 
 
@@ -84,13 +128,7 @@ for (let i = 0; i < 2; i++) {
     url: introAudioPlaylist[i],
     sampleRate: 48000,
     plugins: [
-      Hover.create({
-        lineColor: '#fa8072',
-        lineWidth: 1.5,
-        labelBackground: '#777',
-        labelColor: '#fff',
-        labelSize: '12px',
-      }),
+      hoverPlugin
     ],
   });
   // Audio controls
@@ -131,13 +169,7 @@ const wavesurfer_user = WaveSurfer.create({
   cursorColor: '#545454',
   sampleRate: 48000,
   plugins: [
-    Hover.create({
-      lineColor: '#fa8072',
-      lineWidth: 1.5,
-      labelBackground: '#777',
-      labelColor: '#fff',
-      labelSize: '12px',
-    }),
+    hoverPlugin
   ],
 });
 // Audio controls
@@ -164,8 +196,8 @@ wavesurfer_user.on('finish', () => {
 });
 
 
-if (!(navigator.mediaDevices.getUserMedia)) {
-  showErrorMsg("MediaDevices.getUserMedia() not supported on your browser!", "#errorsAboveHere");
+if (typeof navigator.mediaDevices === 'undefined' || !navigator.mediaDevices.getUserMedia) {
+  showErrorMsg("mediaDevices.getUserMedia() not supported on your browser. Microphone cannot be used.", "#errorsAboveHere");
 } else {
   console.log("The mediaDevices.getUserMedia() method is supported.");
 
@@ -226,12 +258,8 @@ function captureMicrophone(callback) {
       return;
   }
 
-  if(typeof navigator.mediaDevices === 'undefined' || !navigator.mediaDevices.getUserMedia) {
-      alert('This browser does not supports WebRTC getUserMedia API.');
-
-      if(!!navigator.getUserMedia) {
-          alert('This browser seems supporting deprecated getUserMedia API.');
-      }
+  if(!!navigator.getUserMedia) {
+      showErrorMsg("Your browser is using a deprecated version of getUserMedia. Some features may be unusable.", "#errorsAboveHere");
   }
 
   navigator.mediaDevices.getUserMedia({
@@ -240,8 +268,8 @@ function captureMicrophone(callback) {
       }
   }).then(function(mic) {
       callback(mic);
-  }).catch(function(error) {
-      alert('Unable to capture your microphone. Please check console logs.');
+  }).catch( (error) => {
+      showErrorMsg(error.message, "#errorsAboveHere");
   });
 }
 
@@ -282,30 +310,13 @@ function startAttempt() {
   recordTimer = 0;
   startTime = Date.now();
 
-  // Start Recording
-  var options = {
-    type: 'audio',
-    numberOfAudioChannels: isEdge ? 1 : 2,
-    checkForInactiveTracks: true,
-    bufferSize: 16384
-  };
-  if (isSafari || isEdge) {
-    options.recorderType = StereoAudioRecorder;
-  }
-  if (navigator.platform && navigator.platform.toString().toLowerCase().indexOf('win') === -1) {
-    options.sampleRate = 48000; // or 44100 or remove this line for default
-  }
-  if (isSafari) {
-    options.sampleRate = 44100;
-    options.bufferSize = 4096;
-    options.numberOfAudioChannels = 2;
-  }
+
+  // Start recording
   if (recorder) {
     recorder.destroy();
     recorder = null;
   }
-  
-  recorder = RecordRTC(microphone, options);
+  recorder = RecordRTC(microphone, RTC_CONFIG);
   recorder.startRecording();
 
   // Log Time
@@ -427,13 +438,7 @@ function fetchAudioFile() {
     cursorColor: '#545454',
     sampleRate: 48000,
     plugins: [
-      Hover.create({
-        lineColor: '#fa8072',
-        lineWidth: 1.5,
-        labelBackground: '#777',
-        labelColor: '#fff',
-        labelSize: '12px',
-      }),
+      hoverPlugin
     ],
   });
   // Audio controls

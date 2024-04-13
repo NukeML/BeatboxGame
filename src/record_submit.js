@@ -36,6 +36,9 @@ let startTime;
 let duration = 0;
 const leastDurationText = document.querySelector("#leastDuration");
 const mostDurationText = document.querySelector("#mostDuration");
+var referenceAudioDuration;
+var leastDuration;
+var mostDuration;
 
 
 const introductionPage = document.querySelector('.introduction-page');
@@ -258,9 +261,9 @@ function captureMicrophone(callback) {
       return;
   }
 
-  if(!!navigator.getUserMedia) {
-      showErrorMsg("Your browser is using a deprecated version of getUserMedia. Some features may be unusable.", "#errorsAboveHere");
-  }
+  // if(!!navigator.getUserMedia) {
+  //     showErrorMsg("Your browser is using a deprecated version of getUserMedia. Some features may be unusable.", "#errorsAboveHere");
+  // }
 
   navigator.mediaDevices.getUserMedia({
       audio: isEdge ? true : {
@@ -320,9 +323,9 @@ function startAttempt() {
   recorder.startRecording();
 
   // Log Time
-  timerIncrement();
   recordIntervalObject = setInterval(timerIncrement, 500);
-  timeoutObject = setTimeout(stopAttempt, 30000);
+  timeoutObject = setTimeout(stopAttempt, mostDuration * 1000);
+  timerIncrement();
   
 }
 
@@ -423,7 +426,7 @@ function uploadAudioFile(referenceClipName, wavBlob) {
 // SUBMIT BUTTON ONCLICK IS HERE
 function fetchAudioFile() {
 
-  var referenceAudioDuration;
+  recordButton.disabled = true;
 
   const referenceAudioFolderRef = refS(storage, "labels/");
 
@@ -475,6 +478,7 @@ function fetchAudioFile() {
     // Randomly select one audio file from the list
     const randomIndex = Math.floor(Math.random() * referenceAudioList.length);
     const randomAudioName = referenceAudioList[randomIndex];
+    // const randomAudioName = referenceAudioList[7];
     const randomAudioRef = refS(storage, "labels/" + randomAudioName);
 
     // Get audio file URL and load selected audio file
@@ -501,16 +505,17 @@ function fetchAudioFile() {
 
           audio.addEventListener("loadedmetadata", () => {
             referenceAudioDuration = audio.duration;
-            var leastDuration = Math.floor(referenceAudioDuration * 0.8);
-            var mostDuration = Math.ceil(referenceAudioDuration * 1.2);
-            leastDurationText.textContent = leastDuration;
-            mostDurationText.textContent = mostDuration;
+            leastDuration = (Math.floor(referenceAudioDuration) * 0.9);
+            mostDuration = (Math.ceil(referenceAudioDuration) * 1.1);
+            leastDurationText.textContent = Math.floor(leastDuration);
+            mostDurationText.textContent = Math.ceil(mostDuration);
+            recordButton.disabled = false;
 
             // SUBMIT AUDIO
             const submitButton = document.querySelector(".sbutton");
             submitButton.addEventListener("click", () => {
               // Audio Validation
-              if (duration >= leastDuration && duration <= mostDuration) {
+              if (duration >= Math.floor(leastDuration) && duration <= Math.ceil(mostDuration)) {
 
                 // Upload file to Firebase
                 uploadAudioFile(randomAudioName, audioBlob);

@@ -287,7 +287,7 @@ function recordUserAttempt() {
   if (recordingState == false) {
     startAttempt();
   } else {
-    stopAttempt();
+    stopAttempt(true);
   }
 }
 
@@ -331,7 +331,7 @@ function startAttempt() {
 
 
 // STOP RECORDING
-function stopAttempt () {
+function stopAttempt (manual=false) {
   // Stop Recording
   recorder.stopRecording(stopRecordingCallback);
   console.log("Recorder stopped.");
@@ -350,15 +350,21 @@ function stopAttempt () {
   duration = (Date.now() - startTime) / 1000;
   clearInterval(recordIntervalObject);
   clearTimeout(timeoutObject);
+
+  // distinguish between manual stop and auto stop
+  if (manual == false) {
+    console.log("Recording time limit reached.");
+  }
 }
 
 // Time Increment Function for Recording
 function timerIncrement() {
   let seconds = recordTimer / 2;
-  let 
-    tens = Math.floor(seconds / 10).toFixed(0),
-    ones = (seconds % 10).toFixed(1) + '0';
-  timerText.textContent = tens + ones;
+  // let 
+  //   tens = Math.floor(seconds / 10).toFixed(0),
+  //   ones = (seconds % 10).toFixed(1);
+  // timerText.textContent = tens + ones;
+  timerText.textContent = seconds.toFixed(1);
   recordTimer++;
 }
 
@@ -506,9 +512,9 @@ function fetchAudioFile() {
           audio.addEventListener("loadedmetadata", () => {
             referenceAudioDuration = audio.duration;
             leastDuration = (Math.floor(referenceAudioDuration) * 0.9);
-            mostDuration = (Math.ceil(referenceAudioDuration) * 1.1);
+            mostDuration = (Math.ceil(referenceAudioDuration) * 1.3);
             leastDurationText.textContent = Math.floor(leastDuration);
-            mostDurationText.textContent = Math.ceil(mostDuration);
+            mostDurationText.textContent = Math.floor(mostDuration);
             recordButton.disabled = false;
 
             // SUBMIT AUDIO
@@ -522,7 +528,7 @@ function fetchAudioFile() {
                 let chunks = [];
                 audioBlob = new Blob(chunks, { type: 'audio/webm' });
                 duration = 0;
-                timerText.textContent = "00.00";
+                timerText.textContent = "0.0";
                 recordButton.textContent = "Record";
 
                 // Navigate to post-submit page

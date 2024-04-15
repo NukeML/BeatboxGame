@@ -580,7 +580,7 @@ const newsletterSubButton = document.getElementById('newsletter-subscribe');
 
 function sendEmailAddress() {
   set(refD(database, `mailing_list/${Date.now()}`), emailAddress.value);
-  alert('Successfully signed up for newsletter!');
+  alert("Thanks for signing up! We'll be in touch :)");
   // Clearing form input field
   emailAddress.value = "";
 }

@@ -171,6 +171,7 @@ const wavesurfer_user = WaveSurfer.create({
   cursorWidth: 1.5,
   cursorColor: '#545454',
   sampleRate: 48000,
+  normalize: true,
   plugins: [
     hoverPlugin
   ],

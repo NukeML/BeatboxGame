@@ -43,6 +43,10 @@ var mostDuration;
 
 const introductionPage = document.querySelector('.introduction-page');
 const navButton = document.querySelector('.navButton');
+const consentAgreementPopUp = document.querySelector('.consent-agreement-box');
+const consentAgreementContent = document.querySelector('.consent-agreement-content');
+const disagreeButton = document.querySelector('.disagree-button');
+const agreeButton = document.querySelector('.agree-button');
 const audioRecordingPage = document.querySelector('.audio-recording-page');
 const postSubmitPage = document.querySelector('.post-submit-page');
 const pageHeader = document.getElementById('header');
@@ -207,16 +211,30 @@ if (typeof navigator.mediaDevices === 'undefined' || !navigator.mediaDevices.get
 
   // Request Audio permission on navigation
   navButton.addEventListener('click', () => {
+    consentAgreementPopUp.classList.remove("hidden");
+    setTimeout(() => { consentAgreementPopUp.style.opacity = 1; }, 280);
+  });
+
+  // Require user's consent
+  // Disagree action
+  disagreeButton.addEventListener("click", () => {
+    consentAgreementPopUp.style.opacity = 0;
+    consentAgreementContent.scrollTop = 0;
+    setTimeout(() => { consentAgreementPopUp.classList.add("hidden"); }, 280);
+  });
+  // Agree action
+  agreeButton.addEventListener("click", () => {
+    consentAgreementPopUp.style.opacity = 0;
+    setTimeout(() => { consentAgreementPopUp.classList.add("hidden"); }, 280);
+
     introductionPage.style.left = "-200%";
     introductionPage.style.opacity = "0";
-
     setTimeout(() => {
       introductionPage.style.display = "none";
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
       audioRecordingPage.style.display = "block";
     }, 350);
-
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
 
     setTimeout(() => {
       audioRecordingPage.style.opacity = "1";

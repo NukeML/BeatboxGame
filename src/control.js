@@ -6,6 +6,9 @@ const navbackButton = document.querySelector('.navbackButton');
 const infoButton = document.querySelector('.infoButton');
 const infoButtonIcon = document.querySelector('.infoButton i');
 const moreInfoContent = document.querySelector('.more-info-content');
+const consentAgreementContent = document.querySelector('.consent-agreement-content');
+const consentDisagreeButton = document.querySelector('.disagree-button');
+const consentAgreeButton = document.querySelector('.agree-button');
 
 
 infoButton.addEventListener("click", () => {
@@ -37,4 +40,17 @@ navbackButton.addEventListener('click', () => {
         window.location.reload();
     }, 850);
     
+});
+
+
+// CONSENT AGREEMENT CHECK
+consentAgreementContent.addEventListener("scroll", () => {
+    // When scrolled to bottom, enable consent buttons
+    if (consentAgreementContent.scrollTop + consentAgreementContent.clientHeight >= consentAgreementContent.scrollHeight) {
+        consentDisagreeButton.disabled = false;
+        consentAgreeButton.disabled = false;
+    } else {
+        consentDisagreeButton.disabled = true;
+        consentAgreeButton.disabled = true;
+    }
 });

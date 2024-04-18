@@ -239,7 +239,7 @@ body {
     align-self: center;
     color: aliceblue;
     font-size: 2.2rem;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .consent-agreement-instruction {
@@ -248,7 +248,7 @@ body {
     align-self: left;
     color: aliceblue;
     font-size: 1.5rem;
-    font-weight: 800;
+    font-weight: 400;
 }
 
 .consent-agreement-content {
@@ -257,7 +257,7 @@ body {
     align-self: center;
     text-align: justify;
     color: aliceblue;
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: 400;
     background: rgba(105, 105, 105, 0.7);
     padding: 1em 2em 1em 2em;

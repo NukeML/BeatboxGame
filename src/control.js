@@ -44,9 +44,10 @@ navbackButton.addEventListener('click', () => {
 
 
 // CONSENT AGREEMENT CHECK
+const scrollThreshold = 0.85;
 consentAgreementContent.addEventListener("scroll", () => {
     // When scrolled to bottom, enable consent buttons
-    if (consentAgreementContent.scrollTop + consentAgreementContent.clientHeight >= consentAgreementContent.scrollHeight) {
+    if (consentAgreementContent.scrollTop + consentAgreementContent.clientHeight >= consentAgreementContent.scrollHeight * scrollThreshold) {
         consentDisagreeButton.disabled = false;
         consentAgreeButton.disabled = false;
     } else {

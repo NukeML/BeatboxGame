@@ -272,6 +272,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 3em;
+    margin-bottom: 2em;
 }
 
 .consent-button {

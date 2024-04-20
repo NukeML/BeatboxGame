@@ -50,6 +50,8 @@ const agreeButton = document.querySelector('.agree-button');
 const audioRecordingPage = document.querySelector('.audio-recording-page');
 const postSubmitPage = document.querySelector('.post-submit-page');
 const pageHeader = document.getElementById('header');
+const navbackButton = document.querySelector('.navbackButton');
+const errorMsgContainer = document.querySelector('.errorMsgContainer');
 
 const HEADER1 = "Beatbox Imitation Game";
 const HEADER2 = "Submission successful.<br>Thanks for playing!";
@@ -57,6 +59,8 @@ const HEADER2 = "Submission successful.<br>Thanks for playing!";
 
 const playbuttons = document.querySelectorAll(".audio-player i");
 const audioDurations = document.querySelectorAll(".audio-duration");
+
+var isConsentAgreed = false;
 
 // detections for audio recording functionality
 var isEdge = navigator.userAgent.indexOf('Edge') !== -1 && (!!navigator.msSaveOrOpenBlob || !!navigator.msSaveBlob);
@@ -205,14 +209,35 @@ wavesurfer_user.on('finish', () => {
 
 
 if (typeof navigator.mediaDevices === 'undefined' || !navigator.mediaDevices.getUserMedia) {
-  showErrorMsg("mediaDevices.getUserMedia() not supported on your browser. Microphone cannot be used.", "#errorsAboveHere");
+  showErrorMsg("mediaDevices.getUserMedia() not supported on your browser. Microphone cannot be used.");
 } else {
   console.log("The mediaDevices.getUserMedia() method is supported.");
 
   // Request Audio permission on navigation
   navButton.addEventListener('click', () => {
-    consentAgreementPopUp.classList.remove("hidden");
-    setTimeout(() => { consentAgreementPopUp.style.opacity = 1; }, 280);
+    if (!isConsentAgreed) {
+      consentAgreementPopUp.classList.remove("hidden");
+      setTimeout(() => { consentAgreementPopUp.style.opacity = 1; }, 280);
+    } else {
+      introductionPage.style.left = "-200%";
+      introductionPage.style.opacity = "0";
+      setTimeout(() => {
+        introductionPage.style.display = "none";
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        audioRecordingPage.style.display = "block";
+      }, 350);
+
+      setTimeout(() => {
+        audioRecordingPage.style.opacity = "1";
+        if (!microphone) {
+          captureMicrophone(function (mic) {
+            microphone = mic;
+          });
+          return;
+        }
+      }, 550);
+    }
   });
 
   // Require user's consent
@@ -248,26 +273,20 @@ if (typeof navigator.mediaDevices === 'undefined' || !navigator.mediaDevices.get
   });
 }
 
-
-
-function showErrorMsg(error, anchorSelector, above = true) {
-  if (!("content" in document.createElement("template"))) {
-    alert('ERROR MESSAGE CANNOT BE DISPLAYED');
-  } else {
-    const anchor = document.querySelector(anchorSelector);
-    const parent = anchor.parentNode;
-    const template = document.querySelector("#errorMsg");
-    const errorMsg = template.content.cloneNode(true);
-    var errorMsgText = errorMsg.querySelector(".error-msg-innertext");
-    errorMsgText.textContent = "Error: " + String(error);
-    if (above == true) {
-      parent.insertBefore(errorMsg, anchor);
-    } else {
-      parent.insertBefore(errorMsg, anchor.nextSibling);
-    }
-
+function removeErrorMsg() {
+  while(errorMsgContainer.childElementCount > 0) {
+    errorMsgContainer.removeChild(errorMsgContainer.lastElementChild);
   }
+}
 
+function showErrorMsg(error) {
+  const template = document.querySelector("#errorMsg");
+  const errorMsg = template.content.cloneNode(true);
+  var errorMsgText = errorMsg.querySelector(".error-msg-innertext");
+  // const closeErrorMsgButton = errorMsg.querySelector('.closebtn');
+  // closeErrorMsgButton.addEventListener("click", () => { errorMsg.querySelector('error-msg').style.display = "none"; });
+  errorMsgText.textContent = "Error: " + String(error);
+  errorMsgContainer.appendChild(errorMsg);
 }
 
 
@@ -280,10 +299,6 @@ function captureMicrophone(callback) {
       return;
   }
 
-  // if(!!navigator.getUserMedia) {
-  //     showErrorMsg("Your browser is using a deprecated version of getUserMedia. Some features may be unusable.", "#errorsAboveHere");
-  // }
-
   navigator.mediaDevices.getUserMedia({
       audio: isEdge ? true : {
           echoCancellation: false
@@ -291,7 +306,7 @@ function captureMicrophone(callback) {
   }).then(function(mic) {
       callback(mic);
   }).catch( (error) => {
-      showErrorMsg(error.message, "#errorsAboveHere");
+      showErrorMsg(error.message);
   });
 }
 
@@ -390,6 +405,7 @@ function timerIncrement() {
 
 // Event listener for record button
 recordButton.addEventListener('click', () => {
+  removeErrorMsg();
   recordUserAttempt();
 });
 
@@ -448,49 +464,49 @@ function uploadAudioFile(referenceClipName, wavBlob) {
 
 }
 
+// WAVESURFER AUDIO VISUALISER SET-UP
+const wavesurfer = WaveSurfer.create({
+  container: waveformContainer,
+  waveColor: '#ad961f',
+  progressColor: '#877416',
+  responsive: true,
+  height: empirical(7),
+  cursorWidth: 1.5,
+  cursorColor: '#545454',
+  sampleRate: 48000,
+  plugins: [
+    hoverPlugin
+  ],
+});
+// Audio controls
+playbuttons[2].addEventListener('click', () => {
+  if (playbuttons[2].className == "bx bx-play-circle") {
+    wavesurfer.playPause();
+    playbuttons[2].className = "bx bx-pause-circle";
+  } else {
+    wavesurfer.playPause();
+    playbuttons[2].className = "bx bx-play-circle";
+  }
+});
+// Show current time
+wavesurfer.on('ready', function () {
+  audioDurations[2].textContent = formatTime(wavesurfer.getDuration());
+});
+// Show current time
+wavesurfer.on('audioprocess', function () {
+  audioDurations[2].textContent = formatTime(wavesurfer.getCurrentTime());
+});
+// When audio ends
+wavesurfer.on('finish', () => {
+  playbuttons[2].className = "bx bx-play-circle";
+});
+
 // SUBMIT BUTTON ONCLICK IS HERE
 function fetchAudioFile() {
 
   recordButton.disabled = true;
 
   const referenceAudioFolderRef = refS(storage, "labels/");
-
-  // WAVESURFER AUDIO VISUALISER SET-UP
-  const wavesurfer = WaveSurfer.create({
-    container: waveformContainer,
-    waveColor: '#ad961f',
-    progressColor: '#877416',
-    responsive: true,
-    height: empirical(7),
-    cursorWidth: 1.5,
-    cursorColor: '#545454',
-    sampleRate: 48000,
-    plugins: [
-      hoverPlugin
-    ],
-  });
-  // Audio controls
-  playbuttons[2].addEventListener('click', () => {
-    if (playbuttons[2].className == "bx bx-play-circle") {
-      wavesurfer.playPause();
-      playbuttons[2].className = "bx bx-pause-circle";
-    } else {
-      wavesurfer.playPause();
-      playbuttons[2].className = "bx bx-play-circle";
-    }
-  });
-  // Show current time
-  wavesurfer.on('ready', function () {
-    audioDurations[2].textContent = formatTime(wavesurfer.getDuration());
-  });
-  // Show current time
-  wavesurfer.on('audioprocess', function () {
-    audioDurations[2].textContent = formatTime(wavesurfer.getCurrentTime());
-  });
-  // When audio ends
-  wavesurfer.on('finish', () => {
-    playbuttons[2].className = "bx bx-play-circle";
-  });
 
   return listAll(referenceAudioFolderRef).then((result) => {
 
@@ -503,18 +519,16 @@ function fetchAudioFile() {
     // Randomly select one audio file from the list
     const randomIndex = Math.floor(Math.random() * referenceAudioList.length);
     const randomAudioName = referenceAudioList[randomIndex];
-    // const randomAudioName = referenceAudioList[7];
     const randomAudioRef = refS(storage, "labels/" + randomAudioName);
 
     // Get audio file URL and load selected audio file
     getDownloadURL(randomAudioRef)
       .then((url) => {
         // Wavesurfer visualisation
-        // wavesurfer.load('css/debug/DEBUG_AUDIO.mp3'); // For debug purpose
         wavesurfer.load(url);
       })
       .catch((error) => {
-        showErrorMsg(error.message, "#errorsAboveHere");
+        showErrorMsg(error.message);
       });
     // Return filename of the randomly selected audio, matching user's audio to the correct label
     var lastIndex = randomAudioName.lastIndexOf(".");
@@ -526,7 +540,7 @@ function fetchAudioFile() {
       getDownloadURL(referenceAudioFolderRef)
         .then((url) => {
 
-          var audio = new Audio(url)
+          var audio = new Audio(url);
 
           audio.addEventListener("loadedmetadata", () => {
             referenceAudioDuration = audio.duration;
@@ -539,16 +553,25 @@ function fetchAudioFile() {
             // SUBMIT AUDIO
             const submitButton = document.querySelector(".sbutton");
             submitButton.addEventListener("click", () => {
+              isConsentAgreed = true;
+              wavesurfer.pause();
+              wavesurfer_user.pause();
               // Audio Validation
               if (duration >= Math.floor(leastDuration) && duration <= Math.ceil(mostDuration)) {
 
                 // Upload file to Firebase
                 uploadAudioFile(randomAudioName, audioBlob);
+
+                // Reset recorded audio data to empty
                 let chunks = [];
                 audioBlob = new Blob(chunks, { type: 'audio/webm' });
                 duration = 0;
+                leastDuration = 0;
+                mostDuration = 0;
                 timerText.textContent = "0.0";
                 recordButton.textContent = "Record";
+
+                removeErrorMsg();
 
                 // Navigate to post-submit page
                 audioRecordingPage.style.left = "-200%";
@@ -572,7 +595,9 @@ function fetchAudioFile() {
               } else {
                 document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0;
-                showErrorMsg("Invalid duration. Remember: " + leastDuration + "-" + mostDuration + "s!", "#errorsAboveHere");
+                if (errorMsgContainer.childElementCount == 0) {
+                  showErrorMsg("Invalid duration. Remember: " + leastDuration + "-" + mostDuration + "s!");
+                }
                 timerText.textContent = "00.00";
               }
             });
@@ -580,14 +605,36 @@ function fetchAudioFile() {
 
         })
         .catch((error) => {
-          showErrorMsg(error.message, "#errorsAboveHere");
+          showErrorMsg(error.message);
         });
 
     })
     .catch((error) => {
-      showErrorMsg(error.message, "#errorsAboveHere");
+      showErrorMsg(error.message);
     });
 }
+
+navbackButton.addEventListener('click', () => {
+
+  postSubmitPage.style.right = "-200%";
+  postSubmitPage.style.opacity = "0";
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+  pageHeader.textContent = "Beatbox Imitation Game";
+
+  setTimeout(() => {
+    postSubmitPage.style.display = "none";
+    audioRecordingPage.style.display = "block";
+    wavesurfer.empty();
+    wavesurfer_user.empty();
+    fetchAudioFile();
+  }, 250);
+
+  setTimeout(() => {
+    audioRecordingPage.style.opacity = 1;
+  }, 550)
+  
+});
 
 
 

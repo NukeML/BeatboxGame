@@ -2,7 +2,7 @@ const introductionPage = document.querySelector('.introduction-page');
 const audioRecordingPage = document.querySelector('.audio-recording-page');
 const postSubmitPage = document.querySelector('.post-submit-page');
 const pageHeader = document.getElementById('header');
-const navbackButton = document.querySelector('.navbackButton');
+// const navbackButton = document.querySelector('.navbackButton');
 const infoButton = document.querySelector('.infoButton');
 const infoButtonIcon = document.querySelector('.infoButton i');
 const moreInfoContent = document.querySelector('.more-info-content');
@@ -29,18 +29,18 @@ infoButton.addEventListener("click", () => {
 });
 
 
-navbackButton.addEventListener('click', () => {
+// navbackButton.addEventListener('click', () => {
 
-    postSubmitPage.style.right = "-200%";
-    postSubmitPage.style.opacity = "0";
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+//     postSubmitPage.style.right = "-200%";
+//     postSubmitPage.style.opacity = "0";
+//     document.body.scrollTop = 0;
+//     document.documentElement.scrollTop = 0;
 
-    setTimeout(() => {
-        window.location.reload();
-    }, 850);
+//     setTimeout(() => {
+//         window.location.reload();
+//     }, 850);
     
-});
+// });
 
 
 // CONSENT AGREEMENT CHECK

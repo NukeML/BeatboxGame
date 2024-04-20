@@ -563,8 +563,8 @@ function fetchAudioFile() {
                 uploadAudioFile(randomAudioName, audioBlob);
 
                 // Reset recorded audio data to empty
-                let chunks = [];
-                audioBlob = new Blob(chunks, { type: 'audio/webm' });
+                // let chunks = [];
+                // audioBlob = new Blob(chunks, { type: 'audio/webm' });
                 duration = 0;
                 leastDuration = 0;
                 mostDuration = 0;

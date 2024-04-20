@@ -517,9 +517,9 @@ function fetchAudioFile() {
     });
 
     // Randomly select one audio file from the list
-    const randomIndex = Math.floor(Math.random() * referenceAudioList.length);
-    const randomAudioName = referenceAudioList[randomIndex];
-    const randomAudioRef = refS(storage, "labels/" + randomAudioName);
+    var randomIndex = Math.floor(Math.random() * referenceAudioList.length);
+    var randomAudioName = referenceAudioList[randomIndex];
+    var randomAudioRef = refS(storage, "labels/" + randomAudioName);
 
     // Get audio file URL and load selected audio file
     getDownloadURL(randomAudioRef)

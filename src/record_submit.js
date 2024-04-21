@@ -501,12 +501,15 @@ wavesurfer.on('finish', () => {
   playbuttons[2].className = "bx bx-play-circle";
 });
 
+var uploadLimit = 0;
+var currentSubmission = 1;
+
 // SUBMIT BUTTON ONCLICK IS HERE
 function fetchAudioFile() {
 
   recordButton.disabled = true;
 
-  const referenceAudioFolderRef = refS(storage, "labels/");
+  var referenceAudioFolderRef = refS(storage, "labels/");
 
   return listAll(referenceAudioFolderRef).then((result) => {
 
@@ -521,97 +524,84 @@ function fetchAudioFile() {
     var randomAudioName = referenceAudioList[randomIndex];
     var randomAudioRef = refS(storage, "labels/" + randomAudioName);
 
+    var randomAudioNameWithoutExtension = randomAudioName.split(".")[0];
+    audioname.textContent = randomAudioNameWithoutExtension;
+
     // Get audio file URL and load selected audio file
     getDownloadURL(randomAudioRef)
       .then((url) => {
         // Wavesurfer visualisation
         wavesurfer.load(url);
+
+        // Check recorded audio duration
+        var audio = new Audio(url);
+        audio.addEventListener("loadedmetadata", () => {
+          referenceAudioDuration = audio.duration;
+          leastDuration = (Math.floor(referenceAudioDuration) * 0.9);
+          mostDuration = (Math.ceil(referenceAudioDuration) * 1.3);
+          leastDurationText.textContent = Math.floor(leastDuration);
+          mostDurationText.textContent = Math.floor(mostDuration);
+          recordButton.disabled = false;
+
+          // SUBMIT AUDIO
+          var submitButton = document.querySelector(".sbutton");
+          submitButton.addEventListener("click", () => {
+            isConsentAgreed = true;
+            wavesurfer.pause();
+            wavesurfer_user.pause();
+            // Audio Validation
+            if (duration >= Math.floor(leastDuration) && duration <= Math.ceil(mostDuration)) {
+
+              uploadLimit += 1;
+              // Upload file to Firebase
+              if (uploadLimit == currentSubmission) {
+                uploadAudioFile(randomAudioNameWithoutExtension, audioBlob);
+              }
+
+              // Reset recorded audio data to empty
+              duration = 0;
+              leastDuration = 0;
+              mostDuration = 0;
+              timerText.textContent = "0.0";
+              recordButton.textContent = "Record";
+
+              removeErrorMsg();
+
+              // Navigate to post-submit page
+              audioRecordingPage.style.left = "-200%";
+              audioRecordingPage.style.opacity = "0";
+              afterRecordingContainer.style.display = "none";
+              afterRecordingContainer.style.opacity = "0";
+
+              setTimeout(() => {
+                audioRecordingPage.style.display = "none";
+                postSubmitPage.style.display = "block";
+              }, 350);
+
+              document.body.scrollTop = 0;
+              document.documentElement.scrollTop = 0;
+              pageHeader.innerHTML = HEADER2;
+
+              setTimeout(() => {
+                postSubmitPage.style.opacity = "1";
+              }, 550);
+
+            } else {
+              document.body.scrollTop = 0;
+              document.documentElement.scrollTop = 0;
+              if (errorMsgContainer.childElementCount == 0) {
+                showErrorMsg("Invalid duration. Remember: " + leastDuration + "-" + mostDuration + "s!");
+              }
+              timerText.textContent = "00.00";
+            }
+          });
+        });
       })
       .catch((error) => {
         showErrorMsg(error.message);
       });
-    // Return filename of the randomly selected audio, matching user's audio to the correct label
-    var lastIndex = randomAudioName.lastIndexOf(".");
-    return randomAudioName.substring(0, lastIndex);
-  })
-    .then((randomAudioName) => {
-      audioname.textContent = randomAudioName;
-      const referenceAudioFolderRef = refS(storage, `labels/${randomAudioName}.m4a`);
-      getDownloadURL(referenceAudioFolderRef)
-        .then((url) => {
-
-          var audio = new Audio(url);
-
-          audio.addEventListener("loadedmetadata", () => {
-            referenceAudioDuration = audio.duration;
-            leastDuration = (Math.floor(referenceAudioDuration) * 0.9);
-            mostDuration = (Math.ceil(referenceAudioDuration) * 1.3);
-            leastDurationText.textContent = Math.floor(leastDuration);
-            mostDurationText.textContent = Math.floor(mostDuration);
-            recordButton.disabled = false;
-
-            // SUBMIT AUDIO
-            const submitButton = document.querySelector(".sbutton");
-            submitButton.addEventListener("click", () => {
-              isConsentAgreed = true;
-              wavesurfer.pause();
-              wavesurfer_user.pause();
-              // Audio Validation
-              if (duration >= Math.floor(leastDuration) && duration <= Math.ceil(mostDuration)) {
-
-                // Upload file to Firebase
-                uploadAudioFile(randomAudioName, audioBlob);
-
-                // Reset recorded audio data to empty
-                // let chunks = [];
-                // audioBlob = new Blob(chunks, { type: 'audio/webm' });
-                duration = 0;
-                leastDuration = 0;
-                mostDuration = 0;
-                timerText.textContent = "0.0";
-                recordButton.textContent = "Record";
-
-                removeErrorMsg();
-
-                // Navigate to post-submit page
-                audioRecordingPage.style.left = "-200%";
-                audioRecordingPage.style.opacity = "0";
-                afterRecordingContainer.style.display = "none";
-                afterRecordingContainer.style.opacity = "0";
-
-                setTimeout(() => {
-                  audioRecordingPage.style.display = "none";
-                  postSubmitPage.style.display = "block";
-                }, 350);
-
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-                pageHeader.innerHTML = HEADER2;
-
-                setTimeout(() => {
-                  postSubmitPage.style.opacity = "1";
-                }, 550);
-
-              } else {
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-                if (errorMsgContainer.childElementCount == 0) {
-                  showErrorMsg("Invalid duration. Remember: " + leastDuration + "-" + mostDuration + "s!");
-                }
-                timerText.textContent = "00.00";
-              }
-            });
-          });
-
-        })
-        .catch((error) => {
-          showErrorMsg(error.message);
-        });
-
-    })
-    .catch((error) => {
-      showErrorMsg(error.message);
-    });
+    
+  });
 }
 
 navbackButton.addEventListener('click', () => {
@@ -622,12 +612,16 @@ navbackButton.addEventListener('click', () => {
   document.documentElement.scrollTop = 0;
   pageHeader.textContent = "Beatbox Imitation Game";
 
+  uploadLimit = 0;
+  currentSubmission += 1;
+
+  fetchAudioFile();
+
   setTimeout(() => {
     postSubmitPage.style.display = "none";
     audioRecordingPage.style.display = "block";
     wavesurfer.empty();
     wavesurfer_user.empty();
-    fetchAudioFile();
   }, 250);
 
   setTimeout(() => {
